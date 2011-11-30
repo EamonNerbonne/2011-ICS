@@ -1,7 +1,7 @@
 \documentclass{beamer}
 
 \usepackage[utf8x]{inputenc}
-%\usepackage{default}
+\usepackage{default}
 
 \usepackage{amsmath}
 
@@ -79,11 +79,16 @@
   \centering
     \begin{tabular}{ll}
     $\dot{x}(t) = v(t)$ & velocity \\
-    $\dot{R}(t) = \omega(t) \times R(t)$ & angular velocity \\
+    $\dot{R}(t) = \omega^*(t) R(t)$ & angular velocity \\
     $\dot{P}(t) = F(t)$ & force \\
     $\dot{L}(t) = \tau(t)$ & torque (moment of force) \\ 
     \end{tabular}
   \end{table}
+
+\begin{itemize}
+ \item $\omega^*(t)$ is the tensor notation of $\omega(t)$
+ \item $\dot{\alpha}$ is the notation for the time derivative of $\alpha$
+\end{itemize}
 
 \end{frame}
 
@@ -104,6 +109,7 @@
  \begin{itemize}
   \item there is no force, $F(t) = 0$
   \item there is no torque, $\tau(t) = 0$
+  \item $x(t)$ is chosen to be the centre of mass, which is stationary
  \end{itemize}
  Thus, we only need to calculate the angular velocity
 \end{frame}
@@ -111,16 +117,12 @@
 \begin{frame}
  \frametitle{Model}
  \framesubtitle{Updating the state}
-  \begin{table}
-  \centering
-    \begin{tabular}{ll}
-    $x(t)$ & = constant \\
-    $R(t)$ & = $R(t) + \omega(t) \times R(t)$\\
-    $P(t)$ & = 0 \\
-    $L(t)$ & = constant \\ 
-    \end{tabular}
-  \end{table}
-
+\begin{align*}
+    x & = \mbox{constant} \\
+    R(t + \epsilon) & = R(t) + \epsilon ~ \omega^*(t) R(t)\\
+    P & = 0 \\
+    L & = \mbox{constant}
+\end{align*}
 \end{frame}
 
 \begin{frame}
@@ -167,7 +169,7 @@
 
 \begin{frame}
  \frametitle{Implementation}
- We intend to implement this in C/C++ using OpenGL for the visualisation
+ We intend to implement this in C++ using OpenGL for the visualisation
 \end{frame}
 
  \begin{frame}
