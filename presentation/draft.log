@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.8.29)  30 NOV 2011 15:45
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.8.29)  30 NOV 2011 16:51
 entering extended mode
  %&-line parsing enabled.
 **draft.tex
@@ -916,6 +916,8 @@ File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 
 ] [12
 
+] [13
+
 ]
 \tf@nav=\write5
 \openout5 = `draft.nav'.
@@ -928,10 +930,10 @@ File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 
  (./draft.aux) ) 
 Here is how much of TeX's memory you used:
- 13999 strings out of 494922
- 241598 string characters out of 1178223
+ 14003 strings out of 494922
+ 241633 string characters out of 1178223
  329483 words of memory out of 3000000
- 16785 multiletter control sequences out of 15000+50000
+ 16787 multiletter control sequences out of 15000+50000
  63644 words of font info for 56 fonts, out of 3000000 for 9000
  76 hyphenation exceptions out of 8191
  45i,14n,51p,339b,549s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -944,9 +946,9 @@ nts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy
 8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symbols/msam10.pfb>
 </usr/share/texmf-texlive/fonts/type1/arkandis/venturissans/yv1r8a.pfb></usr/sh
 are/texmf-texlive/fonts/type1/arkandis/venturissans/yv1ri8a.pfb>
-Output written on draft.pdf (12 pages, 225515 bytes).
+Output written on draft.pdf (13 pages, 230504 bytes).
 PDF statistics:
- 385 PDF objects out of 1000 (max. 8388607)
- 25 named destinations out of 1000 (max. 500000)
+ 411 PDF objects out of 1000 (max. 8388607)
+ 27 named destinations out of 1000 (max. 500000)
  38 words of extra memory for PDF output out of 10000 (max. 10000000)
 
