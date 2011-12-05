@@ -1,4 +1,7 @@
 #pragma once
+#ifdef _MSC_VER
+#include <windows.h>
+#endif
 #include <GL/gl.h>
 
 struct RgbaImageTexture {
@@ -8,8 +11,9 @@ struct RgbaImageTexture {
 	void BindTexture();
 	~RgbaImageTexture();
 
-	RgbaImageTexture& operator=(const RgbaImageTexture&) = delete;	// Disallow copying
-	RgbaImageTexture(const RgbaImageTexture&) = delete;
+private:
+	RgbaImageTexture& operator=(const RgbaImageTexture&);	// Disallow copying
+	RgbaImageTexture(const RgbaImageTexture&);
 };
 
 

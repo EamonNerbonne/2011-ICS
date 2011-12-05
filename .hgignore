@@ -9,3 +9,4 @@ presentation/*.synctex.gz
 presentation/*.toc
 InitialOpenGL/build/sample
 InitialOpenGL/build/CMakeFiles
+InitialOpenGL/win
