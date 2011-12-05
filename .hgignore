@@ -7,3 +7,5 @@ presentation/*.out
 presentation/*.snm
 presentation/*.synctex.gz
 presentation/*.toc
+InitialOpenGL/build/sample
+InitialOpenGL/build/CMakeFiles
