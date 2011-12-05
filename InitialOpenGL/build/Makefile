@@ -111,6 +111,54 @@ sample/fast:
 	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/build
 .PHONY : sample/fast
 
+BookRenderer.o: BookRenderer.cpp.o
+.PHONY : BookRenderer.o
+
+# target to build an object file
+BookRenderer.cpp.o:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/BookRenderer.cpp.o
+.PHONY : BookRenderer.cpp.o
+
+BookRenderer.i: BookRenderer.cpp.i
+.PHONY : BookRenderer.i
+
+# target to preprocess a source file
+BookRenderer.cpp.i:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/BookRenderer.cpp.i
+.PHONY : BookRenderer.cpp.i
+
+BookRenderer.s: BookRenderer.cpp.s
+.PHONY : BookRenderer.s
+
+# target to generate assembly for a file
+BookRenderer.cpp.s:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/BookRenderer.cpp.s
+.PHONY : BookRenderer.cpp.s
+
+EulerRotation.o: EulerRotation.cpp.o
+.PHONY : EulerRotation.o
+
+# target to build an object file
+EulerRotation.cpp.o:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/EulerRotation.cpp.o
+.PHONY : EulerRotation.cpp.o
+
+EulerRotation.i: EulerRotation.cpp.i
+.PHONY : EulerRotation.i
+
+# target to preprocess a source file
+EulerRotation.cpp.i:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/EulerRotation.cpp.i
+.PHONY : EulerRotation.cpp.i
+
+EulerRotation.s: EulerRotation.cpp.s
+.PHONY : EulerRotation.s
+
+# target to generate assembly for a file
+EulerRotation.cpp.s:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/EulerRotation.cpp.s
+.PHONY : EulerRotation.cpp.s
+
 InitOpenGL.o: InitOpenGL.cpp.o
 .PHONY : InitOpenGL.o
 
@@ -159,29 +207,29 @@ RgbaImageTexture.cpp.s:
 	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RgbaImageTexture.cpp.s
 .PHONY : RgbaImageTexture.cpp.s
 
-RotationState.o: RotationState.cpp.o
-.PHONY : RotationState.o
+RotationModel.o: RotationModel.cpp.o
+.PHONY : RotationModel.o
 
 # target to build an object file
-RotationState.cpp.o:
-	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RotationState.cpp.o
-.PHONY : RotationState.cpp.o
+RotationModel.cpp.o:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RotationModel.cpp.o
+.PHONY : RotationModel.cpp.o
 
-RotationState.i: RotationState.cpp.i
-.PHONY : RotationState.i
+RotationModel.i: RotationModel.cpp.i
+.PHONY : RotationModel.i
 
 # target to preprocess a source file
-RotationState.cpp.i:
-	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RotationState.cpp.i
-.PHONY : RotationState.cpp.i
+RotationModel.cpp.i:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RotationModel.cpp.i
+.PHONY : RotationModel.cpp.i
 
-RotationState.s: RotationState.cpp.s
-.PHONY : RotationState.s
+RotationModel.s: RotationModel.cpp.s
+.PHONY : RotationModel.s
 
 # target to generate assembly for a file
-RotationState.cpp.s:
-	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RotationState.cpp.s
-.PHONY : RotationState.cpp.s
+RotationModel.cpp.s:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RotationModel.cpp.s
+.PHONY : RotationModel.cpp.s
 
 sample.o: sample.cpp.o
 .PHONY : sample.o
@@ -240,15 +288,21 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... sample"
+	@echo "... BookRenderer.o"
+	@echo "... BookRenderer.i"
+	@echo "... BookRenderer.s"
+	@echo "... EulerRotation.o"
+	@echo "... EulerRotation.i"
+	@echo "... EulerRotation.s"
 	@echo "... InitOpenGL.o"
 	@echo "... InitOpenGL.i"
 	@echo "... InitOpenGL.s"
 	@echo "... RgbaImageTexture.o"
 	@echo "... RgbaImageTexture.i"
 	@echo "... RgbaImageTexture.s"
-	@echo "... RotationState.o"
-	@echo "... RotationState.i"
-	@echo "... RotationState.s"
+	@echo "... RotationModel.o"
+	@echo "... RotationModel.i"
+	@echo "... RotationModel.s"
 	@echo "... sample.o"
 	@echo "... sample.i"
 	@echo "... sample.s"

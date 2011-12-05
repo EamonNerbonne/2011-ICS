@@ -1,4 +1,4 @@
-#include "RotationState.h"
+#include "EulerRotation.h"
 #include <Eigen/Core>
 #include <Eigen/SVD>
 #include "matrixUtils.h"
@@ -6,7 +6,7 @@
 using namespace Eigen;
 
 
-RotationState::RotationState(Vector3d dimensions, Vector3d angular_momentum)
+EulerRotation::EulerRotation(Vector3d dimensions, Vector3d angular_momentum)
 : dimensions(dimensions)
 , angular_momentum(angular_momentum)
 , orientation(Matrix3d::Identity())
@@ -22,7 +22,7 @@ RotationState::RotationState(Vector3d dimensions, Vector3d angular_momentum)
 	MoI_body_inv = diagOf_MoI.array().inverse().matrix().asDiagonal();
 }
 
-void RotationState::updateStepEuler() {
+void EulerRotation::updateStep() {
 	Matrix3d I_inv = orientation * MoI_body_inv * orientation.transpose();
 	Vector3d omega = I_inv * angular_momentum;
 	orientation += timestep * asTensor(omega) * orientation;
@@ -30,4 +30,27 @@ void RotationState::updateStepEuler() {
 	auto svd = orientation.jacobiSvd(ComputeFullU | ComputeFullV);
 	orientation = svd.matrixU() * svd.matrixV().transpose();
 }
+void EulerRotation::processInput(char c) {
+	switch(c) {
+	case '1':
+		orientation = Matrix3d::Identity();
+		angular_momentum = Vector3d(1.0,0.0,0.0);
+		break;
+	case '2':
+		orientation = Matrix3d::Identity();
+		angular_momentum= Vector3d(0.0,0.5,0.0);
+		break;
+	case '3':
+		orientation = Matrix3d::Identity();
+		angular_momentum= Vector3d(0.0,0.0,1.0);
+		break;
+	}
+}
 
+
+Matrix3d EulerRotation::getOrientation() {return orientation;}
+void EulerRotation::faster() { timestep *= 1.2; }
+void EulerRotation::slower() { timestep /=1.2; }
+EulerRotation::~EulerRotation() { }
+
+void EulerRotation::jiggle() { angular_momentum += Vector3d::Random() * 0.01;}
