@@ -4,14 +4,14 @@
 
 static void InitGL() {
 
-//	glShadeModel(GL_SMOOTH);
+	glShadeModel(GL_SMOOTH);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-//	glEnable ( GL_COLOR_MATERIAL );
-	glDisable ( GL_COLOR_MATERIAL );
+	glEnable ( GL_COLOR_MATERIAL );
+	//glDisable ( GL_COLOR_MATERIAL );
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
@@ -36,5 +36,7 @@ void SetupMainLoop(DisplayManager*man, int argc, char **argv) {
 	glutSpecialFunc     ( arrow_keys );
 	glutDisplayFunc     ( display );
 	glutIdleFunc		( idle );
+
+	man->init();
 	glutMainLoop        ( );
 }

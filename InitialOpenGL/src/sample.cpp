@@ -43,7 +43,7 @@ struct RotationState {
 		: dimensions(dimensions)
 		, angular_momentum(angular_momentum)
 		, orientation(Matrix3d::Identity())
-		, timestep(0.01)
+		, timestep(0.0003)
 	{
 		Vector3d diagOf_MoI=
 			Vector3d(
@@ -71,17 +71,9 @@ struct RGBImageTexture {
 	GLuint textureID;
 	RGBImageTexture(char const * filename) {
 		int n;
-		unsigned char *rawdata = stbi_load(filename, &width, &height, &n, 3);
+		unsigned char *rawdata = stbi_load(filename, &width, &height, &n, 4);
 		cout<<"width: "<<width<<"; height: "<<height<<"; n: "<<n<<"; ptr:"<<(void*)rawdata<<"; val:"<<rawdata[10000]<<"\n";
-
-		//data = vector(rawdata, rawdata+width*height*3);
-	    // Create Texture
-		cout<<"init "<<textureID<<"; err:"<<glGetError() << "\n";
-
 		glGenTextures(1, &textureID);
-	    cout<<"created "<<textureID<<"; err:"<<glGetError() << "\n";
-	    glGenTextures(1, &textureID);
-	    cout<<"created(again) "<<textureID<<"; err:"<<glGetError() << "\n";
 	    glBindTexture(GL_TEXTURE_2D, textureID);   // 2d texture (x and y size)
 
 	    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // scale linearly when image bigger than texture
@@ -89,7 +81,7 @@ struct RGBImageTexture {
 
 	    // 2d texture, level of detail 0 (normal), 3 components (red, green, blue), x size from image, y size from image,
 	    // border 0 (normal), rgb color data, unsigned byte data, and finally the data itself.
-	    glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, rawdata);
+	    glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, rawdata);
 		stbi_image_free(rawdata);
 		glEnable(GL_TEXTURE_2D);
 	}
@@ -114,19 +106,23 @@ public:
 	BookRenderer()
 		: state(Vector3d(1.0, 2.0, 0.3), Vector3d(0.0, 0.0, 1.0) )
 	{
-		texture = shared_ptr<RGBImageTexture>(new RGBImageTexture("../texture.png"));
+
 	}
 	virtual void display() ;
 	virtual void idle();
-
+	virtual void init();
 	virtual void reshape(int width, int height)	;
 	virtual void keyboard(unsigned char key, int x, int y);
 	virtual void arrow_keys(int a_keys, int x, int y);
 };
 
+void BookRenderer::init() {
+	texture = shared_ptr<RGBImageTexture>(new RGBImageTexture("../texture.png"));
+}
 
 void BookRenderer::display() {
-	state.updateStepEuler();
+	for(int i=0;i<100;i++)
+		state.updateStepEuler();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glTranslatef(0.0f,0.0f,-12.0f);
@@ -157,17 +153,15 @@ void BookRenderer::keyboard(unsigned char key, int x, int y) {
 		exit(0);
 		break;
 	case 's':
-		//state.updateStepEuler();
 		cout << state.orientation << "\n\n";
 		break;
-
 	case '1':
 		state.orientation = Matrix3d::Identity();
 		state.angular_momentum = Vector3d(1.0,0.0,0.0);
 	break;
 	case '2':
 		state.orientation = Matrix3d::Identity();
-		state.angular_momentum= Vector3d(0.0,1.0,0.0);
+		state.angular_momentum= Vector3d(0.0,0.5,0.0);
 	break;
 	case '3':
 		state.orientation = Matrix3d::Identity();
@@ -196,12 +190,11 @@ void BookRenderer::arrow_keys(int a_keys, int x, int y) {
 
 void BookRenderer::renderBook() {
 	glPushMatrix();
-	glTranslated(0.0,0.0,-3.0);
 	glMultMatrixd(asAffine(state.orientation).data());
 	glScaled(state.dimensions.coeff(0),state.dimensions.coeff(1),state.dimensions.coeff(2));
 	texture->BindTexture();
 	glBegin(GL_QUADS);
-	//glColor3f(1.0f,0.0f,0.0f);//front
+	glColor3f(1.0f,0.0f,0.0f);//front
 	 glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f);
 	 glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
 	 glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,-1.0f, 1.0f);

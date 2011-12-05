@@ -8,6 +8,7 @@ public:
 	virtual void reshape(int width, int height)=0;
 	virtual void display()=0;
 	virtual void idle()=0;
+	virtual void init()=0;
 	virtual ~DisplayManager() {}
 };
 
