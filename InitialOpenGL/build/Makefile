@@ -135,6 +135,54 @@ InitOpenGL.cpp.s:
 	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/InitOpenGL.cpp.s
 .PHONY : InitOpenGL.cpp.s
 
+RgbaImageTexture.o: RgbaImageTexture.cpp.o
+.PHONY : RgbaImageTexture.o
+
+# target to build an object file
+RgbaImageTexture.cpp.o:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RgbaImageTexture.cpp.o
+.PHONY : RgbaImageTexture.cpp.o
+
+RgbaImageTexture.i: RgbaImageTexture.cpp.i
+.PHONY : RgbaImageTexture.i
+
+# target to preprocess a source file
+RgbaImageTexture.cpp.i:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RgbaImageTexture.cpp.i
+.PHONY : RgbaImageTexture.cpp.i
+
+RgbaImageTexture.s: RgbaImageTexture.cpp.s
+.PHONY : RgbaImageTexture.s
+
+# target to generate assembly for a file
+RgbaImageTexture.cpp.s:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RgbaImageTexture.cpp.s
+.PHONY : RgbaImageTexture.cpp.s
+
+RotationState.o: RotationState.cpp.o
+.PHONY : RotationState.o
+
+# target to build an object file
+RotationState.cpp.o:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RotationState.cpp.o
+.PHONY : RotationState.cpp.o
+
+RotationState.i: RotationState.cpp.i
+.PHONY : RotationState.i
+
+# target to preprocess a source file
+RotationState.cpp.i:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RotationState.cpp.i
+.PHONY : RotationState.cpp.i
+
+RotationState.s: RotationState.cpp.s
+.PHONY : RotationState.s
+
+# target to generate assembly for a file
+RotationState.cpp.s:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/RotationState.cpp.s
+.PHONY : RotationState.cpp.s
+
 sample.o: sample.cpp.o
 .PHONY : sample.o
 
@@ -159,6 +207,30 @@ sample.cpp.s:
 	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/sample.cpp.s
 .PHONY : sample.cpp.s
 
+stb_image.o: stb_image.c.o
+.PHONY : stb_image.o
+
+# target to build an object file
+stb_image.c.o:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/stb_image.c.o
+.PHONY : stb_image.c.o
+
+stb_image.i: stb_image.c.i
+.PHONY : stb_image.i
+
+# target to preprocess a source file
+stb_image.c.i:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/stb_image.c.i
+.PHONY : stb_image.c.i
+
+stb_image.s: stb_image.c.s
+.PHONY : stb_image.s
+
+# target to generate assembly for a file
+stb_image.c.s:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/stb_image.c.s
+.PHONY : stb_image.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -171,9 +243,18 @@ help:
 	@echo "... InitOpenGL.o"
 	@echo "... InitOpenGL.i"
 	@echo "... InitOpenGL.s"
+	@echo "... RgbaImageTexture.o"
+	@echo "... RgbaImageTexture.i"
+	@echo "... RgbaImageTexture.s"
+	@echo "... RotationState.o"
+	@echo "... RotationState.i"
+	@echo "... RotationState.s"
 	@echo "... sample.o"
 	@echo "... sample.i"
 	@echo "... sample.s"
+	@echo "... stb_image.o"
+	@echo "... stb_image.i"
+	@echo "... stb_image.s"
 .PHONY : help
 
 

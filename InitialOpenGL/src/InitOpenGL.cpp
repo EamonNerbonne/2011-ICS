@@ -23,8 +23,8 @@ static void reshape(int width, int height) { globalMan->reshape(width,height); }
 static void display() { globalMan->display(); }
 static void idle() { globalMan->idle(); }
 
-void SetupMainLoop(DisplayManager*man, int argc, char **argv) {
-	globalMan = man;
+void SetupMainLoop(DisplayManager* (* factory)(), int argc, char **argv) {
+
 	glutInit            ( &argc, argv );
 	glutInitDisplayMode ( GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
 	glutInitWindowSize  ( 500, 500 );
@@ -37,6 +37,6 @@ void SetupMainLoop(DisplayManager*man, int argc, char **argv) {
 	glutDisplayFunc     ( display );
 	glutIdleFunc		( idle );
 
-	man->init();
+	globalMan = factory();
 	glutMainLoop        ( );
 }

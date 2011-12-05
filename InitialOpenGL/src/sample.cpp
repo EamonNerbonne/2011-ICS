@@ -7,118 +7,31 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
-extern "C" {
-#include "stb_image.c"
-}
-
+#include "matrixUtils.h"
+#include "RotationState.h"
+#include "RgbaImageTexture.h"
 
 using namespace Eigen;
 using namespace std;
-
-Matrix4d asAffine(Matrix3d mat) {
-	Matrix4d retval = Matrix4d::Identity();
-	retval.topLeftCorner(3,3) = mat;
-	return retval;
-}
-
-Matrix3d asTensor(Vector3d tensor) {
-	Matrix3d retval = Matrix3d::Zero();
-	retval(1,0) = tensor(2);
-	retval(2,0) = -tensor(1);
-	retval(0,1) = -tensor(2);
-	retval(2,1) = tensor(0);
-	retval(0,2) = tensor(1);
-	retval(1,2) = -tensor(0);
-	return retval;
-}
-
-struct RotationState {
-	Vector3d const dimensions;
-	Vector3d angular_momentum;
-	Matrix3d MoI_body, MoI_body_inv;
-	Matrix3d orientation;
-	double timestep;
-
-	RotationState(Vector3d dimensions, Vector3d angular_momentum)
-		: dimensions(dimensions)
-		, angular_momentum(angular_momentum)
-		, orientation(Matrix3d::Identity())
-		, timestep(0.0003)
-	{
-		Vector3d diagOf_MoI=
-			Vector3d(
-				dimensions(1)*dimensions(1) + dimensions(2)*dimensions(2),
-				dimensions(0)*dimensions(0) + dimensions(2)*dimensions(2),
-				dimensions(1)*dimensions(1) + dimensions(0)*dimensions(0)
-			);
-		MoI_body = diagOf_MoI.asDiagonal(); //TODO:we're ignoring density
-		MoI_body_inv = diagOf_MoI.array().inverse().matrix().asDiagonal();
-	}
-
-	void updateStepEuler() {
-		Matrix3d I_inv = orientation * MoI_body_inv * orientation.transpose();
-		Vector3d omega = I_inv * angular_momentum;
-		orientation += timestep * asTensor(omega) * orientation;
-
-		auto svd = orientation.jacobiSvd(ComputeFullU | ComputeFullV);
-		orientation = svd.matrixU() * svd.matrixV().transpose();
-	}
-};
-
-struct RGBImageTexture {
-	//vector<unsigned char> data;
-	int width, height;
-	GLuint textureID;
-	RGBImageTexture(char const * filename) {
-		int n;
-		unsigned char *rawdata = stbi_load(filename, &width, &height, &n, 4);
-		cout<<"width: "<<width<<"; height: "<<height<<"; n: "<<n<<"; ptr:"<<(void*)rawdata<<"; val:"<<rawdata[10000]<<"\n";
-		glGenTextures(1, &textureID);
-	    glBindTexture(GL_TEXTURE_2D, textureID);   // 2d texture (x and y size)
-
-	    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // scale linearly when image bigger than texture
-	    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); // scale linearly when image smalled than texture
-
-	    // 2d texture, level of detail 0 (normal), 3 components (red, green, blue), x size from image, y size from image,
-	    // border 0 (normal), rgb color data, unsigned byte data, and finally the data itself.
-	    glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, rawdata);
-		stbi_image_free(rawdata);
-		glEnable(GL_TEXTURE_2D);
-	}
-	void BindTexture() {
-		glBindTexture(GL_TEXTURE_2D, textureID);
-		//cout<<"bound "<<textureID<<"\n";
-	}
-	~RGBImageTexture() {
-		glDeleteTextures(1, &textureID);
-	}
-
-	RGBImageTexture& operator=(const RGBImageTexture&) = delete;	// Disallow copying
-	RGBImageTexture(const RGBImageTexture&) = delete;
-};
 
 
 class BookRenderer : public DisplayManager {
 	void renderBook(void);
 	RotationState state;
-	shared_ptr<RGBImageTexture> texture;
+	shared_ptr<RgbaImageTexture> texture;
 public:
 	BookRenderer()
-		: state(Vector3d(1.0, 2.0, 0.3), Vector3d(0.0, 0.0, 1.0) )
+		: state(Vector3d(1.0, 2.0, 0.3), Vector3d(1.0,0.0,0.0) )
 	{
-
+		texture = shared_ptr<RgbaImageTexture>(new RgbaImageTexture("../texture.png"));
 	}
 	virtual void display() ;
 	virtual void idle();
-	virtual void init();
 	virtual void reshape(int width, int height)	;
 	virtual void keyboard(unsigned char key, int x, int y);
 	virtual void arrow_keys(int a_keys, int x, int y);
 };
 
-void BookRenderer::init() {
-	texture = shared_ptr<RGBImageTexture>(new RGBImageTexture("../texture.png"));
-}
 
 void BookRenderer::display() {
 	for(int i=0;i<100;i++)
@@ -167,6 +80,12 @@ void BookRenderer::keyboard(unsigned char key, int x, int y) {
 		state.orientation = Matrix3d::Identity();
 		state.angular_momentum= Vector3d(0.0,0.0,1.0);
 	break;
+	case '+':
+		state.timestep *= 1.2;
+	break;
+	case '-':
+		state.timestep /= 1.2;
+	break;
 	case 'r':
 		state.angular_momentum += Vector3d::Random() * 0.01;
 	break;
@@ -194,12 +113,12 @@ void BookRenderer::renderBook() {
 	glScaled(state.dimensions.coeff(0),state.dimensions.coeff(1),state.dimensions.coeff(2));
 	texture->BindTexture();
 	glBegin(GL_QUADS);
-	glColor3f(1.0f,0.0f,0.0f);//front
+	glColor3f(1.0f,1.0f,1.0f);//front
 	 glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f);
 	 glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
 	 glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,-1.0f, 1.0f);
 	 glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f,-1.0f, 1.0f);
-	glColor3f(0.0f,1.0f,0.0f); //top
+	//glColor3f(0.0f,1.0f,0.0f); //top
     glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f,-1.0f);
     glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, 1.0f,-1.0f);
     glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
@@ -228,8 +147,9 @@ void BookRenderer::renderBook() {
 	glPopMatrix();
 }
 
+DisplayManager * RendererFactory() {return new BookRenderer(); }
 
 int main(int argc, char** argv) {
-	SetupMainLoop(new BookRenderer(), argc, argv);
+	SetupMainLoop(RendererFactory, argc, argv);
 }
 
