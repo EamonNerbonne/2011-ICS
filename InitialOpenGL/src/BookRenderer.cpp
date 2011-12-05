@@ -1,14 +1,14 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 #include <Eigen/Core>
-#include <Eigen/SVD>
 #include <iostream>
-#include <vector>
-#include <algorithm>
 #include "matrixUtils.h"
 #include "RotationModel.h"
 #include "RgbaImageTexture.h"
 #include "BookRenderer.h"
+
+using std::shared_ptr;
+using std::cout;
 
 BookRenderer::BookRenderer(shared_ptr<RotationModel> initstate) : state(initstate)
 {

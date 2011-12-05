@@ -2,18 +2,15 @@
 #include <memory>
 #include "InitOpenGL.h"
 
-using namespace Eigen;
-using namespace std;
-
 class RgbaImageTexture;
 class RotationModel;
 
 class BookRenderer : public DisplayManager {
 	void renderBook(void);
-	shared_ptr<RotationModel> state;
-	shared_ptr<RgbaImageTexture> texture;
+	std::shared_ptr<RotationModel> state;
+	std::shared_ptr<RgbaImageTexture> texture;
 public:
-	BookRenderer(shared_ptr<RotationModel> initstate);
+	BookRenderer(std::shared_ptr<RotationModel> initstate);
 	virtual void display() ;
 	virtual void idle();
 	virtual void reshape(int width, int height)	;
