@@ -111,6 +111,30 @@ sample/fast:
 	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/build
 .PHONY : sample/fast
 
+InitOpenGL.o: InitOpenGL.cpp.o
+.PHONY : InitOpenGL.o
+
+# target to build an object file
+InitOpenGL.cpp.o:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/InitOpenGL.cpp.o
+.PHONY : InitOpenGL.cpp.o
+
+InitOpenGL.i: InitOpenGL.cpp.i
+.PHONY : InitOpenGL.i
+
+# target to preprocess a source file
+InitOpenGL.cpp.i:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/InitOpenGL.cpp.i
+.PHONY : InitOpenGL.cpp.i
+
+InitOpenGL.s: InitOpenGL.cpp.s
+.PHONY : InitOpenGL.s
+
+# target to generate assembly for a file
+InitOpenGL.cpp.s:
+	$(MAKE) -f CMakeFiles/sample.dir/build.make CMakeFiles/sample.dir/InitOpenGL.cpp.s
+.PHONY : InitOpenGL.cpp.s
+
 sample.o: sample.cpp.o
 .PHONY : sample.o
 
@@ -144,6 +168,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... sample"
+	@echo "... InitOpenGL.o"
+	@echo "... InitOpenGL.i"
+	@echo "... InitOpenGL.s"
 	@echo "... sample.o"
 	@echo "... sample.i"
 	@echo "... sample.s"

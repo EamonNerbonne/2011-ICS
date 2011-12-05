@@ -1,110 +1,143 @@
+#include "InitOpenGL.h"
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <Eigen/Core>
+#include <Eigen/SVD>
+#include <iostream>
+#include <memory>
+#include <vector>
+#include <algorithm>
 extern "C" {
-#include <GL/gl.h>     // The GL Header File
-#include <GL/glut.h>   // The GL Utility Toolkit (Glut) Header
+#include "stb_image.c"
 }
 
-float	rtri;						// Angle For The Triangle
-float	rquad;						// Angle For The Quad
 
+using namespace Eigen;
+using namespace std;
 
-void InitGL ( void )     // Create Some Everyday Functions
-{
-
-	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
-	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);				// Black Background
-	glClearDepth(1.0f);									// Depth Buffer Setup
-	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
-	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
-	glEnable ( GL_COLOR_MATERIAL );
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+Matrix4d asAffine(Matrix3d mat) {
+	Matrix4d retval = Matrix4d::Identity();
+	retval.topLeftCorner(3,3) = mat;
+	return retval;
 }
 
-void display ( void )   // Create The Display Function
-{
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
-   glLoadIdentity();									// Reset The Current Modelview Matrix
-   glPushMatrix();
-	glTranslatef(-1.5f,0.0f,-6.0f);						// Move Left 1.5 Units And Into The Screen 6.0
-   glRotatef(rtri,0.0f,1.0f,0.0f);				// Rotate The Triangle On The Y axis
-	glBegin(GL_TRIANGLES);								// Drawing Using Triangles
-		glColor3f(1.0f,0.0f,0.0f);			// Red
-		glVertex3f( 0.0f, 1.0f, 0.0f);			// Top Of Triangle (Front)
-		glColor3f(0.0f,1.0f,0.0f);			// Green
-		glVertex3f(-1.0f,-1.0f, 1.0f);			// Left Of Triangle (Front)
-		glColor3f(0.0f,0.0f,1.0f);			// Blue
-		glVertex3f( 1.0f,-1.0f, 1.0f);			// Right Of Triangle (Front)
-		glColor3f(1.0f,0.0f,0.0f);			// Red
-		glVertex3f( 0.0f, 1.0f, 0.0f);			// Top Of Triangle (Right)
-		glColor3f(0.0f,0.0f,1.0f);			// Blue
-		glVertex3f( 1.0f,-1.0f, 1.0f);			// Left Of Triangle (Right)
-		glColor3f(0.0f,1.0f,0.0f);			// Green
-		glVertex3f( 1.0f,-1.0f, -1.0f);			// Right Of Triangle (Right)
-      glColor3f(1.0f,0.0f,0.0f);			// Red
-		glVertex3f( 0.0f, 1.0f, 0.0f);			// Top Of Triangle (Back)
-		glColor3f(0.0f,1.0f,0.0f);			// Green
-		glVertex3f( 1.0f,-1.0f, -1.0f);			// Left Of Triangle (Back)
-		glColor3f(0.0f,0.0f,1.0f);			// Blue
-		glVertex3f(-1.0f,-1.0f, -1.0f);			// Right Of Triangle (Back)
-		glColor3f(1.0f,0.0f,0.0f);			// Red
-		glVertex3f( 0.0f, 1.0f, 0.0f);			// Top Of Triangle (Left)
-		glColor3f(0.0f,0.0f,1.0f);			// Blue
-		glVertex3f(-1.0f,-1.0f,-1.0f);			// Left Of Triangle (Left)
-		glColor3f(0.0f,1.0f,0.0f);			// Green
-		glVertex3f(-1.0f,-1.0f, 1.0f);			// Right Of Triangle (Left)
-    glEnd();											// Finished Drawing The Triangle
-
-	glLoadIdentity();					// Reset The Current Modelview Matrix
-    glTranslatef(1.5f,0.0f,-6.0f);				// Move Right 1.5 Units And Into The Screen 6.0
-	glRotatef(rquad,1.0f,0.0f,0.0f);			// Rotate The Quad On The X axis
-	glColor3f(0.5f,0.5f,1.0f);							// Set The Color To Blue One Time Only
-	glBegin(GL_QUADS);									// Draw A Quad
-		glColor3f(0.0f,1.0f,0.0f);			// Set The Color To Blue
-		glVertex3f( 1.0f, 1.0f,-1.0f);			// Top Right Of The Quad (Top)
-		glVertex3f(-1.0f, 1.0f,-1.0f);			// Top Left Of The Quad (Top)
-		glVertex3f(-1.0f, 1.0f, 1.0f);			// Bottom Left Of The Quad (Top)
-		glVertex3f( 1.0f, 1.0f, 1.0f);			// Bottom Right Of The Quad (Top)
-		glColor3f(1.0f,0.5f,0.0f);			// Set The Color To Orange
-		glVertex3f( 1.0f,-1.0f, 1.0f);			// Top Right Of The Quad (Bottom)
-		glVertex3f(-1.0f,-1.0f, 1.0f);			// Top Left Of The Quad (Bottom)
-		glVertex3f(-1.0f,-1.0f,-1.0f);			// Bottom Left Of The Quad (Bottom)
-		glVertex3f( 1.0f,-1.0f,-1.0f);			// Bottom Right Of The Quad (Bottom)
-		glColor3f(1.0f,0.0f,0.0f);			// Set The Color To Red
-		glVertex3f( 1.0f, 1.0f, 1.0f);			// Top Right Of The Quad (Front)
-		glVertex3f(-1.0f, 1.0f, 1.0f);			// Top Left Of The Quad (Front)
-		glVertex3f(-1.0f,-1.0f, 1.0f);			// Bottom Left Of The Quad (Front)
-		glVertex3f( 1.0f,-1.0f, 1.0f);			// Bottom Right Of The Quad (Front)
-		glColor3f(1.0f,1.0f,0.0f);			// Set The Color To Yellow
-		glVertex3f( 1.0f,-1.0f,-1.0f);			// Bottom Left Of The Quad (Back)
-		glVertex3f(-1.0f,-1.0f,-1.0f);			// Bottom Right Of The Quad (Back)
-		glVertex3f(-1.0f, 1.0f,-1.0f);			// Top Right Of The Quad (Back)
-		glVertex3f( 1.0f, 1.0f,-1.0f);			// Top Left Of The Quad (Back)
-		glColor3f(0.0f,0.0f,1.0f);			// Set The Color To Blue
-		glVertex3f(-1.0f, 1.0f, 1.0f);			// Top Right Of The Quad (Left)
-		glVertex3f(-1.0f, 1.0f,-1.0f);			// Top Left Of The Quad (Left)
-		glVertex3f(-1.0f,-1.0f,-1.0f);			// Bottom Left Of The Quad (Left)
-		glVertex3f(-1.0f,-1.0f, 1.0f);			// Bottom Right Of The Quad (Left)
-		glColor3f(1.0f,0.0f,1.0f);			// Set The Color To Violet
-		glVertex3f( 1.0f, 1.0f,-1.0f);			// Top Right Of The Quad (Right)
-		glVertex3f( 1.0f, 1.0f, 1.0f);			// Top Left Of The Quad (Right)
-		glVertex3f( 1.0f,-1.0f, 1.0f);			// Bottom Left Of The Quad (Right)
-		glVertex3f( 1.0f,-1.0f,-1.0f);			// Bottom Right Of The Quad (Right)
-	glEnd();						// Done Drawing The Quad
-  												// Done Drawing The Quad
-  glPopMatrix();
-   rtri+=0.2f;						// Increase The Rotation Variable For The Triangle ( NEW )
-	rquad-=0.15f;						// Decrease The Rotation Variable For The Quad     ( NEW )
-
-
-  glutSwapBuffers ( );
-  // Swap The Buffers To Not Be Left With A Clear Screen
+Matrix3d asTensor(Vector3d tensor) {
+	Matrix3d retval = Matrix3d::Zero();
+	retval(1,0) = tensor(2);
+	retval(2,0) = -tensor(1);
+	retval(0,1) = -tensor(2);
+	retval(2,1) = tensor(0);
+	retval(0,2) = tensor(1);
+	retval(1,2) = -tensor(0);
+	return retval;
 }
 
-void reshape ( int width , int height )   // Create The Reshape Function (the viewport)
-{
-  if (height==0)										// Prevent A Divide By Zero By
+struct RotationState {
+	Vector3d const dimensions;
+	Vector3d angular_momentum;
+	Matrix3d MoI_body, MoI_body_inv;
+	Matrix3d orientation;
+	double timestep;
+
+	RotationState(Vector3d dimensions, Vector3d angular_momentum)
+		: dimensions(dimensions)
+		, angular_momentum(angular_momentum)
+		, orientation(Matrix3d::Identity())
+		, timestep(0.01)
 	{
-		height=1;										// Making Height Equal One
+		Vector3d diagOf_MoI=
+			Vector3d(
+				dimensions(1)*dimensions(1) + dimensions(2)*dimensions(2),
+				dimensions(0)*dimensions(0) + dimensions(2)*dimensions(2),
+				dimensions(1)*dimensions(1) + dimensions(0)*dimensions(0)
+			);
+		MoI_body = diagOf_MoI.asDiagonal(); //TODO:we're ignoring density
+		MoI_body_inv = diagOf_MoI.array().inverse().matrix().asDiagonal();
 	}
+
+	void updateStepEuler() {
+		Matrix3d I_inv = orientation * MoI_body_inv * orientation.transpose();
+		Vector3d omega = I_inv * angular_momentum;
+		orientation += timestep * asTensor(omega) * orientation;
+
+		auto svd = orientation.jacobiSvd(ComputeFullU | ComputeFullV);
+		orientation = svd.matrixU() * svd.matrixV().transpose();
+	}
+};
+
+struct RGBImageTexture {
+	//vector<unsigned char> data;
+	int width, height;
+	GLuint textureID;
+	RGBImageTexture(char const * filename) {
+		int n;
+		unsigned char *rawdata = stbi_load(filename, &width, &height, &n, 3);
+		cout<<"width: "<<width<<"; height: "<<height<<"; n: "<<n<<"; ptr:"<<(void*)rawdata<<"; val:"<<rawdata[10000]<<"\n";
+
+		//data = vector(rawdata, rawdata+width*height*3);
+	    // Create Texture
+		cout<<"init "<<textureID<<"; err:"<<glGetError() << "\n";
+
+		glGenTextures(1, &textureID);
+	    cout<<"created "<<textureID<<"; err:"<<glGetError() << "\n";
+	    glGenTextures(1, &textureID);
+	    cout<<"created(again) "<<textureID<<"; err:"<<glGetError() << "\n";
+	    glBindTexture(GL_TEXTURE_2D, textureID);   // 2d texture (x and y size)
+
+	    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // scale linearly when image bigger than texture
+	    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); // scale linearly when image smalled than texture
+
+	    // 2d texture, level of detail 0 (normal), 3 components (red, green, blue), x size from image, y size from image,
+	    // border 0 (normal), rgb color data, unsigned byte data, and finally the data itself.
+	    glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, rawdata);
+		stbi_image_free(rawdata);
+		glEnable(GL_TEXTURE_2D);
+	}
+	void BindTexture() {
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		//cout<<"bound "<<textureID<<"\n";
+	}
+	~RGBImageTexture() {
+		glDeleteTextures(1, &textureID);
+	}
+
+	RGBImageTexture& operator=(const RGBImageTexture&) = delete;	// Disallow copying
+	RGBImageTexture(const RGBImageTexture&) = delete;
+};
+
+
+class BookRenderer : public DisplayManager {
+	void renderBook(void);
+	RotationState state;
+	shared_ptr<RGBImageTexture> texture;
+public:
+	BookRenderer()
+		: state(Vector3d(1.0, 2.0, 0.3), Vector3d(0.0, 0.0, 1.0) )
+	{
+		texture = shared_ptr<RGBImageTexture>(new RGBImageTexture("../texture.png"));
+	}
+	virtual void display() ;
+	virtual void idle();
+
+	virtual void reshape(int width, int height)	;
+	virtual void keyboard(unsigned char key, int x, int y);
+	virtual void arrow_keys(int a_keys, int x, int y);
+};
+
+
+void BookRenderer::display() {
+	state.updateStepEuler();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	glTranslatef(0.0f,0.0f,-12.0f);
+	renderBook();
+	glutSwapBuffers();
+}
+
+void BookRenderer::idle() { display(); }
+
+void BookRenderer::reshape(int width, int height)	{
+	if(height==0) height=1;
 
 	glViewport(0,0,width,height);						// Reset The Current Viewport
 
@@ -112,52 +145,98 @@ void reshape ( int width , int height )   // Create The Reshape Function (the vi
 	glLoadIdentity();									// Reset The Projection Matrix
 
 	// Calculate The Aspect Ratio Of The Window
-	gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
+	gluPerspective(30.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
 
 	glMatrixMode(GL_MODELVIEW);							// Select The Modelview Matrix
-	glLoadIdentity();									
+	glLoadIdentity();
 }
 
-void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
-{
-  switch ( key ) {
-    case 27:        // When Escape Is Pressed...
-      exit ( 0 );   // Exit The Program
-      break;        // Ready For Next Case
-    default:        // Now Wrap It Up
-      break;
-  }
+void BookRenderer::keyboard(unsigned char key, int x, int y) {
+	switch(key) {
+	case 27:
+		exit(0);
+		break;
+	case 's':
+		//state.updateStepEuler();
+		cout << state.orientation << "\n\n";
+		break;
+
+	case '1':
+		state.orientation = Matrix3d::Identity();
+		state.angular_momentum = Vector3d(1.0,0.0,0.0);
+	break;
+	case '2':
+		state.orientation = Matrix3d::Identity();
+		state.angular_momentum= Vector3d(0.0,1.0,0.0);
+	break;
+	case '3':
+		state.orientation = Matrix3d::Identity();
+		state.angular_momentum= Vector3d(0.0,0.0,1.0);
+	break;
+	case 'r':
+		state.angular_momentum += Vector3d::Random() * 0.01;
+	break;
+
+	}
 }
 
-void arrow_keys ( int a_keys, int x, int y )  // Create Special Function (required for arrow keys)
-{
-  switch ( a_keys ) {
-    case GLUT_KEY_UP:     // When Up Arrow Is Pressed...
-      glutFullScreen ( ); // Go Into Full Screen Mode
-      break;
-    case GLUT_KEY_DOWN:               // When Down Arrow Is Pressed...
-      glutReshapeWindow ( 500, 500 ); // Go Into A 500 By 500 Window
-      break;
-    default:
-      break;
-  }
+void BookRenderer::arrow_keys(int a_keys, int x, int y) {
+	switch(a_keys) {
+	case GLUT_KEY_UP:
+		glutFullScreen();
+		break;
+	case GLUT_KEY_DOWN:
+		glutReshapeWindow(500, 500);
+		break;
+	default:
+		break;
+	}
 }
 
 
-int main ( int argc, char** argv )   // Create Main Function For Bringing It All Together
-{
-  glutInit            ( &argc, argv ); // Erm Just Write It =)
-  glutInitDisplayMode ( GLUT_RGBA | GLUT_DOUBLE ); // Display Mode
-  glutInitWindowSize  ( 500, 500 ); // If glutFullScreen wasn't called this is the window size
-  glutCreateWindow    ( "NeHe's OpenGL Framework" ); // Window Title (argv[0] for current directory as title)
-  glutFullScreen      ( );          // Put Into Full Screen
-  InitGL ();
-  glutDisplayFunc     ( display );  // Matching Earlier Functions To Their Counterparts
-  glutReshapeFunc     ( reshape );
-  glutKeyboardFunc    ( keyboard );
-  glutSpecialFunc     ( arrow_keys );
-  glutIdleFunc		  ( display );
-  glutMainLoop        ( );          // Initialize The Main Loop
-  return 0;
+void BookRenderer::renderBook() {
+	glPushMatrix();
+	glTranslated(0.0,0.0,-3.0);
+	glMultMatrixd(asAffine(state.orientation).data());
+	glScaled(state.dimensions.coeff(0),state.dimensions.coeff(1),state.dimensions.coeff(2));
+	texture->BindTexture();
+	glBegin(GL_QUADS);
+	//glColor3f(1.0f,0.0f,0.0f);//front
+	 glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f);
+	 glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
+	 glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,-1.0f, 1.0f);
+	 glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f,-1.0f, 1.0f);
+	glColor3f(0.0f,1.0f,0.0f); //top
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f,-1.0f);
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, 1.0f,-1.0f);
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
+	glColor3f(1.0f,0.5f,0.0f);//bottom
+	glVertex3f(1.0f,-1.0f, 1.0f);
+	glVertex3f(-1.0f,-1.0f, 1.0f);
+	glVertex3f(-1.0f,-1.0f,-1.0f);
+	glVertex3f(1.0f,-1.0f,-1.0f);
+	glColor3f(1.0f,1.0f,0.0f);//back
+	glVertex3f(1.0f,-1.0f,-1.0f);
+	glVertex3f(-1.0f,-1.0f,-1.0f);
+	glVertex3f(-1.0f, 1.0f,-1.0f);
+	glVertex3f(1.0f, 1.0f,-1.0f);
+	glColor3f(0.0f,0.0f,1.0f);//left
+	glVertex3f(-1.0f, 1.0f, 1.0f);
+	glVertex3f(-1.0f, 1.0f,-1.0f);
+	glVertex3f(-1.0f,-1.0f,-1.0f);
+	glVertex3f(-1.0f,-1.0f, 1.0f);
+	glColor3f(1.0f,0.0f,1.0f);//right
+	glVertex3f(1.0f, 1.0f,-1.0f);
+	glVertex3f(1.0f, 1.0f, 1.0f);
+	glVertex3f(1.0f,-1.0f, 1.0f);
+	glVertex3f(1.0f,-1.0f,-1.0f);
+	glEnd();
+	glPopMatrix();
+}
+
+
+int main(int argc, char** argv) {
+	SetupMainLoop(new BookRenderer(), argc, argv);
 }
 
