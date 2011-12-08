@@ -154,7 +154,7 @@
 <pathentry kind="mac" name="__EXCEPTIONS" path="" value="1"/>
 <pathentry kind="mac" name="__GCC_HAVE_DWARF2_CFI_ASM" path="" value="1"/>
 <pathentry kind="mac" name="_GNU_SOURCE" path="" value="1"/>
-<pathentry include="/net/users/csg/csg9038/2011-ICS/eigen" kind="inc" path="" system="true"/>
+<pathentry include="/home/s1484338/Dropbox/Intro Computational Science/2011-ICS/eigen" kind="inc" path="" system="true"/>
 <pathentry include="/usr/include" kind="inc" path="" system="true"/>
 <pathentry include="/usr/local/include" kind="inc" path="" system="true"/>
 <pathentry include="/usr/lib/gcc/i486-linux-gnu/4.4.5/include" kind="inc" path="" system="true"/>

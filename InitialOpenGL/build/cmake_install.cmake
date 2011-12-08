@@ -1,4 +1,4 @@
-# Install script for directory: /net/users/csg/csg9038/2011-ICS/InitialOpenGL/src
+# Install script for directory: /home/s1484338/Dropbox/Intro Computational Science/2011-ICS/InitialOpenGL/src
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,7 +38,7 @@ ELSE(CMAKE_INSTALL_COMPONENT)
   SET(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 ENDIF(CMAKE_INSTALL_COMPONENT)
 
-FILE(WRITE "/net/users/csg/csg9038/2011-ICS/InitialOpenGL/build/${CMAKE_INSTALL_MANIFEST}" "")
+FILE(WRITE "/home/s1484338/Dropbox/Intro Computational Science/2011-ICS/InitialOpenGL/build/${CMAKE_INSTALL_MANIFEST}" "")
 FOREACH(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  FILE(APPEND "/net/users/csg/csg9038/2011-ICS/InitialOpenGL/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  FILE(APPEND "/home/s1484338/Dropbox/Intro Computational Science/2011-ICS/InitialOpenGL/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 ENDFOREACH(file)

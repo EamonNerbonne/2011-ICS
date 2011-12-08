@@ -9,7 +9,7 @@ using namespace std;
 DisplayManager * RendererFactory() {
 	auto state_tracker = shared_ptr<RotationModel>(
 			new EulerRotation(
-						Vector3d(1.0, 2.0, 0.3),
+						Vector3d(1.878, 2.9085, 0.5),
 						Vector3d(1.0,0.0,0.0)
 			)
 	);

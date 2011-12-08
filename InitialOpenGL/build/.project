@@ -47,7 +47,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>/net/users/csg/csg9038/2011-ICS/InitialOpenGL/build</value>
+					<value>/home/s1484338/Dropbox/Intro Computational Science/2011-ICS/InitialOpenGL/build</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.useDefaultBuildCmd</key>
@@ -83,7 +83,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.build.location</key>
-					<value>/net/users/csg/csg9038/2011-ICS/InitialOpenGL/build</value>
+					<value>/home/s1484338/Dropbox/Intro Computational Science/2011-ICS/InitialOpenGL/build</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.autoBuildTarget</key>
@@ -111,7 +111,7 @@
 		<link>
 			<name>[Source directory]</name>
 			<type>2</type>
-			<location>/net/users/csg/csg9038/2011-ICS/InitialOpenGL/src</location>
+			<location>/home/s1484338/Dropbox/Intro Computational Science/2011-ICS/InitialOpenGL/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>
