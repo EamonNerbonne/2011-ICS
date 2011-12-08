@@ -16,7 +16,8 @@ using std::cout;
 BookRenderer::BookRenderer(shared_ptr<RotationModel> initstate) : state(initstate)
 {
 	//texture = shared_ptr<RgbaImageTexture>(new RgbaImageTexture("../texture.png"));
-	texture = shared_ptr<RgbaImageTexture>(new RgbaImageTexture("../textures/dontpanic_front.png"));
+	texturef = shared_ptr<RgbaImageTexture>(new RgbaImageTexture("../textures/dontpanic_front.png"));
+	textureb = shared_ptr<RgbaImageTexture>(new RgbaImageTexture("../textures/dontpanic_back.png"));
 	// front of book: "../textures/dontpanic_front.png"
 	// back of book:  "../textures/dontpanic_back.png"
 	// spine of book: "../textures/dontpanic_spine.png"
@@ -92,7 +93,7 @@ void BookRenderer::renderBook() {
 	glMultMatrixd(asAffine(state->getOrientation()).data());
 	auto dimensions = state->getDimensions();
 	glScaled(dimensions(0),dimensions(1),dimensions(2));
-	texture->BindTexture();
+	texturef->BindTexture();
 	glBegin(GL_QUADS);
 	glColor3f(1.0f,1.0f,1.0f);//front
 	 glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f);
@@ -104,22 +105,23 @@ void BookRenderer::renderBook() {
 	glVertex3f(-1.0f, 1.0f,-1.0f);
 	glVertex3f(-1.0f, 1.0f, 1.0f);
 	glVertex3f(1.0f, 1.0f, 1.0f);
-	glColor3f(1.0f,0.5f,0.0f);//bottom
+	glColor3f(1.0f,1.0f,1.0f);//bottom
 	glVertex3f(1.0f,-1.0f, 1.0f);
 	glVertex3f(-1.0f,-1.0f, 1.0f);
 	glVertex3f(-1.0f,-1.0f,-1.0f);
 	glVertex3f(1.0f,-1.0f,-1.0f);
-	glColor3f(1.0f,1.0f,0.0f);//back
-	glVertex3f(1.0f,-1.0f,-1.0f);
-	glVertex3f(-1.0f,-1.0f,-1.0f);
-	glVertex3f(-1.0f, 1.0f,-1.0f);
-	glVertex3f(1.0f, 1.0f,-1.0f);
-	glColor3f(0.0f,0.0f,1.0f);//left
+	glColor3f(1.0f,1.0f,1.0f);//back
+	textureb->BindTexture();
+	  glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f,-1.0f,-1.0f);
+	  glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,-1.0f,-1.0f);
+	  glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, 1.0f,-1.0f);
+	  glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f,-1.0f);
+	glColor3f(0.0f,0.5f,0.0f);//left
 	glVertex3f(-1.0f, 1.0f, 1.0f);
 	glVertex3f(-1.0f, 1.0f,-1.0f);
 	glVertex3f(-1.0f,-1.0f,-1.0f);
 	glVertex3f(-1.0f,-1.0f, 1.0f);
-	glColor3f(1.0f,0.0f,1.0f);//right
+	glColor3f(1.0f,1.0f,1.0f);//right
 	glVertex3f(1.0f, 1.0f,-1.0f);
 	glVertex3f(1.0f, 1.0f, 1.0f);
 	glVertex3f(1.0f,-1.0f, 1.0f);

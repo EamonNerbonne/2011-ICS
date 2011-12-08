@@ -8,7 +8,8 @@ class RotationModel;
 class BookRenderer : public DisplayManager {
 	void renderBook(void);
 	std::shared_ptr<RotationModel> state;
-	std::shared_ptr<RgbaImageTexture> texture;
+	std::shared_ptr<RgbaImageTexture> texturef;
+	std::shared_ptr<RgbaImageTexture> textureb;
 public:
 	BookRenderer(std::shared_ptr<RotationModel> initstate);
 	virtual void display() ;
