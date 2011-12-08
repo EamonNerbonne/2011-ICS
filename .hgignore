@@ -1,12 +1,11 @@
 syntax: glob
 **.log
 **.synctex.gz(busy)
+InitialOpenGL/build
 presentation/*.aux
 presentation/*.nav
 presentation/*.out
 presentation/*.snm
 presentation/*.synctex.gz
 presentation/*.toc
-InitialOpenGL/build/sample
-InitialOpenGL/build/CMakeFiles
 InitialOpenGL/win
