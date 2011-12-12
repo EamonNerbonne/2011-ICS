@@ -7,7 +7,7 @@ using std::cout;
 RgbaImageTexture::RgbaImageTexture(char const * filename) {
 	int n;
 	unsigned char *rawdata = stbi_load(filename, &width, &height, &n, 4);
-	cout<<"width: "<<width<<"; height: "<<height<<"; n: "<<n<<"; ptr:"<<(void*)rawdata<<"; val:"<<rawdata[10000]<<"\n";
+//	cout<<"width: "<<width<<"; height: "<<height<<"; n: "<<n<<"; ptr:"<<(void*)rawdata<<"; val:"<<(int)rawdata[10000]<<"\n";
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);   // 2d texture (x and y size)
 
