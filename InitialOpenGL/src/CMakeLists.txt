@@ -20,7 +20,7 @@ endif()
 
 #set(CMAKE_INCLUDE_CURRENT_DIR ON) 
 
-set(sources sample.cpp InitOpenGL.cpp EulerRotation.cpp QuaternionRotation.cpp RotationModel.cpp BookRenderer.cpp RgbaImageTexture.cpp stb_image.c)
+set(sources sample.cpp InitOpenGL.cpp EulerRotation.cpp ParticleBasedRotation.cpp QuaternionRotation.cpp RotationModel.cpp BookRenderer.cpp RgbaImageTexture.cpp stb_image.c)
 add_executable(sample ${sources})
 if(CMAKE_COMPILER_IS_GNUCXX)
 	target_link_libraries(sample m X11 Xi Xmu glut GL GLU)
