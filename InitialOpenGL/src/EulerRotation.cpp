@@ -1,16 +1,19 @@
 #include "EulerRotation.h"
 #include <Eigen/Core>
+#include <Eigen/LU>
 #include <Eigen/SVD>
 #include "matrixUtils.h"
+
+#include <iostream>
 
 using namespace Eigen;
 
 
-EulerRotation::EulerRotation(Vector3d dimensions, Vector3d angular_momentum)
+EulerRotation::EulerRotation(Vector3d dimensions, Vector3d angular_momentum, double timestep)
 : dimensions(dimensions)
 , angular_momentum(angular_momentum)
 , orientation(Matrix3d::Identity())
-, timestep(0.0003)
+, timestep(timestep)
 {
 	Vector3d diagOf_MoI=
 			Vector3d(
@@ -26,6 +29,8 @@ void EulerRotation::updateStep() {
 	Matrix3d I_inv = orientation * MoI_body_inv * orientation.transpose();
 	Vector3d omega = I_inv * angular_momentum;
 	orientation += timestep * asTensor(omega) * orientation;
+
+	//std::cout << orientation.squaredNorm() << ", "<< orientation.determinant() << "\n";
 
 	auto svd = orientation.jacobiSvd(ComputeFullU | ComputeFullV);
 	orientation = svd.matrixU() * svd.matrixV().transpose();

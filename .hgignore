@@ -2,6 +2,7 @@ syntax: glob
 **~
 **.log
 **.synctex.gz(busy)
+**.backup
 InitialOpenGL/build
 presentation/*.aux
 presentation/*.nav
@@ -10,3 +11,6 @@ presentation/*.snm
 presentation/*.synctex.gz
 presentation/*.toc
 InitialOpenGL/win
+InitialOpenGL/.metadata
+.cproject
+.project
