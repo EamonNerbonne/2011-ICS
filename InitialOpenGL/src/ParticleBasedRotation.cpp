@@ -8,35 +8,22 @@
 
 using namespace Eigen;
 
-
-
 ParticleBasedRotation::ParticleBasedRotation(Vector3d dimensions, Vector3d angular_momentum, double timestep)
    : dimensions(dimensions)
    , timestep(timestep)
 {
 	resetWithAngularMomentum(angular_momentum);
-	k = 1.0;
+	k = 10.0;
 	part_mass = 1.0;
 }
+typedef Matrix<double,8,8> Matrix88d;
 
-MatrixXd initialPosition(Vector3d const & dimensions) {
-	MatrixXd cubeCoords = MatrixXd::Zero(3,8).colwise() - 0.5*dimensions;
-	Matrix3d dimOffsets = dimensions.asDiagonal();
-
-	for(int pointI=0;pointI<8;++pointI)
-		for(int dimI=0;dimI<3;++dimI)
-			if(pointI & (1<<dimI))
-				cubeCoords.col(pointI) += dimOffsets.col(dimI);
-
-	return cubeCoords;
-}
-
-MatrixXd computePairwiseDistances(MatrixXd const & position) {
-	MatrixXd dist= MatrixXd::Zero(position.cols(), position.cols());
+Matrix88d computePairwiseDistances(Matrix38d const & position) {
+	Matrix88d dist= Matrix88d::Zero();
 	for(ptrdiff_t i=0; i<position.cols(); ++i)
 		for(ptrdiff_t j=i+1; j<position.cols(); ++j)
 			dist(i,j) = (position.col(i) - position.col(j)).norm();
-	dist.triangularView<StrictlyLower>() = dist.triangularView<StrictlyUpper>();
+	dist.triangularView<StrictlyLower>() = dist.triangularView<StrictlyUpper>().transpose();
 	return dist;
 }
 
@@ -58,13 +45,14 @@ void ParticleBasedRotation::resetWithAngularMomentum(Vector3d angular_momentum) 
 	Matrix3d angular_velocity_tensor = asTensor(omega);
 
 	velocity = angular_velocity_tensor * position;
+	energy_scale = velocity.norm();
 }
 
 
 ParticleBasedRotation::~ParticleBasedRotation() {}
 
 void ParticleBasedRotation::updateStep() {
-	MatrixXd accel = MatrixXd::Zero(3,8);
+	Matrix38d accel = Matrix38d::Zero();
 
 	for(ptrdiff_t i=0;i<position.cols(); ++i) {
 		for(ptrdiff_t j=i+1;j<position.cols(); ++j) {
@@ -78,6 +66,7 @@ void ParticleBasedRotation::updateStep() {
 	position.noalias() += timestep * velocity;
 
 	velocity.noalias() += timestep * accel;
+	velocity *= energy_scale/velocity.norm();
 }
 
 void ParticleBasedRotation::processInput(char c) {

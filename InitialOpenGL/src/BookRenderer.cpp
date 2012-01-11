@@ -19,7 +19,7 @@ BookRenderer::BookRenderer(shared_ptr<RotationModel> initstate) : state(initstat
 }
 
 void BookRenderer::display() {
-	for(int i=0;i<300000;i++)
+	for(int i=0;i<30000;i++)
 		state->updateStep();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
@@ -50,9 +50,9 @@ void BookRenderer::keyboard(unsigned char key, int x, int y) {
 	case 27:
 		exit(0);
 		break;
-	case 's':
-		cout << state->getOrientation() << "\n\n";
-		break;
+	//case 's':
+		//cout << state->getOrientation() << "\n\n";
+		//break;
 	case '+':
 		state->faster();
 	break;
@@ -81,7 +81,46 @@ void BookRenderer::arrow_keys(int a_keys, int x, int y) {
 	}
 }
 
+void BookRenderer::renderBook() {
+	glPushMatrix();
+	auto positions  = state->getPositions();
+	texture->BindTexture();
+	glBegin(GL_QUADS);
+	glColor3f(1.0f,1.0f,1.0f);//front
+	glTexCoord2f(0.444f, 0.0f); glVertex3d(positions(0,7), positions(1,7), positions(2,7));
+	glTexCoord2f(0.0f,   0.0f); glVertex3d(positions(0,6), positions(1,6), positions(2,6));
+	glTexCoord2f(0.0f,   1.0f); glVertex3d(positions(0,4), positions(1,4), positions(2,4));
+	glTexCoord2f(0.444f, 1.0f); glVertex3d(positions(0,5), positions(1,5), positions(2,5));
+	glColor3f(1.0f,1.0f,1.0f); //top
+	glVertex3d(positions(0,3), positions(1,3), positions(2,3));
+	glVertex3d(positions(0,2), positions(1,2), positions(2,2));
+	glVertex3d(positions(0,6), positions(1,6), positions(2,6));
+	glVertex3d(positions(0,7), positions(1,7), positions(2,7));
+	glColor3f(1.0f,1.0f,1.0f);//bottom
+	glVertex3d(positions(0,5), positions(1,5), positions(2,5));
+	glVertex3d(positions(0,4), positions(1,4), positions(2,4));
+	glVertex3d(positions(0,0), positions(1,0), positions(2,0));
+	glVertex3d(positions(0,1), positions(1,1), positions(2,1));
+	glColor3f(1.0f,1.0f,1.0f);//back
+	glTexCoord2f(0.562f, 1.0f); glVertex3d(positions(0,1), positions(1,1), positions(2,1));
+	glTexCoord2f(1.0f,   1.0f); glVertex3d(positions(0,0), positions(1,0), positions(2,0));
+	glTexCoord2f(1.0f,   0.0f); glVertex3d(positions(0,2), positions(1,2), positions(2,2));
+	glTexCoord2f(0.562f, 0.0f); glVertex3d(positions(0,3), positions(1,3), positions(2,3));
+	glColor3f(1.0f,1.0f,1.0f);//left
+	glVertex3d(positions(0,6), positions(1,6), positions(2,6));
+	glVertex3d(positions(0,2), positions(1,2), positions(2,2));
+	glVertex3d(positions(0,0), positions(1,0), positions(2,0));
+	glVertex3d(positions(0,4), positions(1,4), positions(2,4));
+	glColor3f(1.0f,1.0f,1.0f);//right (spine)
+	glTexCoord2f(0.562f, 0.0f); glVertex3d(positions(0,3), positions(1,3), positions(2,3));
+	glTexCoord2f(0.444f, 0.0f); glVertex3d(positions(0,7), positions(1,7), positions(2,7));
+	glTexCoord2f(0.444f, 1.0f); glVertex3d(positions(0,5), positions(1,5), positions(2,5));
+	glTexCoord2f(0.562f, 1.0f); glVertex3d(positions(0,1), positions(1,1), positions(2,1));
+	glEnd();
+	glPopMatrix();
+}
 
+/*
 void BookRenderer::renderBook() {
 	glPushMatrix();
 	glMultMatrixd(asAffine(state->getOrientation()).data());
@@ -122,3 +161,4 @@ void BookRenderer::renderBook() {
 	glEnd();
 	glPopMatrix();
 }
+*/

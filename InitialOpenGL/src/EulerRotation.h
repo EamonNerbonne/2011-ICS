@@ -3,14 +3,14 @@
 #include "RotationModel.h"
 
 class EulerRotation : public RotationModel {
-	Eigen::Vector3d const dimensions;
-	Eigen::Vector3d angular_momentum;
-	Eigen::Matrix3d MoI_body, MoI_body_inv;
-	Eigen::Matrix3d orientation;
+	Vector3d const dimensions;
+	Vector3d angular_momentum;
+	Matrix3d MoI_body, MoI_body_inv;
+	Matrix3d orientation;
 	double timestep;
 public:
-	virtual Eigen::Matrix3d getOrientation();
-	virtual Eigen::Vector3d getDimensions() {return dimensions;}
+	virtual Matrix38d getPositions();
+	virtual Vector3d getDimensions() {return dimensions;}
 	virtual void processInput(char c);
 	virtual void faster();
 	virtual void slower();

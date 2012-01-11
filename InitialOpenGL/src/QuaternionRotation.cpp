@@ -53,8 +53,7 @@ void QuaternionRotation::processInput(char c) {
 	}
 }
 
-
-Matrix3d QuaternionRotation::getOrientation() {return orientation.matrix();}
+Matrix38d QuaternionRotation::getPositions() {return orientation.matrix()*initialPosition(dimensions);}
 void QuaternionRotation::faster() { timestep *= 1.2; }
 void QuaternionRotation::slower() { timestep /=1.2; }
 QuaternionRotation::~QuaternionRotation() { }

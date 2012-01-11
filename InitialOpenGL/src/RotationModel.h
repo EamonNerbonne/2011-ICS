@@ -1,14 +1,33 @@
 #pragma once
 #include <Eigen/Core>
+using namespace Eigen;
+
+typedef Matrix<double, 3, 8> Matrix38d;
 
 class RotationModel {
+protected:
+	Matrix38d initialPosition(Vector3d const & dimensions) {
+		Matrix38d cubeCoords = Matrix38d::Zero().colwise() - 0.5*dimensions;
+		Matrix3d dimOffsets = dimensions.asDiagonal();
+
+		for(int pointI=0;pointI<8;++pointI)
+			for(int dimI=0;dimI<3;++dimI)
+				if(pointI & (1<<dimI))
+					cubeCoords.col(pointI) += dimOffsets.col(dimI);
+
+		return cubeCoords;
+	}
+
 public:
-	virtual Eigen::Matrix3d getOrientation()=0;
-	virtual Eigen::Vector3d getDimensions()=0;
+	virtual Matrix38d getPositions()=0;
+	virtual Vector3d getDimensions()=0;
 	virtual void processInput(char c)=0;
 	virtual void faster()=0;
 	virtual void slower()=0;
 	virtual void jiggle()=0;
 	virtual void updateStep()=0;
 	virtual ~RotationModel();
+
+	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
 };

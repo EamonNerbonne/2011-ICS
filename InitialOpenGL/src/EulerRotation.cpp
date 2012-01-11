@@ -52,8 +52,7 @@ void EulerRotation::processInput(char c) {
 	}
 }
 
-
-Matrix3d EulerRotation::getOrientation() {return orientation;}
+Matrix38d EulerRotation::getPositions() {return orientation*initialPosition(dimensions);}
 void EulerRotation::faster() { timestep *= 1.2; }
 void EulerRotation::slower() { timestep /=1.2; }
 EulerRotation::~EulerRotation() { }
