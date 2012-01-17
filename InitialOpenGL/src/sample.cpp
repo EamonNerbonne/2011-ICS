@@ -12,9 +12,9 @@ DisplayManager * RendererFactory() {
 	auto state_tracker = shared_ptr<RotationModel>(
 			new ParticleBasedRotation(
 						Vector3d(1.878, 2.9085, 0.5),
-						Vector3d(1.0,0.0,0.0),
 						0.00001)
 	);
+	state_tracker->resetWithAngularMomentum(Vector3d(1.0, 0.0, 0.0));
 	return new BookRenderer(state_tracker);
 
 }

@@ -8,10 +8,8 @@
 
 using namespace Eigen;
 
-
-EulerRotation::EulerRotation(Vector3d dimensions, Vector3d angular_momentum, double timestep)
+EulerRotation::EulerRotation(Vector3d dimensions, double timestep)
 	: RotationModel(dimensions, timestep)
-	, angular_momentum(angular_momentum)
 	, orientation(Matrix3d::Identity())
 {
 	Vector3d diagOf_MoI=
@@ -31,8 +29,10 @@ void EulerRotation::updateStep() {
 
 	//std::cout << orientation.squaredNorm() << ", "<< orientation.determinant() << "\n";
 
-	auto svd = orientation.jacobiSvd(ComputeFullU | ComputeFullV);
-	orientation = svd.matrixU() * svd.matrixV().transpose();
+	if(normalize) {
+		auto svd = orientation.jacobiSvd(ComputeFullU | ComputeFullV);
+		orientation = svd.matrixU() * svd.matrixV().transpose();
+	}
 }
 
 void EulerRotation::resetWithAngularMomentum(Vector3d angular_momentum) {

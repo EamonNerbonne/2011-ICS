@@ -6,9 +6,8 @@
 
 using namespace Eigen;
 
-QuaternionRotation::QuaternionRotation(Vector3d dimensions, Vector3d angular_momentum, double timestep)
+QuaternionRotation::QuaternionRotation(Vector3d dimensions, double timestep)
 	: RotationModel(dimensions, timestep)
-	, angular_momentum(angular_momentum)
 	, orientation(Quaternion<double>::Identity())
 {
 	Vector3d diagOf_MoI=
@@ -32,8 +31,8 @@ void QuaternionRotation::updateStep() {
 	orientation.y() += 0.5 * timestep * updateStep.y();
 	orientation.z() += 0.5 * timestep * updateStep.z();
 
-//	std::cout << orientation.squaredNorm()<< ", "<< orientation.matrix().squaredNorm() << ", "<< orientation.matrix().determinant() << "\n";
-	orientation.normalize();
+	if(normalize)
+		orientation.normalize();
 }
 
 void QuaternionRotation::resetWithAngularMomentum(Vector3d angular_momentum) {

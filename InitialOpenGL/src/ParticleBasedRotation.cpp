@@ -8,10 +8,9 @@
 
 using namespace Eigen;
 
-ParticleBasedRotation::ParticleBasedRotation(Vector3d dimensions, Vector3d angular_momentum, double timestep)
+ParticleBasedRotation::ParticleBasedRotation(Vector3d dimensions, double timestep)
 	: RotationModel(dimensions, timestep)
 {
-	resetWithAngularMomentum(angular_momentum);
 	k = 10.0;
 	part_mass = 1.0;
 }
@@ -65,7 +64,8 @@ void ParticleBasedRotation::updateStep() {
 	position.noalias() += timestep * velocity;
 
 	velocity.noalias() += timestep * accel;
-	velocity *= energy_scale/velocity.norm();
+	if(normalize)
+		velocity *= energy_scale/velocity.norm();
 }
 
 

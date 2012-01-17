@@ -13,7 +13,7 @@ public:
 	virtual Matrix38d getPositions();
 	virtual void updateStep();
 	virtual void jiggle();
-	QuaternionRotation(Eigen::Vector3d dimensions, Eigen::Vector3d angular_momentum, double timestep);
+	QuaternionRotation(Eigen::Vector3d dimensions, double timestep);
 	virtual ~QuaternionRotation();
 
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW

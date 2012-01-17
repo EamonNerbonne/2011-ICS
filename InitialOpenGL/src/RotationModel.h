@@ -24,12 +24,11 @@ protected:
 	}
 
 	Vector3d dimensions;
-	double timestep;
 
 	RotationModel(Vector3d dimensions, double timestep);
-
-
 public:
+	double timestep;
+	bool normalize;
 	virtual void resetWithAngularMomentum(Vector3d angular_momentum)=0;
 	Vector3d getDimensions() {return dimensions;}
 	void faster() { timestep *= 1.2; }
@@ -41,5 +40,4 @@ public:
 	virtual ~RotationModel();
 
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
 };

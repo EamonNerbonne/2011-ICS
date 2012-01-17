@@ -11,6 +11,10 @@
 #include "RgbaImageTexture.h"
 #include "BookRenderer.h"
 
+#include "ParticleBasedRotation.h"
+#include "EulerRotation.h"
+#include "QuaternionRotation.h"
+
 using std::shared_ptr;
 using std::cout;
 
@@ -52,19 +56,21 @@ void BookRenderer::keyboard(unsigned char key, int /*x*/, int /*y*/) {
 	case 27:
 		exit(0);
 		break;
-	//case 's':
-		//cout << state->getOrientation() << "\n\n";
-		//break;
 	case '+':
 		state->faster();
-	break;
+		break;
 	case '-':
 		state->slower();
-	break;
+		break;
 	case 'r':
 		state->jiggle();
-	break;
-		case '1':
+		break;
+	case 'n':
+		state->normalize = !state->normalize;
+		cout <<"Normalize: "<<state->normalize <<"\n";
+
+		break;
+	case '1':
 		state->resetWithAngularMomentum(Vector3d(1.0,0.0,0.0));
 		break;
 	case '2':
@@ -73,7 +79,23 @@ void BookRenderer::keyboard(unsigned char key, int /*x*/, int /*y*/) {
 	case '3':
 		state->resetWithAngularMomentum(Vector3d(0.0,0.0,1.0));
 		break;
-	break;
+	case '7':
+		state = shared_ptr<RotationModel>(new ParticleBasedRotation(state->getDimensions(),state->timestep));
+		state->resetWithAngularMomentum(Vector3d(1.0,0.0,0.0));
+		cout <<"ParticleBasedRotation\n";
+		break;
+	case '8':
+		state = shared_ptr<RotationModel>(new EulerRotation(state->getDimensions(),state->timestep));
+		state->resetWithAngularMomentum(Vector3d(1.0,0.0,0.0));
+		cout <<"EulerRotation\n";
+		break;
+	case '9':
+		state = shared_ptr<RotationModel>(new QuaternionRotation(state->getDimensions(),state->timestep));
+		state->resetWithAngularMomentum(Vector3d(1.0,0.0,0.0));
+		cout <<"QuaternionRotation\n";
+		break;
+	default:
+		break;
 	}
 }
 

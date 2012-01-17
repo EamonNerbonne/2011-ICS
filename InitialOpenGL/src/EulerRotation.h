@@ -12,6 +12,6 @@ public:
 	virtual Matrix38d getPositions();
 	virtual void updateStep();
 	virtual void jiggle();
-	EulerRotation(Eigen::Vector3d dimensions, Eigen::Vector3d angular_momentum, double timestep);
+	EulerRotation(Eigen::Vector3d dimensions, double timestep);
 	virtual ~EulerRotation();
 };
