@@ -16,13 +16,14 @@ using std::cout;
 
 BookRenderer::BookRenderer(shared_ptr<RotationModel> initstate) : state(initstate)
 {
-	texture = shared_ptr<RgbaImageTexture>(new RgbaImageTexture("../textures/cover.png"));
+	texture = shared_ptr<RgbaImageTexture>(new RgbaImageTexture("textures/cover.png"));
 }
 
 void BookRenderer::display() {
 	for(int i=0;i<30000;i++)
 		state->updateStep();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_TEXTURE_2D);
 	glLoadIdentity();
 	glTranslatef(0.0f,0.0f,-12.0f);
 	renderBook();
