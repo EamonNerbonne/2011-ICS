@@ -10,11 +10,9 @@ class ParticleBasedRotation : public RotationModel {
 	Matrix38d velocity;
 	Matrix<double,8,8> baseLen;
 
-	void resetWithAngularMomentum(Eigen::Vector3d angular_momentum);
-
 public:
+	virtual void resetWithAngularMomentum(Vector3d angular_momentum);
 	virtual Matrix38d getPositions() {return position;}
-	virtual void processInput(char c);
 	virtual void updateStep();
 	virtual void jiggle();
 	ParticleBasedRotation(Eigen::Vector3d dimensions, Eigen::Vector3d angular_momentum, double timestep);

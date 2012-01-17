@@ -30,12 +30,12 @@ protected:
 
 
 public:
+	virtual void resetWithAngularMomentum(Vector3d angular_momentum)=0;
 	Vector3d getDimensions() {return dimensions;}
 	void faster() { timestep *= 1.2; }
 	void slower() { timestep /=1.2; }
 
 	virtual Matrix38d getPositions()=0;
-	virtual void processInput(char c)=0;
 	virtual void jiggle()=0;
 	virtual void updateStep()=0;
 	virtual ~RotationModel();

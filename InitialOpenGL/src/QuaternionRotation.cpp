@@ -35,22 +35,12 @@ void QuaternionRotation::updateStep() {
 //	std::cout << orientation.squaredNorm()<< ", "<< orientation.matrix().squaredNorm() << ", "<< orientation.matrix().determinant() << "\n";
 	orientation.normalize();
 }
-void QuaternionRotation::processInput(char c) {
-	switch(c) {
-	case '1':
-		orientation = Quaterniond::Identity();
-		angular_momentum = Vector3d(1.0,0.0,0.0);
-		break;
-	case '2':
-		orientation = Quaterniond::Identity();
-		angular_momentum= Vector3d(0.0,0.5,0.0);
-		break;
-	case '3':
-		orientation = Quaterniond::Identity();
-		angular_momentum= Vector3d(0.0,0.0,1.0);
-		break;
-	}
+
+void QuaternionRotation::resetWithAngularMomentum(Vector3d angular_momentum) {
+	orientation = Matrix3d::Identity();
+	this->angular_momentum = angular_momentum;
 }
+
 
 Matrix38d QuaternionRotation::getPositions() {return orientation.matrix()*initialPosition(dimensions);}
 QuaternionRotation::~QuaternionRotation() { }

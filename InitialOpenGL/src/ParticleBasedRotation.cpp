@@ -68,19 +68,6 @@ void ParticleBasedRotation::updateStep() {
 	velocity *= energy_scale/velocity.norm();
 }
 
-void ParticleBasedRotation::processInput(char c) {
-	switch(c) {
-	case '1':
-		resetWithAngularMomentum(Vector3d(1.0,0.0,0.0));
-		break;
-	case '2':
-		resetWithAngularMomentum(Vector3d(0.0,0.5,0.0));
-		break;
-	case '3':
-		resetWithAngularMomentum(Vector3d(0.0,0.0,1.0));
-		break;
-	}
-}
 
 void ParticleBasedRotation::jiggle() {
 	Vector3d randomRotVector = Vector3d::Random() * 0.01;

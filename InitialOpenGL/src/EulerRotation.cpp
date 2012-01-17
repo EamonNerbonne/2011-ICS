@@ -34,22 +34,12 @@ void EulerRotation::updateStep() {
 	auto svd = orientation.jacobiSvd(ComputeFullU | ComputeFullV);
 	orientation = svd.matrixU() * svd.matrixV().transpose();
 }
-void EulerRotation::processInput(char c) {
-	switch(c) {
-	case '1':
-		orientation = Matrix3d::Identity();
-		angular_momentum = Vector3d(1.0,0.0,0.0);
-		break;
-	case '2':
-		orientation = Matrix3d::Identity();
-		angular_momentum= Vector3d(0.0,0.5,0.0);
-		break;
-	case '3':
-		orientation = Matrix3d::Identity();
-		angular_momentum= Vector3d(0.0,0.0,1.0);
-		break;
-	}
+
+void EulerRotation::resetWithAngularMomentum(Vector3d angular_momentum) {
+	orientation = Matrix3d::Identity();
+	this->angular_momentum = angular_momentum;
 }
+
 
 Matrix38d EulerRotation::getPositions() {return orientation*initialPosition(dimensions);}
 EulerRotation::~EulerRotation() { }

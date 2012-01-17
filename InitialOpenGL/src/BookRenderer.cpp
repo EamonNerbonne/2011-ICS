@@ -64,8 +64,15 @@ void BookRenderer::keyboard(unsigned char key, int /*x*/, int /*y*/) {
 	case 'r':
 		state->jiggle();
 	break;
-	default:
-		state->processInput(key);
+		case '1':
+		state->resetWithAngularMomentum(Vector3d(1.0,0.0,0.0));
+		break;
+	case '2':
+		state->resetWithAngularMomentum(Vector3d(0.0,0.5,0.0));
+		break;
+	case '3':
+		state->resetWithAngularMomentum(Vector3d(0.0,0.0,1.0));
+		break;
 	break;
 	}
 }

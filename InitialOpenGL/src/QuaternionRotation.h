@@ -8,8 +8,9 @@ class QuaternionRotation : public RotationModel {
 	Matrix3d MoI_body, MoI_body_inv;
 	Quaternion<double> orientation;
 public:
+	virtual void resetWithAngularMomentum(Vector3d angular_momentum);
+
 	virtual Matrix38d getPositions();
-	virtual void processInput(char c);
 	virtual void updateStep();
 	virtual void jiggle();
 	QuaternionRotation(Eigen::Vector3d dimensions, Eigen::Vector3d angular_momentum, double timestep);
