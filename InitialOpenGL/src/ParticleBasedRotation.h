@@ -3,9 +3,7 @@
 #include "RotationModel.h"
 
 class ParticleBasedRotation : public RotationModel {
-	Eigen::Vector3d const dimensions;
 	double part_mass;
-	double timestep;
 	double energy_scale;
 	double k;
 	Matrix38d position;
@@ -16,10 +14,7 @@ class ParticleBasedRotation : public RotationModel {
 
 public:
 	virtual Matrix38d getPositions() {return position;}
-	virtual Vector3d getDimensions() {return dimensions;}
 	virtual void processInput(char c);
-	virtual void faster();
-	virtual void slower();
 	virtual void updateStep();
 	virtual void jiggle();
 	ParticleBasedRotation(Eigen::Vector3d dimensions, Eigen::Vector3d angular_momentum, double timestep);

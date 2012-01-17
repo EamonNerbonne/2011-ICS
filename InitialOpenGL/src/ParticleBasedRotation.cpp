@@ -9,8 +9,7 @@
 using namespace Eigen;
 
 ParticleBasedRotation::ParticleBasedRotation(Vector3d dimensions, Vector3d angular_momentum, double timestep)
-   : dimensions(dimensions)
-   , timestep(timestep)
+	: RotationModel(dimensions, timestep)
 {
 	resetWithAngularMomentum(angular_momentum);
 	k = 10.0;
@@ -82,10 +81,6 @@ void ParticleBasedRotation::processInput(char c) {
 		break;
 	}
 }
-
-
-void ParticleBasedRotation::faster() { timestep *= 1.2; }
-void ParticleBasedRotation::slower() { timestep /=1.2; }
 
 void ParticleBasedRotation::jiggle() {
 	Vector3d randomRotVector = Vector3d::Random() * 0.01;

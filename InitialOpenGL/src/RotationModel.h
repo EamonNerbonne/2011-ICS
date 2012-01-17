@@ -12,8 +12,7 @@ class RotationModel {
 protected:
 	Matrix38d initialPosition(Vector3d const & dimensions) {
 		Vector3d scaled = 0.5 * dimensions;
-		Matrix38d cubeCoords(Matrix38d::Zero().colwise()
-			- scaled);
+		Matrix38d cubeCoords(Matrix38d::Zero().colwise() - scaled);
 		Matrix3d dimOffsets = dimensions.asDiagonal();
 
 		for(int pointI=0;pointI<8;++pointI)
@@ -24,12 +23,19 @@ protected:
 		return cubeCoords;
 	}
 
+	Vector3d dimensions;
+	double timestep;
+
+	RotationModel(Vector3d dimensions, double timestep);
+
+
 public:
+	Vector3d getDimensions() {return dimensions;}
+	void faster() { timestep *= 1.2; }
+	void slower() { timestep /=1.2; }
+
 	virtual Matrix38d getPositions()=0;
-	virtual Vector3d getDimensions()=0;
 	virtual void processInput(char c)=0;
-	virtual void faster()=0;
-	virtual void slower()=0;
 	virtual void jiggle()=0;
 	virtual void updateStep()=0;
 	virtual ~RotationModel();

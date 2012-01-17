@@ -7,10 +7,9 @@
 using namespace Eigen;
 
 QuaternionRotation::QuaternionRotation(Vector3d dimensions, Vector3d angular_momentum, double timestep)
-: dimensions(dimensions)
-, angular_momentum(angular_momentum)
-, orientation(Quaternion<double>::Identity())
-, timestep(timestep)
+	: RotationModel(dimensions, timestep)
+	, angular_momentum(angular_momentum)
+	, orientation(Quaternion<double>::Identity())
 {
 	Vector3d diagOf_MoI=
 			Vector3d(
@@ -54,8 +53,6 @@ void QuaternionRotation::processInput(char c) {
 }
 
 Matrix38d QuaternionRotation::getPositions() {return orientation.matrix()*initialPosition(dimensions);}
-void QuaternionRotation::faster() { timestep *= 1.2; }
-void QuaternionRotation::slower() { timestep /=1.2; }
 QuaternionRotation::~QuaternionRotation() { }
 
 void QuaternionRotation::jiggle() { angular_momentum += Vector3d::Random() * 0.01;}

@@ -10,10 +10,9 @@ using namespace Eigen;
 
 
 EulerRotation::EulerRotation(Vector3d dimensions, Vector3d angular_momentum, double timestep)
-: dimensions(dimensions)
-, angular_momentum(angular_momentum)
-, orientation(Matrix3d::Identity())
-, timestep(timestep)
+	: RotationModel(dimensions, timestep)
+	, angular_momentum(angular_momentum)
+	, orientation(Matrix3d::Identity())
 {
 	Vector3d diagOf_MoI=
 			Vector3d(
@@ -53,8 +52,6 @@ void EulerRotation::processInput(char c) {
 }
 
 Matrix38d EulerRotation::getPositions() {return orientation*initialPosition(dimensions);}
-void EulerRotation::faster() { timestep *= 1.2; }
-void EulerRotation::slower() { timestep /=1.2; }
 EulerRotation::~EulerRotation() { }
 
 void EulerRotation::jiggle() { angular_momentum += Vector3d::Random() * 0.01;}
