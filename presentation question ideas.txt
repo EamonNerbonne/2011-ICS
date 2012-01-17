@@ -1,0 +1,3 @@
+- veerconstante?
+- En waarom niet afstand normaliseren?
+- demping?
