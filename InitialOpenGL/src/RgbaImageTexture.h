@@ -4,16 +4,16 @@
 #endif
 #include <GL/gl.h>
 
-struct RgbaImageTexture {
+class RgbaImageTexture {
+	RgbaImageTexture& operator=(const RgbaImageTexture&);	// Disallow copying
+	RgbaImageTexture(const RgbaImageTexture&);
+public:
+
 	int width, height;
 	GLuint textureID;
 	RgbaImageTexture(char const * filename);
 	void BindTexture();
 	~RgbaImageTexture();
-
-private:
-	RgbaImageTexture& operator=(const RgbaImageTexture&);	// Disallow copying
-	RgbaImageTexture(const RgbaImageTexture&);
 };
 
 

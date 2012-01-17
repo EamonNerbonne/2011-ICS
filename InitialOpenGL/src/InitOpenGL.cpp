@@ -1,6 +1,7 @@
 #include "InitOpenGL.h"
 #ifdef _MSC_VER
 #include <windows.h>
+#pragma warning (disable:4505)
 #endif
 #include <GL/gl.h>
 #include <GL/glut.h>

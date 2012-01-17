@@ -22,6 +22,7 @@
    #endif
 #else
    #define stbi_inline __forceinline
+   #pragma warning (disable:4996)
 #endif
 
 

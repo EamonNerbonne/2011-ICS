@@ -1,5 +1,6 @@
 #ifdef _MSC_VER
 #include <windows.h>
+#pragma warning(disable:4505)
 #endif
 #include <GL/gl.h>
 #include <GL/glut.h>
@@ -45,7 +46,7 @@ void BookRenderer::reshape(int width, int height)	{
 	glLoadIdentity();
 }
 
-void BookRenderer::keyboard(unsigned char key, int x, int y) {
+void BookRenderer::keyboard(unsigned char key, int /*x*/, int /*y*/) {
 	switch(key) {
 	case 27:
 		exit(0);
@@ -68,7 +69,7 @@ void BookRenderer::keyboard(unsigned char key, int x, int y) {
 	}
 }
 
-void BookRenderer::arrow_keys(int a_keys, int x, int y) {
+void BookRenderer::arrow_keys(int a_keys, int /*x*/, int /*y*/) {
 	switch(a_keys) {
 	case GLUT_KEY_UP:
 		glutFullScreen();
