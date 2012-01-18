@@ -75,11 +75,11 @@
  \begin{itemize}
   \item Calculate force on particle $i$:
   \begin{displaymath}
-   F_i(t) = \sum_{j \neq i} \frac{k}{m} \left( \frac{\|x_i(0) - x_j(0)\|}{\|x_i(t) - x_j(t)\|} - 1\right) \left(x_i(t) - x_j(t)\right)
+   F_i(t) = \sum_{j \neq i} k \left( \frac{\|x_i(0) - x_j(0)\|}{\|x_i(t) - x_j(t)\|} - 1\right) \left(x_i(t) - x_j(t)\right)
   \end{displaymath}
   \item Calculate velocity of particle $i$:
   \begin{displaymath}
-   v_i(t + \Delta t) = v_i(t) + F_i(t) \; \Delta t
+   v_i(t + \Delta t) = v_i(t) + \frac{1}{m} F_i(t) \; \Delta t
   \end{displaymath}
   \item Calculate position of particle $i$:
   \begin{displaymath}
