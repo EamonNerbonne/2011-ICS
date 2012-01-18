@@ -1,7 +1,7 @@
 \documentclass{beamer}
 
 \usepackage[utf8x]{inputenc}
-\usepackage{default}
+%\usepackage{default}
 
 \usepackage{amsmath}
 
@@ -75,15 +75,15 @@
  \begin{itemize}
   \item Calculate force on particle $i$:
   \begin{displaymath}
-   F_i(t) = \sum_j (x_i(t) - x_j(t)) - (x_i(0) - x_j(0))
+   F_i(t) = \sum_{j \neq i} \frac{k}{m} \left( \frac{\|x_i(0) - x_j(0)\|}{\|x_i(t) - x_j(t)\|} - 1\right) \left(x_i(t) - x_j(t)\right)
   \end{displaymath}
   \item Calculate velocity of particle $i$:
   \begin{displaymath}
-   v_i(t + \Delta t) = v_i(t) + F_i(t) \times \Delta t
+   v_i(t + \Delta t) = v_i(t) + F_i(t) \Delta t
   \end{displaymath}
   \item Calculate position of particle $i$:
   \begin{displaymath}
-   x_i(t + \Delta t) = x_i(t) + v_i(t) \times \Delta t
+   x_i(t + \Delta t) = x_i(t) + v_i(t) \Delta t
   \end{displaymath}
  \end{itemize}
 \end{frame}
@@ -93,7 +93,7 @@
  \framesubtitle{Computations}
  Using Euler integration, for $n$ particles, in each time step we need to compute
  \begin{itemize}
-  \item $\frac{(n-1)^2}{2}$ forces
+  \item $\frac{n(n-1)}{2}$ forces
   \item $n$ velocities
   \item $n$ positions
  \end{itemize}
@@ -150,7 +150,7 @@
 \begin{frame}
  \frametitle{A different approach}
  \begin{itemize}
-  \item Different approach introduces last time
+  \item Different approach as introduced last time
   \item Calculate angular velocity to update the orientation
  \end{itemize}
 \end{frame}
@@ -160,16 +160,14 @@
  \framesubtitle{Computations}
  \begin{itemize}
   \item Angular velocity calculated from angular momentum and moment of inertia
-  \begin{displaymath}
-  I(t) = R(t) \times I_{body} \times R(t)^{T}
-  \end{displaymath}
-
-  \begin{displaymath}
-  \omega(t) = I(t)^{-1} \times L
-  \end{displaymath}
+  \begin{align*}
+  I(t) &= R(t)^T \; I_{body} \; R(t) \\
+  I(t)^{-1} &= R(t) \; {I_{body}}^{\!\!-1} \; R(t)^T \\
+  \omega(t) &= I(t)^{-1} \; L
+  \end{align*}
   \item Change in orientation calculated from angular velocity
   \begin{displaymath}
-  R(t + \Delta t) = R(t) + R(t) \times \omega^*(t) \times \Delta t
+  R(t + \Delta t) = R(t) + \omega^*\!(t) \; R(t)  \;  \Delta t
   \end{displaymath}
  \end{itemize}
 \end{frame}
@@ -216,8 +214,8 @@
 \begin{frame}
  \frametitle{Quaternions} 
  \begin{itemize}
-  \item Orientation has 3 degrees of freedom, but a $3 \times 3$ matrix (9 degrees of freedom)
-  \item Orientation with quaternions has 4 degrees of freedom
+  \item Orientation has 3 degrees of freedom, but a $3\times3$ matrix has 9
+  \item Quaternions have 4 degrees of freedom
   \item Again, normalisation to prevent shape from changing
  \end{itemize}
 \end{frame}
