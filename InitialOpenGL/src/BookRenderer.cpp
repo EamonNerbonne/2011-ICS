@@ -1,4 +1,5 @@
 #ifdef _MSC_VER
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #pragma warning(disable:4505)
 #endif
