@@ -3,7 +3,6 @@
 #include <fstream>
 #include "stb_image.h"
 #include <string>
-#include <direct.h>
 #include <algorithm>
 
 using std::cout;
@@ -30,9 +29,6 @@ int file_size(const char* sFileName)
 }
 
 string find_texture(char const * filename) {
-	char const * const cwd = _getcwd(buf, 1024);
-	cout << cwd << "\n";
-
 	string path(filename);
 	std::replace( path.begin(), path.end(), '/', pathsep);
 
