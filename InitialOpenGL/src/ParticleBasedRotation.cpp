@@ -55,9 +55,17 @@ void ParticleBasedRotation::updateStep() {
 	for(ptrdiff_t i=0;i<position.cols(); ++i) {
 		for(ptrdiff_t j=i+1;j<position.cols(); ++j) {
 			Vector3d JtoI = position.col(i) - position.col(j);
-			Vector3d onI = k / part_mass * (baseLen(i,j) / JtoI.norm() - 1) * JtoI;
-			accel.col(i) += onI;
-			accel.col(j) -= onI;
+			double JtoIdist = JtoI.norm();
+			Vector3d JtoIunit = JtoI / JtoIdist;
+
+			Vector3d vIwrtJ = velocity.col(i) - velocity.col(j);
+			Vector3d vParallelComponent = JtoIunit * JtoIunit.dot(vIwrtJ);
+
+			Vector3d dampingForce = -2. * sqrt(k / part_mass) * vParallelComponent;
+
+			Vector3d onI = k / part_mass * (baseLen(i,j) - JtoIdist) * JtoIunit;
+			accel.col(i) += onI + dampingForce;
+			accel.col(j) -= onI + dampingForce;
 		}
 	}
 
