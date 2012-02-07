@@ -1,0 +1,185 @@
+body {
+    font-family: "Gentium Book Basic" , Gentium, "Gentium Basic" , "Palatino Linotype" , "Hoefler Text" , Constantia, "Minion Pro" , Georgia, serif;
+    font-size: 10pt;
+}
+
+body, p {
+    text-align: justify;
+    hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+}
+
+.titlepage {
+    page-break-after: always;
+}
+
+h1, h2 {
+    margin: 1em 0 0.6em;
+    font-family: Cambria, Georgia, Serif;
+}
+
+header h1 {
+    font-weight: bold;
+    font-size: 30pt;
+    color: #258;
+    text-align: center;
+}
+
+header h2 {
+    font-weight: bold;
+    font-size: 24pt;
+    text-align: center;
+    margin: 0;
+}
+
+section h1, aside h1, nav h1 {
+    color: Black;
+    text-align: left;
+    font-size: 18pt;
+}
+
+section h1:before { content: attr(data-fullpath) " "; padding-right:1em; }
+section section h1 { font-size: 14pt; }
+section section section h1 { font-size: 12pt; }
+
+figure > img {max-width:100%; height:auto;}
+figure {margin:0.5em 1em;}
+
+.generateTableOfContents td { vertical-align:top; }
+.generateTableOfContents td:first-child { padding-right: 1em; }
+
+.rightbox {
+    float: right;
+}
+
+.authorsbox {
+    margin: 2cm 0.5cm;
+    text-align: right;
+}
+
+.highlight {
+    background-color: #ffff00;
+}
+.centered {
+    text-align: center;
+}
+
+
+/* Nice table border styling */
+
+table.bookstyleborders {
+    border-collapse: collapse;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+table.bookstyleborders tr {
+    border-top: 1px solid #333;
+}
+table.bookstyleborders td {
+    padding: 0.6em 0.5em;
+}
+
+table.simpleborders {
+    border-style: solid;
+    border-spacing: 0;
+    border-width: 0px 0px 1px 1px;
+}
+
+table.simpleborders td {
+    border-style: solid;
+    border-width: 1px 1px 0px 0px;
+    margin: 0;
+    padding: 4px;
+    font-weight: bold;
+}
+
+/* Basic Table layouts */
+table {
+    hyphens: manual;
+    -moz-hyphens: manual;
+    -webkit-hyphens: manual;
+    text-align: left;
+}
+th {
+    padding: 0.1em 0.5em;
+}
+
+
+/* Definition lists */
+dt {
+    font-weight: bold;
+    float: left;
+    clear: left;
+}
+dd {
+    margin-left: 1em;
+}
+dd:before {
+    content: '\A0';
+    padding-left: 0.2em;
+}
+td > dl {
+    margin: 0;
+}
+
+/* Basic Paragraph styling */
+p {
+    margin: 0.5em 0;
+    clear: left;
+}
+h1 {
+    clear: left;
+}
+p + p {
+    text-indent: 1.5em;
+}
+
+
+/* page layout styling */
+/* TODO: print style sheet */
+
+
+body {
+    padding: 0;
+    margin: 0;
+    background: #ddd;
+}
+
+.margincontainer {
+    max-width: 21cm;
+    background: white;
+    margin: 0 auto;
+    box-shadow: 0 0 1.5cm rgba(0,0,0,0.5);
+}
+.textcontainer {
+    padding-top: 4cm;
+    padding-bottom: 1cm;
+    max-width: 12.42cm;
+    margin: 0 auto;
+}
+
+.positive-impact-cell { background: #0f6; text-align:center;}
+.negative-impact-cell { background: #f33; text-align:center;}
+
+.bibliography li { -moz-border-radius: 0.7em; padding:0.1em 0.5em 0.1em 3em; text-indent:-2.5em;}
+.bibliography li[data-citationnumber]:before { content: '[' attr(data-citationnumber) '] '; padding-right:0.1em; }
+.bibliography ul { list-style:none; padding:0;margin:0;}
+
+@media screen {
+    
+  li:target { background: rgba(255,255,0,0.5); box-shadow: 0 0 0.2em rgba(255,255,0,1.0); 
+   -webkit-transition: all 0.8s 0.2s ease-in; 
+   -moz-transition: all 0.8s 0.2s ease-in; 
+   transition: all 0.8s 0.2s ease-in; 
+   }  
+}
+
+@media print {
+    body {
+        background: white;
+    }
+    .margincontainer {
+        box-shadow: none;
+    }
+}
