@@ -109,29 +109,30 @@ th {
     padding: 0.1em 0.5em;
 }
 
-
 /* Definition lists */
-        dl {
-            margin: 0;
-            margin-left: 1em;
-        }
-        dt, dd {
-            margin: 0;
-            display: inline;
-        }
-        dt {
-            margin-left: -1em;
-            font-weight: bold;
-            padding-right: 0.2em;
-        }
-        dd:before {
-            content: " ";
-        }
-        dd:after {
-            content: "\A";
-            white-space: pre;
-        }
+dl {
+    margin: 0;
+    margin-left: 1em;
+}
+dt, dd {
+    margin: 0;
+    display: inline;
+}
+dt {
+    margin-left: -1em;
+    font-weight: bold;
+    padding-right: 0.2em;
+}
+dd:before {
+    content: " ";
+}
+dd:after {
+    content: "\A";
+    white-space: pre;
+}
 
+figcaption[data-figurenumber]:before {font-weight:bold; content: 'Figure ' attr(data-figurenumber) ': ';}
+ 
 /* Basic Paragraph styling */
 p {
     margin: 0.5em 0;
