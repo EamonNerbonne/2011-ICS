@@ -13,7 +13,7 @@
                 <hgroup>
                     <h1>Simulation of the Unstable Rotation of a Book </h1>
                     <h2>Introduction to Computational Science 2011-2012 </h2>
-                    <h2>Version 0.2</h2>
+                    <h3>Version 0.3</h3>
                 </hgroup>
                 <div class="authorsbox">
                     <div>Ivar Postma</div>
@@ -31,23 +31,19 @@
             <section id="section-introduction">
                 <!-- Chapter 1 - Introduction -->
                 <h1>Introduction </h1>
-                <p>Many students consider classical mechanics to be somewhat difficult because it's not always very intuitive. For some students this can lead to frustration when studying for an exam and under stress they might be inclided to throw their classical mechanics book out the window.</p>
+                <p>Many students consider classical mechanics to be somewhat difficult because it's not always very intuitive. For some students this can lead to frustration when studying for an exam and under stress they might be inclined to throw their classical mechanics book out the window.</p>
                 <p>There are many different ways to throw your classical mechanics book out of your window. One of the more popular ways is to use it as a frisbee. When a book is thrown like a frisbee it starts rotating around the centre of mass of the book. Students that live in one of the higher floors of a flat may notice that this rotation is stable, until the book hits the ground.</p>
                 <p>Let us now consider a hard cover book. We can define three perpendicular axes. The first axis runs through the midpoint of the book. The second axis runs through the midpoint of the spine of the book. The third axis runs through the midpoint of the top. When thrown as a frisbee, the book rotates along the first axis, which is called Z in the figure below. This rotation is stable and so is the rotation around third axis (Y). However, if we throw a book so that it is rotating along the second axis (X) we can see that the rotation is unstable.</p>
                 <figure>
                     <img src="include/rotationaxes.png" alt="A cubiod and its main rotational axis X, Y and Z" />
-                    <figcaption>
-                    <b>Figure: </b>A cuboid with its three main axis
-                    </figcaption>
+                    <figcaption>A cuboid with its three main axis </figcaption>
                 </figure>
                 <p>In space, we can see the unstable rotation even better because with a lack of gravity we can eliminate linear momentum. The video below demonstrates an experiment done in an international space station.</p>
                 <!-- The <figure>-tag is used below because the <video>-tag doesn't work properly -->
                 <figure>
                     <iframe width="420" height="315" src="http://www.youtube.com/embed/GgVpOorcKqc" frameborder="0" allowfullscreen></iframe>
                     <br />
-                    <figcaption>
-                    <b>Video: </b>Experiment in space demonstration the unstable rotation along the middle axes
-                    </figcaption>
+                    <caption><b>Video: </b>Experiment in space demonstration the unstable rotation along the middle axes </caption>
                 </figure>
                 
                 <section>
@@ -67,31 +63,34 @@
             <section id="section-particle">
                 <!-- Chapter 2 - Partcile Simulation -->
                 <h1>Particle Simulation </h1>
-                <p>A general introduction into particle simulation.</p>                
-                <p>Velocity of a particle</p>
+                <p>In particle simulation, a number of particles is defined and their position is tracked over time. The change in position is defined by the velocity of the particle. Or more formally: </p>                
                 <script type="math/tex; mode=display">
  \label{eq:velocity} v(t) = \dot{x}(t) = \frac{d}{dt} x(t)
                 </script>
-                <p>Acceleration of a particle</p>
+                <p>Throughout this article we will use the dot notation to indicate a time derivative which is the standard notation in physics.</p>
+                <p>The velocity of a particle is not necessarily constant, it may also change over time. The change in velocity is defined by the acceleration of a particle. Or: </p>
                 <script type="math/tex; mode=display">
  \label{eq:acceleration} a(t) = \dot{v}(t) = \frac{d}{dt} v(t)
                 </script>
-                <p>Hooke's law</p>
-                <script type="math/tex; mode=display">
- \label{eq:hooke} \mathbf{F} = -k \mathbf{x} 
-                </script>
-                <p>Newton's second law</p>
+                <p>To find the acceleration of a particle we can use Newton's second law.</p>
                 <script type="math/tex; mode=display">
  \label{eq:newton2} \mathbf{F} = m \mathbf{a}
                 </script>
-                <p>Newton's third law</p>
-                <script type="math/tex; mode=display">
- \label{eq:newton3} \sum \mathbf{F}_{a,b} = - \sum \mathbf{F}_{b,a}
-                </script>
+                <p>Since the masses of particle are generally constant, the acceleration can be calculated from the force applied to the particle.</p>
+                
                 <section>
                     <h1>Modelling the book</h1>
                     <p>The book is modelled by eight particles located at the eight corner points of the book. Each particle has the same mass. Each particle has an initial position that depends on the initial orientation of the book and an initial velocity that depends on the initial angular velocity. The interacting forces are modelled by placing a spring between each pair of particles. This means that in total there are 28 springs.</p>
+                    <p>The interacting force between to particles can be calculated with Hooke's law:</p>
+                    <script type="math/tex; mode=display">
+ \label{eq:hooke} \mathbf{F} = -k \mathbf{x} 
+                    </script>
+                    <p>Here, <script type="math/tex">k</script> the the spring constant and <script type="math/tex">\mathbf{x}</script> is the displacement vector.</p>
                     <p>The total force on a particle <script type="math/tex">i</script> is the sum of the individual forces between particle <script type="math/tex">i</script> and every particle <script type="math/tex">j \neq i</script>.</p>
+                    <p>Newton's third law</p>
+                    <script type="math/tex; mode=display">
+ \label{eq:newton3} \sum \mathbf{F}_{a,b} = - \sum \mathbf{F}_{b,a}
+                    </script>
                 </section>
                 
                 <section>
@@ -103,12 +102,11 @@
             <section id="section-rigid">
                 <!-- Chapter 3 - Rigid Simulation-->
                 <h1>Rigid Simulation</h1>
-                <p>An introduction on rigid simulation.</p>
-                <p>Angular momentum</p>
+                <p>In the video in the introduction, one may notice that the only property of the book that changes is its orientation. The change in orientation is determined by the angular velocity <script type="math/tex">\omega</script> of the object. This angular velocity, together with the moment of inertia of the body, can be used to calculate the angular momentum of the body: </p>
                 <script type="math/tex; mode=display">
  \label{eq:angular} L(t) = I(t) \omega (t)
                 </script>
-                <p>Inertia</p>
+                <p>The moment of inertia is the measure of an object's resistance to change in it's orientation. </p>
                 <script type="math/tex; mode=display">
  \label{eq:inertia} I(t) = R(t) I_{body} R(t)^T
                 </script>
@@ -120,7 +118,7 @@
 	     I_{zx} & I_{zy} & I_{zz}
             \end{bmatrix}
                 </script>
-                <p>Inertia tensor for a cuboid</p>
+                <p>The inertia tensor for a cuboid is known. For a cuboid of mass <script type="math/tex">M</script> and dimensions <script type="math/tex">a \times b \times c</script> the inertia tensor is defined as:</p>
                 <script type="math/tex; mode=display">
  I_{body} = \frac{1}{12} \begin{bmatrix}
              M(b^2 + c^2) & 0 & 0 \\
@@ -128,6 +126,11 @@
 	     0 & 0 & M(a^2 + b^2)
             \end{bmatrix}
                 </script>
+                
+                <section>
+                    <h1>Modelling the book</h1>
+                    <p>Without linear momentum the centre of mass of the book is stationary.</p>
+                </section>
                 
                 <section>
                     <h1>Quaternions</h1>
@@ -141,22 +144,56 @@
                 
                 <section>
                     <h1>Euler integration</h1>
-                    <p>Euler's method is the most basic numerical procedure to solve ordinary differential equations (ODEs) with a known initial value.</p>
+                    <p>In the implementation of the rotation we will need to solve ordinary differential equations (ODEs). These will be solved numerically. Euler's method is the most basic numerical procedure to solve ODEs with a known initial value.</p>
+                    <p>In Euler integration the value of a function at <script type="math/tex">t_{i+1}</script> is calculated from the value of that function at <script type="math/tex">t_{i}</script> and the derivate of the function at <script type="math/tex">t_{i}</script>. </p>
                     <script type="math/tex; mode=display">
  \label{eq:euler} g(t_{i+1}) = g(t_{i}) + g'(t_{i}) \Delta t
                     </script>
+                    <p>At each time step, Euler integration introduces an error. This error is proportional to the time step. This is way a small time step is preferable. However, even with small time steps the error will grow and the calculated value will drift far away from the actual value.</p>
+                    <p>To reduce the effect of this drift it may sensible to switch to a higher order numerical integration technique that produces a smaller error. This comes at the cost of a longer computation time. Even though this will reduce the error it can not eliminate it. An alternative in this case is normalisation.</p>
+                </section>
+                
+                <section>
+                    <h1>Particle Simulation</h1>
+                    <p>In particle simulation we need to store the positions and the velocities in 3D space of all the particles. Both are stored in a <script type="math/tex">3 \times 8</script> matrix. The interacting forces are stored in an <script type="math/tex">8 \times 8</script> matrix.</p>
+                    <p>At each time step the positions, the velocities and the interacting forces have to be computed.</p>
+                    <p>After calculating the new values they can be normalised.</p>
+                </section>
+                
+                <section>
+                    <h1>Rigid Simulation</h1>
+                    <p>In each time step <script type="math/tex">I^{-1}</script> is calculated from the current orientation and the static moment of inertia of the body. Using this <script type="math/tex">I^{-1}</script> the angular velocity at that time step is calculated.</p>
                 </section>
                 
                 <section>
                     <h1>Visualisation</h1>
                     <p>OpenGL is used for the visualisation of the rotating book.</p>
-                    <p>The position of the eight corner points of the book define where to draw each side of the book.</p>
+                    <p>The position of the eight corner points of the book define where to draw each side of the book. To be able the distinguish between different sides of the book a texture is rendered on the front, spine and back of the book. </p>
                 </section>
             </section>
             
             <section id="section-results">
                 <h1>Results</h1>
-                <p></p>
+                <p>The implementation shows the visualisation of a rotating book. There are three different methods to calculate the position of the corner points of the book, a particle-based method, a rigid method with an orientation matrix and a rigid method with quaternions. The user can reset the visualisation to a rotation around each of the three axis. Normalisation can be turned on and off.</p>
+                <section>
+                    <h1>Particle Simulation</h1>
+                    <p></p>
+                </section>
+                
+                <section>
+                    <h1>Rigid Simulation</h1>
+                    <p></p>
+                    
+                    <section>
+                        <h1>Orientation Matrix</h1>
+                        <p></p>
+                    </section>
+                    
+                    <section>
+                        <h1>Quaternions</h1>
+                        <p></p>
+                    </section>
+                </section>
             </section>
             
             <section id="section-discussion">
