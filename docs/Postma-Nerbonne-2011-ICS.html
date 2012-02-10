@@ -49,6 +49,7 @@
                 <section>
                     <h1>Simulation</h1>
                     <p>In this project we will simulate the rotation of a book so that it behaves naturally. We will look at two different approaches. One simulation will be particle-based, the other is based on calculating the angular momentum of a rigid body.</p>
+                    <p>Because the goal of this project is to simulate the rotation correctly, we will consider a system without external forces. </p>
                 </section>
                 <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
@@ -63,24 +64,24 @@
             <section id="section-particle">
                 <!-- Chapter 2 - Partcile Simulation -->
                 <h1>Particle Simulation </h1>
-                <p>In particle simulation, a number of particles is defined and their position is tracked over time. The change in position is defined by the velocity of the particle. Or more formally: </p>                
+                <p>In particle simulation, a number of particles is defined and their position <script type="math/tex">x</script> is tracked over time. The change in position is defined by the velocity <script type="math/tex">v</script> of the particle. Or more formally: </p>                
                 <script type="math/tex; mode=display">
  \label{eq:velocity} v(t) = \dot{x}(t) = \frac{d}{dt} x(t)
                 </script>
                 <p>Throughout this article we will use the dot notation to indicate a time derivative which is the standard notation in physics.</p>
-                <p>The velocity of a particle is not necessarily constant, it may also change over time. The change in velocity is defined by the acceleration of a particle. Or: </p>
+                <p>The velocity of a particle is not necessarily constant, it may also change over time. The change in velocity is defined by the acceleration <script type="math/tex">a</script> of a particle. Or: </p>
                 <script type="math/tex; mode=display">
  \label{eq:acceleration} a(t) = \dot{v}(t) = \frac{d}{dt} v(t)
                 </script>
-                <p>To find the acceleration of a particle we can use Newton's second law.</p>
+                <p>To find the acceleration of a particle we can use Newton's second law. </p>
                 <script type="math/tex; mode=display">
  \label{eq:newton2} \mathbf{F} = m \mathbf{a}
                 </script>
-                <p>Since the masses of particle are generally constant, the acceleration can be calculated from the force applied to the particle.</p>
+                <p>Since the masses of particles are generally constant, the acceleration can be calculated from the force applied to the particle.</p>
                 
                 <section>
                     <h1>Modelling the book</h1>
-                    <p>The book is modelled by eight particles located at the eight corner points of the book. Each particle has the same mass. Each particle has an initial position that depends on the initial orientation of the book and an initial velocity that depends on the initial angular velocity. The interacting forces are modelled by placing a spring between each pair of particles. This means that in total there are 28 springs.</p>
+                    <p>To model an object with particles we must define a number of particles, their mass and how they interact with eachother. For simplicity, we assume that the shape of the book is a cuboid and that it has a uniform distribution of mass. The book is modelled by eight particles located at the eight corner points of the cuboid. Each particle has the same mass. Each particle has an initial position that depends on the initial orientation of the book. It also has an initial velocity that depends on the initial angular velocity. The interacting forces are modelled by placing a spring between each pair of particles. This means that in total there are 28 springs.</p>
                     <p>The interacting force between to particles can be calculated with Hooke's law:</p>
                     <script type="math/tex; mode=display">
  \label{eq:hooke} \mathbf{F} = -k \mathbf{x} 
@@ -102,15 +103,16 @@
             <section id="section-rigid">
                 <!-- Chapter 3 - Rigid Simulation-->
                 <h1>Rigid Simulation</h1>
-                <p>In the video in the introduction, one may notice that the only property of the book that changes is its orientation. The change in orientation is determined by the angular velocity <script type="math/tex">\omega</script> of the object. This angular velocity, together with the moment of inertia of the body, can be used to calculate the angular momentum of the body: </p>
+                <p>In the video in the introduction, one may notice that the only property of the book that changes is its orientation. The change in orientation is determined by the angular velocity <script type="math/tex">\omega</script> of the object. This angular velocity, together with the moment of inertia of the body, can be used to calculate the angular momentum <script type="math/tex">L</script> of the body: </p>
                 <script type="math/tex; mode=display">
  \label{eq:angular} L(t) = I(t) \omega (t)
                 </script>
-                <p>The moment of inertia is the measure of an object's resistance to change in it's orientation. </p>
+                <p>The angular momentum is constant when the torque <script type="math/tex">\tau</script> is zero.</p>
+                <p>The moment of inertia is the measure of an object's resistance to change in its orientation <script type="math/tex">R</script>. </p>
                 <script type="math/tex; mode=display">
  \label{eq:inertia} I(t) = R(t) I_{body} R(t)^T
                 </script>
-                <p>Inertia tensor</p>
+                <p>In general the inertia tensor of an object is defined as:</p>
                 <script type="math/tex; mode=display">
  \label{eq:moi} I_{body} = \begin{bmatrix}
              I_{xx} & I_{xy} & I_{xz} \\
@@ -129,7 +131,7 @@
                 
                 <section>
                     <h1>Modelling the book</h1>
-                    <p>Without linear momentum the centre of mass of the book is stationary.</p>
+                    <p>Without linear momentum the centre of mass of the book is stationary. This centre of mass is the origin in our coordinate system. </p>
                 </section>
                 
                 <section>
@@ -140,7 +142,8 @@
             
             <section id="section-implementation">
                 <h1>Implementation</h1>
-                <p>The implementation is written in C++. The Eigen library is used for linear algebra <a href="#bib-eigen">[ref]</a>.</p>
+                <p>In our implementation the visualisation is seperated from the calculation of the rotation. </p>
+                <p>The implementation is written in C++. The Eigen library is used for linear algebra <a href="#bib-eigen">[ref]</a>. The library provides useful data types, such as matrices and vectors, and useful operations on these data types, such as the dot product of two matrices.</p>
                 
                 <section>
                     <h1>Euler integration</h1>
@@ -155,8 +158,8 @@
                 
                 <section>
                     <h1>Particle Simulation</h1>
-                    <p>In particle simulation we need to store the positions and the velocities in 3D space of all the particles. Both are stored in a <script type="math/tex">3 \times 8</script> matrix. The interacting forces are stored in an <script type="math/tex">8 \times 8</script> matrix.</p>
-                    <p>At each time step the positions, the velocities and the interacting forces have to be computed.</p>
+                    <p>In particle simulation we need to store the positions and the velocities in 3D space of all the particles. Both are stored in a 3 <script type="math/tex">\times</script> 8 matrix. The interacting forces are stored in an 8 <script type="math/tex">\times</script> 8 matrix.</p>
+                    <p>At each time step the positions, the velocities and the interacting forces have to be computed. </p>
                     <p>After calculating the new values they can be normalised.</p>
                 </section>
                 
@@ -167,8 +170,8 @@
                 
                 <section>
                     <h1>Visualisation</h1>
-                    <p>OpenGL is used for the visualisation of the rotating book.</p>
-                    <p>The position of the eight corner points of the book define where to draw each side of the book. To be able the distinguish between different sides of the book a texture is rendered on the front, spine and back of the book. </p>
+                    <p>OpenGL is used for the visualisation of the rotating book. </p>
+                    <p>In OpenGL a cuboid is rendered by specifying its eight sides. The position of the eight corner points of the book define where to draw each side of the book. To be able the distinguish between different sides of the book a texture is rendered on the front, spine and back of the book. </p>
                 </section>
             </section>
             
@@ -177,33 +180,37 @@
                 <p>The implementation shows the visualisation of a rotating book. There are three different methods to calculate the position of the corner points of the book, a particle-based method, a rigid method with an orientation matrix and a rigid method with quaternions. The user can reset the visualisation to a rotation around each of the three axis. Normalisation can be turned on and off.</p>
                 <section>
                     <h1>Particle Simulation</h1>
-                    <p></p>
+                    <p>The particle-based simulation produces a natural looking simulation of the rotation of a book. The rotation along the shortest and longest axis is stable. Rotation along the middle axis also appears to be stable, but this rotation is not robust. As soon as the rotation is only slightly disaligned with the axis it turns into an unstable rotation.</p>
+                    <p>Damping is a necessary part of this particle simulation. </p>
+                    <p>This simulation is sufficiently fast.</p>
                 </section>
                 
                 <section>
                     <h1>Rigid Simulation</h1>
-                    <p></p>
+                    <p>A rigid simulation where the orientation of the body is updated in each time step can be implemented in two different ways: using a 3 <script type="math/tex">\times</script> 3 orientation matrix and using quaternions. </p>
                     
                     <section>
                         <h1>Orientation Matrix</h1>
-                        <p></p>
+                        <p>The simulation using an orientation matrix also produces a natural looking result. </p>
+                        <p>Without normalisation the error produced by Euler integration adds up and the shape of the book starts to change noticeably after some time. Eventually, the error is so extreme that the simulation crashes. </p>
                     </section>
                     
                     <section>
                         <h1>Quaternions</h1>
-                        <p></p>
+                        <p>The simulation of the rotating book using the quaternion-based implementation appears to be visually the same as the orientation matrix method. However, this changes when normalisation is turned off. </p>
+                        <p>Like the implementation with the orientation matrix the shape of the book will eventually change when normalisation is turned off. </p>
                     </section>
                 </section>
             </section>
             
             <section id="section-discussion">
                 <h1>Discussion</h1>
-                <p></p>
+                <p>When to normalise?</p>
             </section>
             
             <section id="section-conclusion">
                 <h1>Conclusion</h1>
-                <p></p>
+                <p>Simulation of the rotation of a book can be succesfully implemented with both a particle-based method and rigid method. </p>
             </section>
             
             <!--
