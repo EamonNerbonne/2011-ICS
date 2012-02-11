@@ -64,15 +64,16 @@
                 <script type="math/tex; mode=display">a(t) = \dot{v}(t) = \frac{d}{dt} v(t)</script>
                 <p>To find the acceleration of a particle we can use Newton's second law. </p>
                 <script type="math/tex; mode=display">\F = m \a</script>
+                <p>Where necessary, we will use subscripts to differentiate between particles.  For example, <script type="math/tex">\x_i</script> is the position of the <script type="math/tex">i</script>-th particle, <script type="math/tex">\F_j</script> the force acting on particle <script type="math/tex">j</script>, and <script type="math/tex">\F_{j,i}</script> the force acting on particle <script type="math/tex">j</script> due to the spring connected to <script type="math/tex">i</script>.</p>
                 <!--<p>Since the masses of particles are generally constant, the acceleration can be calculated from the force applied to the particle.</p>-->
                 
                 <section>
                     <h1>Modelling the book</h1>
                     <p>To model an object with particles we must define a number of particles, their mass and how they interact with each other. For simplicity, the book is modelled by eight particles located at the eight corner points of the cuboid. Each particle has the same mass and an initial position that depends on the initial orientation of the book. The initial linear velocity of each particle is computed using the initial angular velocity of the book as a whole.  To ensure the book maintains its shape, virtual springs are added between each pair of particles.  This means that in total there are 28 springs.</p>
-                    <p>The interacting force between two particles can be calculated with Hooke's law:</p>
-                    <script type="math/tex; mode=display"> \F = -k \x </script>
-                    <p>Here, <script type="math/tex">k</script> is the the spring constant (defined to be identical for all springs) and <script type="math/tex">\x</script> the displacement vector.  The equilibrium length of each spring is computed using the book at rest.</p>
-                    <p>The total force on a particle <script type="math/tex">i</script> is the sum of the individual forces between particle <script type="math/tex">i</script> and every particle <script type="math/tex">j \neq i</script>.</p>
+                    <p>The force caused by the spring between two particles can be calculated with Hooke's law:</p>
+                    <script type="math/tex; mode=display"> F = -k d </script>
+                    <p>Here, <script type="math/tex">k</script> is the the spring constant (defined to be identical for all springs) and <script type="math/tex">d</script> the displacement from the equilibrium length.  The equilibrium length of each spring is computed using the book's shape at rest. </p>
+                    <p>The total force on a particle <script type="math/tex">i</script> is the sum of the individual forces between particle <script type="math/tex">i</script> and every particle <script type="math/tex">j \neq i</script>.  However, the direction of displacement   </p>
                     <p>Newton's third law</p>
                     <script type="math/tex; mode=display">
  \label{eq:newton3} \sum \F_{a,b} = - \sum \F_{b,a}
