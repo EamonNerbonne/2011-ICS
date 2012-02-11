@@ -44,7 +44,7 @@ void QuaternionRotation::resetWithAngularMomentum(Vector3d angular_momentum) {
 Matrix38d QuaternionRotation::getPositions() {return orientation.matrix()*initialPosition(dimensions);}
 QuaternionRotation::~QuaternionRotation() { }
 
-void QuaternionRotation::jiggle() { angular_momentum += Vector3d::Random() * 0.01;}
+void QuaternionRotation::jiggle() { angular_momentum += Vector3d::Random() * 0.001;}
 
 
 

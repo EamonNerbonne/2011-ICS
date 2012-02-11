@@ -44,4 +44,4 @@ void EulerRotation::resetWithAngularMomentum(Vector3d angular_momentum) {
 Matrix38d EulerRotation::getPositions() {return orientation*initialPosition(dimensions);}
 EulerRotation::~EulerRotation() { }
 
-void EulerRotation::jiggle() { angular_momentum += Vector3d::Random() * 0.01;}
+void EulerRotation::jiggle() { angular_momentum += Vector3d::Random() * 0.001;}

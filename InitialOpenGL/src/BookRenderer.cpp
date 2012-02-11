@@ -25,7 +25,7 @@ BookRenderer::BookRenderer(shared_ptr<RotationModel> initstate) : state(initstat
 }
 
 void BookRenderer::display() {
-	for(int i=0;i<30000/3000;i++)
+	for(int i=0;i<30000/30;i++)
 		state->updateStep();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_TEXTURE_2D);

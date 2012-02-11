@@ -78,7 +78,7 @@ void ParticleBasedRotation::updateStep() {
 
 
 void ParticleBasedRotation::jiggle() {
-	Vector3d randomRotVector = Vector3d::Random() * 0.01;
+	Vector3d randomRotVector = Vector3d::Random() * 0.001;
 	Matrix3d randomRot;
 	randomRot = AngleAxisd(randomRotVector(0), Vector3d::UnitZ())
 					  * AngleAxisd(randomRotVector(0), Vector3d::UnitY())
