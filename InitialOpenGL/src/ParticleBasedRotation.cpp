@@ -72,8 +72,10 @@ void ParticleBasedRotation::updateStep() {
 	position.noalias() += timestep * velocity;
 
 	velocity.noalias() += timestep * accel;
-	if(normalize)
+	if(normalize) {
 		velocity *= energy_scale/velocity.norm();
+		position = position.colwise() - position.rowwise().mean();
+	}
 }
 
 
