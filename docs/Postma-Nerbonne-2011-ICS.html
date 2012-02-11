@@ -9,6 +9,11 @@
 <body>
     <div class="margincontainer">
         <article class="textcontainer" id="outer_root">
+        <script type="math/tex">
+        \newcommand{\F}{\mathbf{F}}
+        \newcommand{\x}{\mathbf{x}}
+        \newcommand{\a}{\mathbf{a}}
+        </script>
             <header class="titlepage">
                 <hgroup>
                     <h1>Simulating the Unstable Rotation of a Book </h1>
@@ -27,62 +32,50 @@
             <aside>
                 <h1>Abstract</h1>
                 <p> <i class="highlight">TODO: This could be an abstract, still needs text+styling</i></p>
+                <p> <i class="highlight">TODO: We need to be consistent with formulas: are vectors bold or not?  e.g. x, v, a, F etc.</i></p>
             </aside>
             <section id="section-introduction">
                 <!-- Chapter 1 - Introduction -->
                 <h1>Introduction </h1>
                 <p>Many students consider classical mechanics to be somewhat difficult because it's not always very intuitive. For some students this can lead to frustration when studying for an exam and under stress they might be inclined to throw their classical mechanics book out the window.</p>
                 <p>There are many different ways to throw your classical mechanics book out of your window. One of the more popular ways is to use it as a frisbee. When a book is thrown like a frisbee it starts rotating around the centre of mass of the book. Students that live in one of the higher floors of a flat may notice that this rotation is <em>stable</em>: until the book hits the ground, its apparent axis of rotation does not change.</p>
-                <p>Let us now consider a hard cover book. We can define three perpendicular axes. The first axis runs through the midpoint of the book. The second axis runs through the midpoint of the spine of the book. The third axis runs through the midpoint of the top. When thrown as a frisbee, the book rotates along the first axis, which is called Z in the figure below. This rotation is stable and so is the rotation around third axis (Y). However, if we throw a book so that it is rotating along the second axis (X) we can see that the rotation is unstable.</p>
-                <figure>
+                <p>Let us now consider a hard cover book (<a href="#fig-axes-definition">[ref]</a>). We can define three perpendicular axes. The first axis, <script type="math/tex">x</script> in the figure below, runs through the midpoint of the spine of the book.  The second axis, <script type="math/tex">y</script>, runs through the midpoint of the top.  The third axis, <script type="math/tex">z</script>, runs through the midpoint of the book's covers. </p>
+                <figure id="fig-axes-definition">
                     <img src="include/rotationaxes.png" alt="A cubiod and its main rotational axis X, Y and Z" />
-                    <figcaption>A cuboid with its three main axis </figcaption>
+                    <figcaption>A cuboid with its three main axes</figcaption>
                 </figure>
-                <p>In space, we can see the unstable rotation even better because with a lack of gravity we can eliminate linear momentum. The video below demonstrates an experiment done in an international space station.</p>
+                <p> When thrown as a frisbee, the book rotates along the <dfn>z</dfn> axis. This rotation is stable, as is the rotation around the <script type="math/tex">y</script> axis. However, if we throw a book so that it is rotating along the <script type="math/tex">x</script> axis, the rotation is unstable.  In space, we can see this unstable rotation more clearly because without gravity we can eliminate linear motion. The video below (<a href="#fig-video-ISS">[ref]</a>) demonstrates an experiment done on the international space station.</p>
                 <!-- The <figure>-tag is used below because the <video>-tag doesn't work properly -->
-                <figure>
+                <figure id="fig-video-ISS">
                     <iframe width="420" height="315" src="http://www.youtube.com/embed/GgVpOorcKqc"></iframe>
-                    <br />
-                    <figcaption>Video of experiment in space demonstrating the unstable rotation along the middle axes </figcaption>
+                    <figcaption>Video of an experiment in space demonstrating stable and unstable rotation. <i class="highlight">TODO: source reference</i></figcaption>
                 </figure>
                 
-                <section>
-                    <h1>Simulation</h1>
-                    <p>In this project we will simulate the rotation of a book so that it behaves naturally. We will look at two different approaches. One simulation will be particle-based, the other is based on calculating the angular momentum of a rigid body.</p>
-                    <p>Because the goal of this project is to simulate the rotation correctly, we will consider a system without external forces. </p>
-                </section>
+                <p>In this project we will simulate the rotation of a book so that it behaves naturally (as in <a href="#fig-video-ISS">[ref]</a>).  Since the goal of this project is to simulate the rotation, we will consider a system without external forces.  We will look at two different approaches. Firstly, we will simulate the book as a number of particles connected by springs.  Rotation, whether stable or not, will be an emergent phenomenon based on the interaction between the particles.  The second approach will model the book as a single rigid body in which rotation is explicitly simulated using angular momentum and the book's moment of inertia.</p>
             </section>
             
             <section id="section-particle">
                 <!-- Chapter 2 - Partcile Simulation -->
                 <h1>Particle Simulation </h1>
-                <p>In particle simulation, a number of particles is defined and their position <script type="math/tex">x</script> is tracked over time. The change in position is defined by the velocity <script type="math/tex">v</script> of the particle. Or more formally: </p>                
-                <script type="math/tex; mode=display">
- \label{eq:velocity} v(t) = \dot{x}(t) = \frac{d}{dt} x(t)
-                </script>
+                <p>In the particle simulation a number of particles is defined and their position <script type="math/tex">\x</script> is tracked over time. The change in position is defined by the velocity <script type="math/tex">v</script> of the particle. Or more formally: </p>                
+                <script type="math/tex; mode=display">v(t) = \dot{x}(t) = \frac{d}{dt} x(t)</script>
                 <p>Throughout this article we will use the dot notation to indicate a time derivative which is the standard notation in physics.</p>
                 <p>The velocity of a particle is not necessarily constant, it may also change over time. The change in velocity is defined by the acceleration <script type="math/tex">a</script> of a particle. Or: </p>
-                <script type="math/tex; mode=display">
- \label{eq:acceleration} a(t) = \dot{v}(t) = \frac{d}{dt} v(t)
-                </script>
+                <script type="math/tex; mode=display">a(t) = \dot{v}(t) = \frac{d}{dt} v(t)</script>
                 <p>To find the acceleration of a particle we can use Newton's second law. </p>
-                <script type="math/tex; mode=display">
- \label{eq:newton2} \mathbf{F} = m \mathbf{a}
-                </script>
-                <p>Since the masses of particles are generally constant, the acceleration can be calculated from the force applied to the particle.</p>
+                <script type="math/tex; mode=display">\F = m \a</script>
+                <!--<p>Since the masses of particles are generally constant, the acceleration can be calculated from the force applied to the particle.</p>-->
                 
                 <section>
                     <h1>Modelling the book</h1>
-                    <p>To model an object with particles we must define a number of particles, their mass and how they interact with eachother. For simplicity, we assume that the shape of the book is a cuboid and that it has a uniform distribution of mass. The book is modelled by eight particles located at the eight corner points of the cuboid. Each particle has the same mass. Each particle has an initial position that depends on the initial orientation of the book. It also has an initial velocity that depends on the initial angular velocity. The interacting forces are modelled by placing a spring between each pair of particles. This means that in total there are 28 springs.</p>
-                    <p>The interacting force between to particles can be calculated with Hooke's law:</p>
-                    <script type="math/tex; mode=display">
- \label{eq:hooke} \mathbf{F} = -k \mathbf{x} 
-                    </script>
-                    <p>Here, <script type="math/tex">k</script> the the spring constant and <script type="math/tex">\mathbf{x}</script> is the displacement vector.</p>
+                    <p>To model an object with particles we must define a number of particles, their mass and how they interact with each other. For simplicity, the book is modelled by eight particles located at the eight corner points of the cuboid. Each particle has the same mass and an initial position that depends on the initial orientation of the book. The initial linear velocity of each particle is computed using the initial angular velocity of the book as a whole.  To ensure the book maintains its shape, virtual springs are added between each pair of particles.  This means that in total there are 28 springs.</p>
+                    <p>The interacting force between two particles can be calculated with Hooke's law:</p>
+                    <script type="math/tex; mode=display"> \F = -k \x </script>
+                    <p>Here, <script type="math/tex">k</script> is the the spring constant (defined to be identical for all springs) and <script type="math/tex">\x</script> the displacement vector.  The equilibrium length of each spring is computed using the book at rest.</p>
                     <p>The total force on a particle <script type="math/tex">i</script> is the sum of the individual forces between particle <script type="math/tex">i</script> and every particle <script type="math/tex">j \neq i</script>.</p>
                     <p>Newton's third law</p>
                     <script type="math/tex; mode=display">
- \label{eq:newton3} \sum \mathbf{F}_{a,b} = - \sum \mathbf{F}_{b,a}
+ \label{eq:newton3} \sum \F_{a,b} = - \sum \F_{b,a}
                     </script>
                 </section>
                 
