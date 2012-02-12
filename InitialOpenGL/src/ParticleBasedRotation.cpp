@@ -8,8 +8,8 @@
 
 using namespace Eigen;
 
-ParticleBasedRotation::ParticleBasedRotation(Vector3d dimensions, double timestep)
-	: RotationModel(dimensions, timestep)
+ParticleBasedRotation::ParticleBasedRotation(Vector3d dimensions)
+	: RotationModel(dimensions)
 {
 	k = 10.0;
 	part_mass = 1.0;
@@ -49,7 +49,7 @@ void ParticleBasedRotation::resetWithAngularMomentum(Vector3d angular_momentum) 
 
 ParticleBasedRotation::~ParticleBasedRotation() {}
 
-void ParticleBasedRotation::updateStep() {
+void ParticleBasedRotation::updateStep(double timestep) {
 	Matrix38d accel = Matrix38d::Zero();
 
 	for(ptrdiff_t i=0;i<position.cols(); ++i) {

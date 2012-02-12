@@ -25,18 +25,15 @@ protected:
 
 	Vector3d dimensions;
 
-	RotationModel(Vector3d dimensions, double timestep);
+	RotationModel(Vector3d dimensions);
 public:
-	double timestep;
 	bool normalize;
 	virtual void resetWithAngularMomentum(Vector3d angular_momentum)=0;
 	Vector3d getDimensions() {return dimensions;}
-	void faster() { timestep *= 1.2; }
-	void slower() { timestep /=1.2; }
 
 	virtual Matrix38d getPositions()=0;
 	virtual void jiggle()=0;
-	virtual void updateStep()=0;
+	virtual void updateStep(double timestep)=0;
 	virtual ~RotationModel();
 
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW

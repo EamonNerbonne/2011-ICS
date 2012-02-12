@@ -2,8 +2,7 @@
 
 RotationModel::~RotationModel(){}
 
-RotationModel::RotationModel(Vector3d dimensions, double timestep) 
+RotationModel::RotationModel(Vector3d dimensions) 
 	: dimensions(dimensions)
-	, timestep(timestep)	
 	, normalize(false)
 	{ }

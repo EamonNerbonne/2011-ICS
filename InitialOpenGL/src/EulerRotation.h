@@ -10,8 +10,8 @@ public:
 
 	virtual void resetWithAngularMomentum(Vector3d angular_momentum);
 	virtual Matrix38d getPositions();
-	virtual void updateStep();
+	virtual void updateStep(double timestep);
 	virtual void jiggle();
-	EulerRotation(Eigen::Vector3d dimensions, double timestep);
+	EulerRotation(Eigen::Vector3d dimensions);
 	virtual ~EulerRotation();
 };

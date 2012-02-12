@@ -11,9 +11,9 @@ public:
 	virtual void resetWithAngularMomentum(Vector3d angular_momentum);
 
 	virtual Matrix38d getPositions();
-	virtual void updateStep();
+	virtual void updateStep(double timestep);
 	virtual void jiggle();
-	QuaternionRotation(Eigen::Vector3d dimensions, double timestep);
+	QuaternionRotation(Eigen::Vector3d dimensions);
 	virtual ~QuaternionRotation();
 
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW

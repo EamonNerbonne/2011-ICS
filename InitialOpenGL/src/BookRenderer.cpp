@@ -19,18 +19,18 @@
 using std::shared_ptr;
 using std::cout;
 
-BookRenderer::BookRenderer(shared_ptr<RotationModel> initstate) : state(initstate)
+BookRenderer::BookRenderer(shared_ptr<RotationModel> initstate, double timestep, int timesteps_per_frame) : state(initstate), timestep(timestep), timesteps_per_frame(timesteps_per_frame)
 {
 	texture = shared_ptr<RgbaImageTexture>(new RgbaImageTexture("textures/cover.png"));
 }
 
 void BookRenderer::display() {
-	for(int i=0;i<30000/30;i++)
-		state->updateStep();
+	for(int i=0;i<timesteps_per_frame;i++)
+		state->updateStep(timestep/timesteps_per_frame);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_TEXTURE_2D);
 	glLoadIdentity();
-	glTranslatef(0.0f,0.0f,-12.0f);
+	glTranslatef(0.0f,0.0f,-8.0f);
 	renderBook();
 	glutSwapBuffers();
 }
@@ -58,10 +58,10 @@ void BookRenderer::keyboard(unsigned char key, int /*x*/, int /*y*/) {
 		exit(0);
 		break;
 	case '+':
-		state->faster();
+		timestep*=1.2;
 		break;
 	case '-':
-		state->slower();
+		timestep/=1.2;
 		break;
 	case 'r':
 		state->jiggle();
@@ -81,17 +81,17 @@ void BookRenderer::keyboard(unsigned char key, int /*x*/, int /*y*/) {
 		state->resetWithAngularMomentum(Vector3d(0.0,0.0,1.0));
 		break;
 	case '7':
-		state = shared_ptr<RotationModel>(new ParticleBasedRotation(state->getDimensions(),state->timestep));
+		state = shared_ptr<RotationModel>(new ParticleBasedRotation(state->getDimensions()));
 		state->resetWithAngularMomentum(Vector3d(1.0,0.0,0.0));
 		cout <<"ParticleBasedRotation\n";
 		break;
 	case '8':
-		state = shared_ptr<RotationModel>(new EulerRotation(state->getDimensions(),state->timestep));
+		state = shared_ptr<RotationModel>(new EulerRotation(state->getDimensions()));
 		state->resetWithAngularMomentum(Vector3d(1.0,0.0,0.0));
 		cout <<"EulerRotation\n";
 		break;
 	case '9':
-		state = shared_ptr<RotationModel>(new QuaternionRotation(state->getDimensions(),state->timestep));
+		state = shared_ptr<RotationModel>(new QuaternionRotation(state->getDimensions()));
 		state->resetWithAngularMomentum(Vector3d(1.0,0.0,0.0));
 		cout <<"QuaternionRotation\n";
 		break;

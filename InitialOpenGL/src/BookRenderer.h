@@ -8,9 +8,11 @@ class RotationModel;
 class BookRenderer : public DisplayManager {
 	void renderBook(void);
 	std::shared_ptr<RotationModel> state;
+	double timestep;
+	int timesteps_per_frame;
 	std::shared_ptr<RgbaImageTexture> texture;
 public:
-	BookRenderer(std::shared_ptr<RotationModel> initstate);
+	BookRenderer(std::shared_ptr<RotationModel> initstate, double timestep, int timesteps_per_frame);
 	virtual void display() ;
 	virtual void idle();
 	virtual void reshape(int width, int height)	;

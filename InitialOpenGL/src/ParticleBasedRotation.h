@@ -13,9 +13,9 @@ class ParticleBasedRotation : public RotationModel {
 public:
 	virtual void resetWithAngularMomentum(Vector3d angular_momentum);
 	virtual Matrix38d getPositions() {return position;}
-	virtual void updateStep();
+	virtual void updateStep(double timestep);
 	virtual void jiggle();
-	ParticleBasedRotation(Eigen::Vector3d dimensions, double timestep);
+	ParticleBasedRotation(Eigen::Vector3d dimensions);
 	virtual ~ParticleBasedRotation();
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };

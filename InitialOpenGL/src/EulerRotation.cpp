@@ -8,8 +8,8 @@
 
 using namespace Eigen;
 
-EulerRotation::EulerRotation(Vector3d dimensions, double timestep)
-	: RotationModel(dimensions, timestep)
+EulerRotation::EulerRotation(Vector3d dimensions)
+	: RotationModel(dimensions)
 	, orientation(Matrix3d::Identity())
 {
 	Vector3d diagOf_MoI=
@@ -22,7 +22,7 @@ EulerRotation::EulerRotation(Vector3d dimensions, double timestep)
 	MoI_body_inv = diagOf_MoI.array().inverse().matrix().asDiagonal();
 }
 
-void EulerRotation::updateStep() {
+void EulerRotation::updateStep(double timestep) {
 	Matrix3d I_inv = orientation * MoI_body_inv * orientation.transpose();
 	Vector3d omega = I_inv * angular_momentum;
 	orientation += timestep * asTensor(omega) * orientation;

@@ -6,8 +6,8 @@
 
 using namespace Eigen;
 
-QuaternionRotation::QuaternionRotation(Vector3d dimensions, double timestep)
-	: RotationModel(dimensions, timestep)
+QuaternionRotation::QuaternionRotation(Vector3d dimensions)
+	: RotationModel(dimensions)
 	, orientation(Quaternion<double>::Identity())
 {
 	Vector3d diagOf_MoI=
@@ -20,7 +20,7 @@ QuaternionRotation::QuaternionRotation(Vector3d dimensions, double timestep)
 	MoI_body_inv = diagOf_MoI.array().inverse().matrix().asDiagonal();
 }
 
-void QuaternionRotation::updateStep() {
+void QuaternionRotation::updateStep(double timestep) {
 	Matrix3d I_inv = orientation * MoI_body_inv * orientation.conjugate();
 	Vector3d omega = I_inv * angular_momentum;
 
