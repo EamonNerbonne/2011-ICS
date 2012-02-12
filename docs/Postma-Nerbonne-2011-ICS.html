@@ -13,6 +13,7 @@
         \newcommand{\F}{\mathbf{F}}
         \newcommand{\x}{\mathbf{x}}
         \newcommand{\a}{\mathbf{a}}
+        \newcommand{\d}{\mathbf{d}}
         </script>
             <header class="titlepage">
                 <hgroup>
@@ -53,33 +54,44 @@
                 
                 <p>In this project we will simulate the rotation of a book so that it behaves naturally (as in <a href="#fig-video-ISS">[ref]</a>).  Since the goal of this project is to simulate the rotation, we will consider a system without external forces.  We will look at two different approaches. Firstly, we will simulate the book as a number of particles connected by springs.  Rotation, whether stable or not, will be an emergent phenomenon based on the interaction between the particles.  The second approach will model the book as a single rigid body in which rotation is explicitly simulated using angular momentum and the book's moment of inertia.</p>
             </section>
+            <section>
+                <h1>Euler method</h1>
+                <p>To implement simulation, we will define a number of ordinary differential equations (ODEs). These will be solved numerically.  Since Euler's method is the simplest method and computationally cheap, it was used to solve the equations arising from the models below. </p>
+                <p>In Euler integration the value of a function is computed at discrete timesteps <script type="math/tex">t_{i}</script> where <script type="math/tex">t_{i+1} = t_{i} + \Delta t</script>. The value of a function at the next timestep is computed using a linear extrapolation from its current value and its derivative: </p>
+                <script type="math/tex; mode=display">
+ g(t_{i+1}) = g(t_{i}) + \dot{g}(t_{i}) \Delta t
+                </script>
+                <p>At each time step, Euler integration introduces an error which is (at worst) proportional <script type="math/tex">\Delta t</script>.  Thus, for a fixed time interval (which requires more timesteps as <script type="math/tex">\Delta t</script> decreases), the overall error is at worst directly proportional to <script type="math/tex">\Delta t</script>.  However, even with a short time step, the error will grow and the calculated value will drift far away from the actual value.  To reduce the effect of this drift, it is in general useful to use a higher order numerical integration technique resulting in less error.  These (usually) come at the cost of a longer computation time and cannot eliminate the error. As this simulation is not computationally intensive, a CPU can compute very many timesteps in real time, so that even Euler integration is sufficiently accurate to make demonstration of the numerical errors impractical.  To highlight the difference between the models, a larger-than-necessary timestep was thus used.</p>
+            </section>
             
             <section id="section-particle">
                 <!-- Chapter 2 - Partcile Simulation -->
                 <h1>Particle Simulation </h1>
                 <p>In the particle simulation a number of particles is defined and their position <script type="math/tex">\x</script> is tracked over time. The change in position is defined by the velocity <script type="math/tex">v</script> of the particle. Or more formally: </p>                
                 <script type="math/tex; mode=display">v(t) = \dot{x}(t) = \frac{d}{dt} x(t)</script>
-                <p>Throughout this article we will use the dot notation to indicate a time derivative which is the standard notation in physics.</p>
+                
                 <p>The velocity of a particle is not necessarily constant, it may also change over time. The change in velocity is defined by the acceleration <script type="math/tex">a</script> of a particle. Or: </p>
                 <script type="math/tex; mode=display">a(t) = \dot{v}(t) = \frac{d}{dt} v(t)</script>
                 <p>To find the acceleration of a particle we can use Newton's second law. </p>
                 <script type="math/tex; mode=display">\F = m \a</script>
-                <p>Where necessary, we will use subscripts to differentiate between particles.  For example, <script type="math/tex">\x_i</script> is the position of the <script type="math/tex">i</script>-th particle, <script type="math/tex">\F_j</script> the force acting on particle <script type="math/tex">j</script>, and <script type="math/tex">\F_{j,i}</script> the force acting on particle <script type="math/tex">j</script> due to the spring connected to <script type="math/tex">i</script>.</p>
+                <p>Where necessary, we will use subscripts to differentiate between particles.  For example, <script type="math/tex">\x_i</script> is the position of the <script type="math/tex">i</script>-th particle, <script type="math/tex">\F_i</script> the force acting on particle <script type="math/tex">i</script>, and <script type="math/tex">\F_{ij}</script> the force acting on particle <script type="math/tex">i</script> due to the spring connected to the <script type="math/tex">j</script>-th particle.</p>
                 <!--<p>Since the masses of particles are generally constant, the acceleration can be calculated from the force applied to the particle.</p>-->
                 
                 <section>
                     <h1>Modelling the book</h1>
                     <p>To model an object with particles we must define a number of particles, their mass and how they interact with each other. For simplicity, the book is modelled by eight particles located at the eight corner points of the cuboid. Each particle has the same mass and an initial position that depends on the initial orientation of the book. The initial linear velocity of each particle is computed using the initial angular velocity of the book as a whole.  To ensure the book maintains its shape, virtual springs are added between each pair of particles.  This means that in total there are 28 springs.</p>
-                    <p>The force caused by the spring between two particles can be calculated with Hooke's law:</p>
-                    <script type="math/tex; mode=display"> F = -k d </script>
-                    <p>Here, <script type="math/tex">k</script> is the the spring constant (defined to be identical for all springs) and <script type="math/tex">d</script> the displacement from the equilibrium length.  The equilibrium length of each spring is computed using the book's shape at rest. </p>
-                    <p>The total force on a particle <script type="math/tex">i</script> is the sum of the individual forces between particle <script type="math/tex">i</script> and every particle <script type="math/tex">j \neq i</script>.  However, the direction of displacement   </p>
-                    <p>Newton's third law</p>
-                    <script type="math/tex; mode=display">
- \label{eq:newton3} \sum \F_{a,b} = - \sum \F_{b,a}
+                    <p>The force on <script type="math/tex">i</script> by the spring to <script type="math/tex">j</script> is (by Hooke's law) directly proportional to the displacement from the equilibrium length but in opposite direction.  Accounting for the fact that the orientation of the spring depends on the position of the particles it is attached to, this can be expressed as follows:</p>
+                    <script type="math/tex; mode=display"> 
+                        \begin{align*}
+                            \F_{ij} & = -k \left(\|\x_i - \x_j\| - \mathbf{L}_{ij}\right)\frac{\x_i - \x_j}{\|\x_i - \x_j\|} \\
+                                       & = -k \left(1 - \frac{\mathbf{L}_{ij}}{\|\x_i - \x_j\|}\right)(\x_i - \x_j)
+                        \end{align*}
                     </script>
+                    <p>Here, <script type="math/tex">k</script> is the the spring constant (defined to be identical for all springs) and <script type="math/tex">\mathbf{L}_{ij}</script> the equilibrium length of the spring between <script type="math/tex">i</script> and <script type="math/tex">j</script> (as determined using the book's shape at rest). The total force on a particle <script type="math/tex">i</script> is simply the sum of the individual forces acting on it.</p>
+                    <p>Although this simple model works, the springs maintaining the book's shape have a tendency to vibrate.  Initially, the book's springs are in equilibrium and thus do not provide the necessary centripital acceleration to maintain the book's shape.  As the rotation causes the particles to move further apart spring tensions rise.  When the time the outward motion is fully halted by the high spring tension, the spring tension does not cease but insteads starts pulling the points closer together again.  This process repeats indefinitely, causing vibration.  By increasing the spring constant, the amount of distortion to the shape can be minimized; after all, with stiffer springs less displacement is necessary to provide the same centripital acceleration.</p>
+                    <p>The error caused by Euler integration in this model causes the system to vibrate more and more strongly as time progresses.  In effect, by simulating the rotating motion in a piecewise linear fashion, the counteracting pull of the springs comes a short moment after the exension caused by the rotation.  Thus, on average, each timestep adds a small amount of potential energy to the springs.  Eventually, the system diverges.  Visually, the book "blows up".  By decreasing the spring constant, the amount of potential energy gained each timestep is reduced thus delaying the moment of divergence.  The choice of spring constant thus represents a trade-off between maintaining the shape as much as possible or delaying divergence as much as possible.</p>
+
                 </section>
-                
                 <section>
                     <h1>Damping</h1>
                     <p>Something on damping.</p>
@@ -131,16 +143,6 @@
                 <p>In our implementation the visualisation is seperated from the calculation of the rotation. </p>
                 <p>The implementation is written in C++. The Eigen library is used for linear algebra <a href="#bib-eigen">[ref]</a>. The library provides useful data types, such as matrices and vectors, and useful operations on these data types, such as the dot product of two matrices.</p>
                 
-                <section>
-                    <h1>Euler integration</h1>
-                    <p>In the implementation of the rotation we will need to solve ordinary differential equations (ODEs). These will be solved numerically. Euler's method is the most basic numerical procedure to solve ODEs with a known initial value.</p>
-                    <p>In Euler integration the value of a function at <script type="math/tex">t_{i+1}</script> is calculated from the value of that function at <script type="math/tex">t_{i}</script> and the derivate of the function at <script type="math/tex">t_{i}</script>. </p>
-                    <script type="math/tex; mode=display">
- \label{eq:euler} g(t_{i+1}) = g(t_{i}) + g'(t_{i}) \Delta t
-                    </script>
-                    <p>At each time step, Euler integration introduces an error. This error is proportional to the time step. This is way a small time step is preferable. However, even with small time steps the error will grow and the calculated value will drift far away from the actual value.</p>
-                    <p>To reduce the effect of this drift it may sensible to switch to a higher order numerical integration technique that produces a smaller error. This comes at the cost of a longer computation time. Even though this will reduce the error it can not eliminate it. An alternative in this case is normalisation.</p>
-                </section>
                 
                 <section>
                     <h1>Particle Simulation</h1>
