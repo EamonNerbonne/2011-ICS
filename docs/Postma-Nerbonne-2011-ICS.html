@@ -236,26 +236,51 @@
                 <section>
                     <h1>Particle Simulation</h1>
                     <p>The particle-based simulation produces a natural looking simulation of the rotation of a book. The rotation along the shortest and longest axis is stable. Rotation along the middle axis also appears to be stable, but this rotation is not robust. As soon as the rotation is only slightly dis-aligned with the axis it turns into an unstable rotation. The video in <a href="#fig-video-results-particle">[ref]</a> shows the rotation along the middle axis. First it is stable but when a small dis-alignment is introduced the rotation proves unstable. The simulation runs sufficiently fast on a standard computer. </p>
-                    <p>Damping is a necessary part of this particle simulation. Without damping, we can observe the rotation being transformed into vibration. Without normalization, the total sum of energy increases and the simulation "explodes".</p>
+                    <p>Damping is a necessary part of this particle simulation. Without damping, we can observe the rotation being transformed into vibration. We can see this in <a href="#fig-video-results-particle-nodamp">[ref]</a>. Without normalization, the total sum of energy increases and the simulation "explodes". This is shown in <a href="#fig-video-results-particle-nonorm">[ref]</a>. </p>
 					<figure id="fig-video-results-particle">
                         <div class="iframe">
                             <iframe src="http://www.youtube.com/embed/9FTlJCfqWa4?theme=light&amp;hd=1&amp;modestbranding=1"></iframe>
                         </div>
-                    <figcaption>Video of particle simulation showing unstable rotation.</figcaption>
-                </figure>
-                    <p><i class="highlight">TODO: Insert video links.</i></p>
-                    <div class="iframe">
-                    <label>(Show Video) <input type="checkbox"/>
-                    <span><iframe src="http://www.youtube.com/embed/UAmZ7DC11mA?theme=light&amp;hd=1&amp;modestbranding=1"></iframe></span></label>
-                    </div>
+                        <figcaption>Video of particle simulation showing unstable rotation.</figcaption>
+                    </figure>
+					
+					<figure id="fig-video-results-particle-nodamp">
+                        <div class="iframe">
+                            <label>(Show Video) <input type="checkbox"/>
+                            <span><iframe src="http://www.youtube.com/embed/zesM8mFwqso?theme=light&amp;hd=1&amp;modestbranding=1"></iframe></span></label>
+                        </div>
+						<figcaption>Video of particle simulation showing unstable rotation, without damping.</figcaption>
+			        </figure>
+					
+					<figure id="fig-video-results-particle-nonorm">
+                        <div class="iframe">
+                            <label>(Show Video) <input type="checkbox"/>
+                            <span><iframe src="http://www.youtube.com/embed/wKXNdiDOhGI?theme=light&amp;hd=1&amp;modestbranding=1"></iframe></span></label>
+                        </div>
+						<figcaption>Video of particle simulation showing unstable rotation, without normailzation.</figcaption>
+			        </figure>
                 </section>
                 
                 <section>
                     <h1>Rigid Simulation</h1>
                     <p>A rigid simulation where the orientation of the body is updated in each time step can be implemented in two different ways: using a 3 <script type="math/tex">\times</script> 3 orientation matrix and using quaternions. </p>
-                    <p>The simulation using an orientation matrix also produces a natural looking result and it also runs sufficiently fast. Without normalization the error produced by Euler integration adds up and we can see the shape of the book start to change noticeably after some time. Eventually, the error is so extreme that the simulation crashes. </p>
-					<p><i class="highlight">TODO: Insert video links.</i></p>
-                    <p>The simulation of the rotating book using the quaternion-based implementation appears to be visually the same as the orientation matrix method. However, this changes when normalization is turned off. Like the implementation with the orientation matrix the shape of the book will eventually change when normalization is turned off. It takes longer for this change to take effect. </p>
+                    <p>The simulation using an orientation matrix also produces a natural looking result and it also runs sufficiently fast (<a href="#fig-video-results-orientation">[ref]</a>). Without normalization the error produced by Euler integration adds up and we can see the shape of the book start to change noticeably after some time. Eventually, the error is so extreme that the simulation crashes. </p>
+					<figure id="fig-video-results-orientation">
+                        <div class="iframe">
+                            <label>(Show Video) <input type="checkbox"/>
+                            <span><iframe src="http://www.youtube.com/embed/UAmZ7DC11mA?theme=light&amp;hd=1&amp;modestbranding=1"></iframe></span></label>
+                        </div>
+						<figcaption>Video of orientation based simulation showing unstable rotation.</figcaption>
+			        </figure>
+                    <p>The simulation of the rotating book using the quaternion-based implementation appears to be visually the same as the orientation matrix method. However, this changes when normalization is turned off (<a href="#fig-video-results-quaternion-nonorm">[ref]</a>). Like the implementation with the orientation matrix the shape of the book will eventually change when normalization is turned off. It takes longer for this change to take effect. </p>
+					<figure id="fig-video-results-quaternion-nonorm">
+                        <div class="iframe">
+                            <label>(Show Video) <input type="checkbox"/>
+                            <span><iframe src="http://www.youtube.com/embed/5qZKb5Rl4ZE?theme=light&amp;hd=1&amp;modestbranding=1"></iframe></span></label>
+                        </div>
+						<figcaption>Video of quaternion based simulation showing unstable rotation, without normalization.</figcaption>
+			        </figure>
+					
 					<p><i class="highlight">TODO: Insert video links.</i></p>
                 </section>
             </section>
