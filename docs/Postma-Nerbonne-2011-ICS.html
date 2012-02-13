@@ -181,7 +181,7 @@
                 
                 <section>
                     <h1>Implementation</h1>
-                    <p></p>
+                    <p>The only thing we need to store is a 3 <script type="math/tex">\times</script> 3 matrix describing the orientation, another 3 <script type="math/tex">\times</script> 3 matrix for the moment of inertia and vector decribing the angular momentum. In each timestep we calculate the angular velocity and we update the orientation. The orientation can then be normalized with SVD using the Eigen library. From the orientation matrix, the world coordinates of the corner points are determined which are used to visualize the book. </p>
                 </section>
                 
                 <section>
