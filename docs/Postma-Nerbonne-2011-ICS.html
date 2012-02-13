@@ -75,7 +75,7 @@
                 </script>
                 <p>To find the acceleration of a particle we can use Newton's second law. </p>
                 <script type="math/tex; mode=display">F = m a</script>
-                <p>Where necessary, we will use subscripts to differentiate between particles.  For example, <script type="math/tex">\x_i</script> is the position of the <script type="math/tex">i</script>-th particle, <script type="math/tex">\F_i</script> the force acting on particle <script type="math/tex">i</script>, and <script type="math/tex">\F_{ij}</script> the force acting on particle <script type="math/tex">i</script> due to the spring connected to the <script type="math/tex">j</script>-th particle.</p>
+                <p>Where necessary, we will use subscripts to differentiate between particles.  For example, <script type="math/tex">x_i</script> is the position of the <script type="math/tex">i</script>-th particle, <script type="math/tex">F_i</script> the force acting on particle <script type="math/tex">i</script>, and <script type="math/tex">F_{ij}</script> the force acting on particle <script type="math/tex">i</script> due to the spring connected to the <script type="math/tex">j</script>-th particle.</p>
                 <!--<p>Since the masses of particles are generally constant, the acceleration can be calculated from the force applied to the particle.</p>-->
                 
                 <section>
@@ -84,8 +84,8 @@
                     <p>The force on <script type="math/tex">i</script> by the spring to <script type="math/tex">j</script> is (by Hooke's law) directly proportional to the displacement from the equilibrium length but in opposite direction.  Accounting for the fact that the orientation of the spring depends on the position of the particles it is attached to, this can be expressed as follows:</p>
                     <script type="math/tex; mode=display"> 
                         \begin{align*}
-                            \F_{ij} & = -k \left(\|\x_i - \x_j\| - \mathbf{L}_{ij}\right)\frac{\x_i - \x_j}{\|\x_i - \x_j\|} \\
-                                       & = -k \left(1 - \frac{\mathbf{L}_{ij}}{\|\x_i - \x_j\|}\right)(\x_i - \x_j)
+                            F_{ij} & = -k \left(\|x_i - x_j\| - \mathbf{L}_{ij}\right)\frac{x_i - x_j}{\|x_i - x_j\|} \\
+                                       & = -k \left(1 - \frac{\mathbf{L}_{ij}}{\|x_i - x_j\|}\right)(x_i - x_j)
                         \end{align*}
                     </script>
                     <p>Here, <script type="math/tex">k</script> is the the spring constant (defined to be identical for all springs) and <script type="math/tex">\mathbf{L}_{ij}</script> the equilibrium length of the spring between <script type="math/tex">i</script> and <script type="math/tex">j</script> (as determined using the book's shape at rest). The total force on a particle <script type="math/tex">i</script> is simply the sum of the individual forces acting on it.</p>
