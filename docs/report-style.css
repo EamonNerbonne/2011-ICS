@@ -192,13 +192,14 @@ div.iframe > label {
     color:Green;
 }
 
-div.iframe > label > input[type=checkbox] + div { visibility:collapse; overflow:hidden; height:0;
+div.iframe > label > input[type=checkbox] + span { visibility:collapse; overflow:hidden; height:0;
    -webkit-transition: height 0.5s 0s ease-in, visibility 0 0.5s ; 
    -ms-transition: height 0.5s 0s ease-in, visibility 0 0.5s ; 
    -moz-transition: height 0.5s 0s ease-in, visibility 0 0.5s ; 
    transition: height 0.5s 0s ease-in, visibility 0 0.5s ; 
+   display:block;
                                                   }
-div.iframe > label > input[type=checkbox]:checked + div { visibility:visible; height:9.5cm;
+div.iframe > label > input[type=checkbox]:checked + span { visibility:visible; height:9.5cm;
    -webkit-transition: height 0.5s 0s ease-in; 
    -ms-transition: height 0.5s 0s ease-in; 
    -moz-transition: height 0.5s 0s ease-in; 

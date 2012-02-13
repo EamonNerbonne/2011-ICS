@@ -45,7 +45,7 @@
                 <!-- The <figure>-tag is used below because the <video>-tag doesn't work properly -->
                 <figure id="fig-video-ISS">
                     <div class="iframe">
-                        <iframe src="http://www.youtube.com/embed/GgVpOorcKqc?theme=light&hd=1&modestbranding=1"></iframe>
+                        <iframe src="http://www.youtube.com/embed/GgVpOorcKqc?theme=light&amp;hd=1&amp;modestbranding=1"></iframe>
                     </div>
                     <figcaption>Video of an experiment in space demonstrating both stable and unstable rotation <a href="#bib-video-ISS">[ref]</a>.</figcaption>
                 </figure>
@@ -132,7 +132,7 @@
                     <p>The book is visualized using OpenGL to visualize the book. In OpenGL a cuboid is rendered by specifying its eight sides. The position of the eight corner points of the book define where to draw each side of the book. To be able the distinguish between different sides of the book a texture is rendered on the front, spine and back of the book.</p>
                     <p>In our implementation the visualization is separated from the calculation of the rotation. For visualization we will need the world coordinates of the corner points of the book. Since the particles are located at these corners their positions can directly be used for visualization.</p>
                     <p>For the particle simulation, we need to store the positions and the velocities in 3D space of all the particles. Both are stored in a <script type="math/tex">3 \times 8</script> matrix. The interacting forces and the equilibrium lengths of each spring are stored in an <script type="math/tex">8 \times  8</script> matrix. The implementation is written in C++, in which matrices are not standard. The Eigen library can be used for linear algebra <a href="#bib-eigen">[ref]</a>. This library provides useful data types, such as matrices and vectors, and many common linear algebra operations.</p>
-                    <p>At each time step the positions are updated using the velocity and then the velocity is updated using the computed forces (Newton's third law is exploited to avoid half of the force computations).  After calculating the new values, they can be normalized.</p>
+                    <p>At each time step the positions are updated using the velocity and then the velocity is updated using the computed forces (Newton's third law is exploited to avoid half of the force computations).  After calculating the new values, they can be normalized. The initial positions and velocities are computed based on a choice b can be chosen by the user; three predefined initial rotations are computed based off an a fixed angular velocity around each  </p>
                 </section>
             </section>
             <section id="section-rigid">
@@ -239,14 +239,14 @@
                     <p>Damping is a necessary part of this particle simulation. Without damping, we can observe the rotation being transformed into vibration. Without normalization, the total sum of energy increases and the simulation "explodes".</p>
 					<figure id="fig-video-results-particle">
                         <div class="iframe">
-                            <iframe src="http://www.youtube.com/embed/9FTlJCfqWa4?theme=light&hd=1&modestbranding=1"></iframe>
+                            <iframe src="http://www.youtube.com/embed/9FTlJCfqWa4?theme=light&amp;hd=1&amp;modestbranding=1"></iframe>
                         </div>
                     <figcaption>Video of particle simulation showing unstable rotation.</figcaption>
                 </figure>
                     <p><i class="highlight">TODO: Insert video links.</i></p>
                     <div class="iframe">
                     <label>(Show Video) <input type="checkbox"/>
-                    <div><iframe src="http://www.youtube.com/embed/UAmZ7DC11mA?theme=light&hd=1&modestbranding=1"></iframe></div></label>
+                    <span><iframe src="http://www.youtube.com/embed/UAmZ7DC11mA?theme=light&amp;hd=1&amp;modestbranding=1"></iframe></span></label>
                     </div>
                 </section>
                 
