@@ -200,17 +200,17 @@
                 
                 <section>
                     <h1>Quaternions</h1>
-                    <p>Quaternions provide a convenient mathematical notation for representing orientations and rotations of objects in three dimensions. Expressing rotations as quaternions offers some advantages over a matrix notation. Concatenating rotations has a low computational cost and it's easier to extract the angle and axis of rotation. In our case, they're useful because normalization of quaternions is computationally much cheaper than normalization of the orientation matrix via SVD.</p>
+                    <p>Quaternions, and extension to complex numbers with a further two non-real components, provide a convenient mathematical notation for representing orientations and rotations of objects in three dimensions. Expressing rotations as quaternions offers some advantages over a matrix notation. Concatenating rotations has a low computational cost and it's easier to extract the angle and axis of rotation. In our case, they're useful because normalization of quaternions is computationally much cheaper than normalization of the orientation matrix via SVD.</p>
                     <p>A quaternion <script type="math/tex">q</script> can be written as <script type="math/tex">w + x i + y j + z k</script> where <script type="math/tex">i^2 = j^2 = k^2 = ijk = -1</script>. </p>
-                    <p>In quaternion notation the orientation is denoted as <script type="math/tex">q</script>. The change in orientation is now given by:</p>
+                    <p>In quaternion notation the orientation is denoted as <script type="math/tex">q</script>. The change in orientation can then be written as:</p>
                     <script type="math/tex; mode=display">
-                    \dot{q}(t) = q(t) * \frac{1}{2} \omega (t)
+                    \dot{q}(t) = \frac{1}{2} q(t) \omega (t)
                     </script>
-                    <p>To calculate the moment of inertia we can't use the transpose of the orientation matrix. Instead the complex conjugate of the orientation quaternion is used:</p>
+                    <p>(Strictly speaking, the vector <script type="math/tex">\omega</script> is reinterpreted as a quaternion <script type="math/tex">\omega_x i + \omega_y j + \omega_z k</script> here). To calculate the moment of inertia we can't use the transpose of the orientation matrix. Instead the quaternion conjugate (just like complex numbers, this means to negate the non-real components) of the orientation quaternion is used:</p>
                     <script type="math/tex; mode=display">
                     I(t) = q(t) I_{body} \overline{q}(t)
                     </script>
-                    <p>Quaternions are supported in the Eigen library thus the implementation of the rigid method using quaternions are very similar to the one using an orientation matrix. This orientation matrix is replaced by a quaternion and in the calculating of the new orientation we add a factor 0.5.</p>
+                    <p>Quaternions are supported in the Eigen library thus the implementation of the rigid body method using quaternions is very similar to the one using an orientation matrix. This orientation matrix is replaced by a quaternion and in the calculating of the new orientation we add a factor 0.5.  In particular, the library defines a multiplication of a quaternion by a matrix involves conceptually reinterpreting the quaternion as a matrix with coefficients computed to result in an equivalent rotation.</p>
                     <p>Normalization of quaternions is also supported by Eigen. This normalization is similar to the normalization of a vector. The four values <script type="math/tex">w, x, y</script> and <script type="math/tex">z</script> are simply divided by the magnitude of the quaternion:</p>
                     <script type="math/tex; mode=display">
                     ||q|| = \sqrt{w^2+x^2+y^2+z^2}
