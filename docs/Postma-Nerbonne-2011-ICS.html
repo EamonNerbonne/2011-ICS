@@ -196,7 +196,11 @@
                     <script type="math/tex; mode=display">
                     I(t) = q(t) I_{body} \overline{q}(t)
                     </script>
-                    <p><i class="highlight">TODO: Something on the normalization and implementation of quaternions.</i></p>
+                    <p>Quaternions are supported in the Eigen library thus the implementation of the rigid method using quaternions are very similar to the one using an orientation matrix. This orientation matrix is replaced by a quaternion.</p>
+                    <p>Normalization of quaternions is also supported by Eigen. This normalization is similar to the normalization of a vector. The four values <script type="math/tex">w, x, y</script> and <script type="math/tex">z</script> are simply divided by the magnitude of the quaternion:</p>
+                    <script type="math/tex; mode=display">
+                    |q| = \sqrt{w^2+x^2+y^2+z^2}
+                    </script></p>
                 </section>
             </section>
             
