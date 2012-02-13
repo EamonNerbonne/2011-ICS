@@ -234,25 +234,15 @@
                 <section>
                     <h1>Particle Simulation</h1>
                     <p>The particle-based simulation produces a natural looking simulation of the rotation of a book. The rotation along the shortest and longest axis is stable. Rotation along the middle axis also appears to be stable, but this rotation is not robust. As soon as the rotation is only slightly dis-aligned with the axis it turns into an unstable rotation.</p>
-                    <p>Damping is a necessary part of this particle simulation. </p>
+                    <p>Damping is a necessary part of this particle simulation. Without damping, we can observe the rotation being transformed into vibration.</p>
                     <p>This simulation is sufficiently fast. <i class="highlight">TODO: Little more text.</i></p>
                 </section>
                 
                 <section>
                     <h1>Rigid Simulation</h1>
                     <p>A rigid simulation where the orientation of the body is updated in each time step can be implemented in two different ways: using a 3 <script type="math/tex">\times</script> 3 orientation matrix and using quaternions. </p>
-                    
-                    <section>
-                        <h1>Orientation Matrix</h1>
-                        <p>The simulation using an orientation matrix also produces a natural looking result. </p>
-                        <p>Without normalization the error produced by Euler integration adds up and the shape of the book starts to change noticeably after some time. Eventually, the error is so extreme that the simulation crashes. <i class="highlight">TODO: Little more text.</i> </p>
-                    </section>
-                    
-                    <section>
-                        <h1>Quaternions</h1>
-                        <p>The simulation of the rotating book using the quaternion-based implementation appears to be visually the same as the orientation matrix method. However, this changes when normalization is turned off. </p>
-                        <p>Like the implementation with the orientation matrix the shape of the book will eventually change when normalization is turned off. <i class="highlight">TODO: Little more text.</i> </p>
-                    </section>
+                    <p>The simulation using an orientation matrix also produces a natural looking result. Without normalization the error produced by Euler integration adds up and the shape of the book starts to change noticeably after some time. Eventually, the error is so extreme that the simulation crashes. <i class="highlight">TODO: Little more text.</i> </p>
+                    <p>The simulation of the rotating book using the quaternion-based implementation appears to be visually the same as the orientation matrix method. However, this changes when normalization is turned off. Like the implementation with the orientation matrix the shape of the book will eventually change when normalization is turned off. <i class="highlight">TODO: Little more text.</i> </p>
                 </section>
             </section>
             
