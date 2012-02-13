@@ -10,10 +10,7 @@
     <div class="margincontainer">
         <article class="textcontainer" id="outer_root">
         <script type="math/tex">
-        \newcommand{\F}{\mathbf{F}}
-        \newcommand{\x}{\mathbf{x}}
-        \newcommand{\a}{\mathbf{a}}
-        \newcommand{\d}{\mathbf{d}}
+        %for \newcommand
         </script>
             <header class="titlepage">
                 <hgroup>
@@ -69,7 +66,7 @@
             <section id="section-particle">
                 <!-- Chapter 2 - Partcile Simulation -->
                 <h1>Particle Simulation </h1>
-                <p>In the particle simulation a number of particles is defined and their position <script type="math/tex">\x</script> is tracked over time. The rate of change of the position is the velocity <script type="math/tex">v</script> of the particle.  The velocity of a particle is not necessarily constant, it may also change over time. The rate of change of the velocity is defined by the acceleration <script type="math/tex">a</script> of a particle. Or: </p>
+                <p>In the particle simulation a number of particles is defined and their position <script type="math/tex">x</script> is tracked over time. The rate of change of the position is the velocity <script type="math/tex">v</script> of the particle.  The velocity of a particle is not necessarily constant, it may also change over time. The rate of change of the velocity is defined by the acceleration <script type="math/tex">a</script> of a particle. Or: </p>
                 <script type="math/tex; mode=display">
                 \begin{align*}
                     v(t) &= \dot{x}(t) \\
@@ -77,7 +74,7 @@
                 \end{align*}
                 </script>
                 <p>To find the acceleration of a particle we can use Newton's second law. </p>
-                <script type="math/tex; mode=display">\F = m \a</script>
+                <script type="math/tex; mode=display">F = m a</script>
                 <p>Where necessary, we will use subscripts to differentiate between particles.  For example, <script type="math/tex">\x_i</script> is the position of the <script type="math/tex">i</script>-th particle, <script type="math/tex">\F_i</script> the force acting on particle <script type="math/tex">i</script>, and <script type="math/tex">\F_{ij}</script> the force acting on particle <script type="math/tex">i</script> due to the spring connected to the <script type="math/tex">j</script>-th particle.</p>
                 <!--<p>Since the masses of particles are generally constant, the acceleration can be calculated from the force applied to the particle.</p>-->
                 
