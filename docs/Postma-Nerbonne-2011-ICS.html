@@ -49,7 +49,7 @@
                     </div>
                     <figcaption>Video of an experiment in space demonstrating both stable and unstable rotation <a href="#bib-video-ISS">[ref]</a>.</figcaption>
                 </figure>
-                
+				                
                 <p>In this project we will simulate the rotation of a book so that it behaves naturally (as in <a href="#fig-video-ISS">[ref]</a>).  Since the goal of this project is to simulate the rotation, we will consider a system without external forces.  We will look at two different approaches. Firstly, we will simulate the book as a number of particles connected by springs.  Rotation, whether stable or not, will be an emergent phenomenon based on the interaction between the particles.  The second approach will model the book as a single rigid body in which rotation is explicitly simulated using angular momentum and the book's moment of inertia.</p>
             </section>
             
@@ -234,8 +234,12 @@
                 <p>The implementation shows the visualization of a rotating book. There are three different methods to calculate the position of the corner points of the book, a particle-based method, a rigid method with an orientation matrix and a rigid method with quaternions. The user can reset the visualization to a rotation around each of the three axis. Normalization can be turned on and off.</p>
                 <section>
                     <h1>Particle Simulation</h1>
-                    <p>The particle-based simulation produces a natural looking simulation of the rotation of a book. The rotation along the shortest and longest axis is stable. Rotation along the middle axis also appears to be stable, but this rotation is not robust. As soon as the rotation is only slightly dis-aligned with the axis it turns into an unstable rotation. The simulation runs sufficiently fast on a standard computer. </p>
+                    <p>The particle-based simulation produces a natural looking simulation of the rotation of a book. The rotation along the shortest and longest axis is stable. Rotation along the middle axis also appears to be stable, but this rotation is not robust. As soon as the rotation is only slightly dis-aligned with the axis it turns into an unstable rotation. The video in <a href="#fig-video-results-particle">[ref]</a> shows the rotation along the middle axis. First it is stable but when a small dis-alignment is introduced the rotation proves unstable. The simulation runs sufficiently fast on a standard computer. </p>
                     <p>Damping is a necessary part of this particle simulation. Without damping, we can observe the rotation being transformed into vibration. Without normalization, the total sum of energy increases and the simulation "explodes".</p>
+					<figure id="fig-video-results-particle">
+                    <iframe width="420" height="315" src="http://www.youtube.com/embed/9FTlJCfqWa4"></iframe>
+                    <figcaption>Video of particle simulation showing unstable rotation.</figcaption>
+                </figure>
                     <p><i class="highlight">TODO: Insert video links.</i></p>
                 </section>
                 
