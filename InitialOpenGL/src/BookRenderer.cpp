@@ -18,7 +18,7 @@
 
 using std::shared_ptr;
 using std::cout;
-
+#undef max
 BookRenderer::BookRenderer(shared_ptr<RotationModel> initstate, double timestep, int timesteps_per_frame) : state(initstate), timestep(timestep), timesteps_per_frame(timesteps_per_frame)
 {
 	texture = shared_ptr<RgbaImageTexture>(new RgbaImageTexture("textures/cover.png"));
@@ -38,6 +38,7 @@ void BookRenderer::display() {
 void BookRenderer::idle() { display(); }
 
 void BookRenderer::reshape(int width, int height)	{
+	cout<<width<<"x"<<height<<"\n";
 	if(height==0) height=1;
 
 	glViewport(0,0,width,height);						// Reset The Current Viewport
@@ -59,9 +60,19 @@ void BookRenderer::keyboard(unsigned char key, int /*x*/, int /*y*/) {
 		break;
 	case '+':
 		timestep*=1.2;
+		cout<<"Timestep per frame size: "<< timestep<<"\n";
 		break;
 	case '-':
 		timestep/=1.2;
+		cout<<"Timestep per frame size: "<< timestep<<"\n";
+		break;
+	case '/':
+		timesteps_per_frame = std::max(1,(int)(timesteps_per_frame/1.1));
+		cout<<"Timestep subdivisions per frame now: "<< timesteps_per_frame<<"\n";
+		break;
+	case '*':
+		timesteps_per_frame = (int)(timesteps_per_frame*1.1+0.999);
+		cout<<"Timestep subdivisions per frame now: "<< timesteps_per_frame<<"\n";
 		break;
 	case 'r':
 		state->jiggle();
@@ -111,7 +122,7 @@ void BookRenderer::arrow_keys(int a_keys, int /*x*/, int /*y*/) {
 		glutFullScreen();
 		break;
 	case GLUT_KEY_DOWN:
-		glutReshapeWindow(500, 500);
+		glutReshapeWindow(720, 720);
 		break;
 	default:
 		break;
@@ -120,6 +131,8 @@ void BookRenderer::arrow_keys(int a_keys, int /*x*/, int /*y*/) {
 
 void BookRenderer::renderBook() {
 	glPushMatrix();
+	glRotated(180,1.0,0.0,0.0);
+	glRotated(180,0.0,0.0,1.0);
 	auto positions  = state->getPositions();
 	texture->BindTexture();
 	glBegin(GL_QUADS);

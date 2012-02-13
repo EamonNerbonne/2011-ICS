@@ -4,6 +4,7 @@
 #include "stb_image.h"
 #include <string>
 #include <algorithm>
+#include <GL/GLU.h>
 
 using std::cout;
 using std::string;
@@ -44,7 +45,14 @@ string find_texture(char const * filename) {
 	return string();
 }
 
+typedef void  (APIENTRY * MY_GLGENERATEMIPMAPS)(GLenum);
+
+
 RgbaImageTexture::RgbaImageTexture(char const * filename) {
+	MY_GLGENERATEMIPMAPS  glGenerateMipmap = (MY_GLGENERATEMIPMAPS)wglGetProcAddress("glGenerateMipmap");
+
+
+
 	string fixed_path = find_texture(filename);
 	int n;
 	unsigned char *rawdata = stbi_load(fixed_path.c_str(), &width, &height, &n, 4);
@@ -53,11 +61,15 @@ RgbaImageTexture::RgbaImageTexture(char const * filename) {
 	glBindTexture(GL_TEXTURE_2D, textureID);   // 2d texture (x and y size)
 
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // scale linearly when image bigger than texture
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); // scale linearly when image smalled than texture
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR); // scale linearly when image smalled than texture
+	
 
 	// 2d texture, level of detail 0 (normal), 3 components (red, green, blue), x size from image, y size from image,
 	// border 0 (normal), rgb color data, unsigned byte data, and finally the data itself.
 	glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, rawdata);
+	//gluBuild2DMipmaps( GL_TEXTURE_2D, 4, width, height, GL_RGBA, GL_UNSIGNED_BYTE, rawdata );
+	//glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST); 
+	glGenerateMipmap(GL_TEXTURE_2D);  //Generate mipmaps now!!!
 	stbi_image_free(rawdata);
 }
 

@@ -32,7 +32,7 @@ void SetupMainLoop(DisplayManager* (* factory)(), int argc, char **argv) {
 
 	glutInit            ( &argc, argv );
 	glutInitDisplayMode ( GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);
-	glutInitWindowSize  ( 500, 500 );
+	glutInitWindowSize  ( 720, 720 );
 	glutCreateWindow    ( "Unstable Rotation" );
 	//glutFullScreen      ( );
 	InitGL ();
