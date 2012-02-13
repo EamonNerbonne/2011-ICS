@@ -45,7 +45,7 @@
                 <!-- The <figure>-tag is used below because the <video>-tag doesn't work properly -->
                 <figure id="fig-video-ISS">
                     <div style="position:relative;">
-                        <iframe style="width:100%; height: 9.7cm" src="http://www.youtube.com/embed/GgVpOorcKqc"></iframe>
+                        <iframe style="width:100%; height: 9.7cm" src="http://www.youtube.com/embed/GgVpOorcKqc?theme=light"></iframe>
                     </div>
                     <figcaption>Video of an experiment in space demonstrating both stable and unstable rotation <a href="#bib-video-ISS">[ref]</a>.</figcaption>
                 </figure>
@@ -116,7 +116,8 @@
                     <script type="math/tex; mode=display">
                         \begin{align*}
                             \ddot{r} & = -2\sqrt{\frac{k}{m}}\dot{r} - \frac{k}{m}r \\
-                            F_{ij} &= \left(-2 \sqrt{k m}(v_i - v_j)\cdot\frac{x_i - x_j}{\|x_i - x_j\|}  - k \left( \|x_i - x_j\| - \mathbf{L}_{ij}\right)\right)\frac{x_i - x_j}{\|x_i - x_j\|}
+                            \hat{x}_{ij} &\equiv \frac{x_i - x_j}{\|x_i - x_j\|} \qquad \qquad \left\{\mbox{ definition }\right\}\\
+                            F_{ij} &=- \left(2 \sqrt{k m}\; \hat{x}_{ij} \cdot (v_i - v_j) + k ( \|x_i - x_j\| - \mathbf{L}_{ij})\right)\hat{x}_{ij}
                         \end{align*}
                     </script>
                     <p>
