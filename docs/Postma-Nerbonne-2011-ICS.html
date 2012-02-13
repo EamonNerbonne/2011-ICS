@@ -86,8 +86,8 @@
                     <p>The force on <script type="math/tex">i</script> by the spring to <script type="math/tex">j</script> is (by Hooke's law) directly proportional to the displacement from the equilibrium length but in opposite direction.  Accounting for the fact that the orientation of the spring depends on the position of the particles it is attached to, this can be expressed as follows:</p>
                     <script type="math/tex; mode=display"> 
                         \begin{align*}
-                            F_{ij} & = -k \left(\|x_i - x_j\| - \mathbf{L}_{ij}\right)\frac{x_i - x_j}{\|x_i - x_j\|} \\
-                                       & = -k \left(1 - \frac{\mathbf{L}_{ij}}{\|x_i - x_j\|}\right)(x_i - x_j)
+                            \hat{x}_{ij} &\equiv \frac{x_i - x_j}{\|x_i - x_j\|} \qquad \qquad \left\{\mbox{ unit-vector shorthand }\right\}\\
+                            F_{ij} & = -k \left(\|x_i - x_j\| - \mathbf{L}_{ij}\right)\hat{x}_{ij} 
                         \end{align*}
                     </script>
                     <p>Here, <script type="math/tex">k</script> is the the spring constant (defined to be identical for all springs) and <script type="math/tex">\mathbf{L}_{ij}</script> the equilibrium length of the spring between <script type="math/tex">i</script> and <script type="math/tex">j</script> (as determined using the book's shape at rest). The total force on a particle <script type="math/tex">i</script> is simply the sum of the individual forces acting on it.</p>
@@ -116,7 +116,6 @@
                     <script type="math/tex; mode=display">
                         \begin{align*}
                             \ddot{r} & = -2\sqrt{\frac{k}{m}}\dot{r} - \frac{k}{m}r \\
-                            \hat{x}_{ij} &\equiv \frac{x_i - x_j}{\|x_i - x_j\|} \qquad \qquad \left\{\mbox{ definition }\right\}\\
                             F_{ij} &=- \left(2 \sqrt{k m}\; \hat{x}_{ij} \cdot (v_i - v_j) + k ( \|x_i - x_j\| - \mathbf{L}_{ij})\right)\hat{x}_{ij}
                         \end{align*}
                     </script>
@@ -137,21 +136,28 @@
             </section>
             <section id="section-rigid">
                 <!-- Chapter 4 - Rigid Simulation-->
-                <h1>Rigid Simulation</h1>
+                <h1>Rigid Body Simulation</h1>
                 <p>In the video in the introduction, one may notice that the only property of the book that changes is its orientation. The orientation can be described with an orientation matrix <script type="math/tex">R</script>. The change in orientation is determined by the angular velocity <script type="math/tex">\omega</script> of the object. </p>
                 <script type="math/tex; mode=display">
-                    \dot{R}(t) = R(t) * \omega (t)
+                    \begin{align*}
+                        \dot{R}(t) &= \omega^*\!(t) \; R(t) \\
+                        \omega^* & \equiv  \begin{bmatrix}
+                            0 & -\omega_z  & \omega_y \\
+	                        \omega_z & 0 & -\omega_x  \\
+	                        -\omega_y & \omega_x &0
+                        \end{bmatrix} \qquad \qquad \left\{\mbox{ cross-product as matrix }\right\}
+                    \end{align*}
                 </script>
-                <p>To update the orientation of the object, we need the angular velocity. This angular velocity, together with the moment of inertia of the body <script type="math/tex">I</script>, can be used to calculate the angular momentum <script type="math/tex">L</script> of the body: </p>
+                <p>To update the orientation of the object, we need the angular velocity. Initially the angular velocity is known and together with the moment of inertia of the body <script type="math/tex">I</script>, can be used to calculate the angular momentum <script type="math/tex">L</script>: </p>
                 <script type="math/tex; mode=display">
                     L(t) = I(t) \omega (t)
                 </script>
-                <p>Because we do not consider external forces in our model the angular momentum is constant. This means the angular velocity can be calculated with the moment of inertia. </p>
-                <p>The moment of inertia is the measure of an object's resistance to change in its orientation <script type="math/tex">R</script>. For a given orientation matrix the moment of inertia is defined as:</p>
+                <p>Because we do not consider external forces in our model the angular momentum is constant. This means the angular velocity can be calculated once the moment of inertia is known. </p>
+                <p>The moment of inertia is the measure of an object's resistance to change in its orientation <script type="math/tex">R</script>. Since the distribution of an objects mass in space changes as its orientation does; so does it's moment of inertia.  Under a given rotation (i.e. orientation) matrix the current moment of inertia can be computed as:</p>
                 <script type="math/tex; mode=display">
                     I(t) = R(t) I_{body} R(t)^T
                 </script>
-                <p>where <script type="math/tex">I_{body}</script> is the so-called inertia tensor of the object. In general, the inertia tensor of an object is defined as:</p>
+                <p>where <script type="math/tex">I_{body}</script> is the moment of inertia tensor of the object in the bodie's principal axes.  If the moment of inertia is known in any coordinate system, by SVD you can find the principal axes.  In general, the inertia tensor of an object is defined as:</p>
                 <script type="math/tex; mode=display">
                     I_{body} =
                         \begin{bmatrix}
@@ -169,11 +175,17 @@
 	                        0 & 0 & M(a^2 + b^2)
                         \end{bmatrix}
                 </script>
-                <p>This inertia tensor does not change during the simulation and thus it can be precomputed. </p>
-                
+                <p>This (body-space) inertia tensor does not change during the simulation and thus it can be precomputed. In particular, it is diagonal and thus has a trivially computed inverse, which is useful in finding the current angular velocity:</p>
+                <script type="math/tex; mode=display">
+                    \begin{align*}
+                        \omega (t) &= I(t)^{-1} \; L(t)\\ 
+                        &= \left(R(t)^T\right)^{-1} \; I_{body}^{-1} \; {R(t)}^{-1} \; L(t)\\ 
+                         &= R(t) \; I_{body}^{-1} \; R(t)^{T} \; L(t)
+                    \end{align*}
+                </script>
                 <section>
                     <h1>Modeling the book</h1>
-                    <p>Without linear momentum the center of mass of the book is stationary. This center of mass is the origin in our coordinate system. The corner points of the book are defined by body coordinates. Together with the orientation of the body these body coordinates can be used to determine the world coordinates of the corner points. The body coordinates are also used to computer the moment of inertia of the body.</p>
+                    <p>Without linear momentum the center of mass of the book is stationary. This center of mass is the origin in our coordinate system. The corner points of the book are defined by body coordinates. Together with the orientation of the body these body coordinates can be used to determine the world coordinates of the corner points. The body coordinates are also used to compute the moment of inertia of the body.</p>
                 </section>
                 
                 <section>
