@@ -58,8 +58,8 @@
                 <script type="math/tex; mode=display">
  g(t_{i+1}) = g(t_{i}) + \dot{g}(t_{i}) \Delta t
                 </script>
-                <p>We will use the notation <script type="math/tex">\dot{g} \equiv \tfrac{dg}{dt}</script> and <script type="math/tex">\ddot{g} \equiv \tfrac{d^2g}{dt^2}</script> for the first and second time derivatives of a function, as usual in the physics community.
- </p>
+                <p>We will use the notation <script type="math/tex">\dot{g} \equiv \tfrac{dg}{dt}</script> and <script type="math/tex">\ddot{g} \equiv \tfrac{d^2g}{dt^2}</script> for the first and second time derivatives of a function, as usual in the physics community.</p>
+
                 <p>At each time step, Euler integration introduces an error which is (at worst) proportional <script type="math/tex">\Delta t</script>.  Thus, for a fixed time interval (which requires more timesteps as <script type="math/tex">\Delta t</script> decreases), the overall error is at worst directly proportional to <script type="math/tex">\Delta t</script>.  However, even with a short time step, the error will grow and the calculated value will drift far away from the actual value.  To reduce the effect of this drift, it is in general useful to use a higher order numerical integration technique resulting in less error.  These (usually) come at the cost of a longer computation time and cannot eliminate the error. As this simulation is not computationally intensive, a CPU can compute very many timesteps in real time, so that even Euler integration is sufficiently accurate to make demonstration of the numerical errors impractical.  To highlight the difference between the models, a larger-than-necessary timestep was thus used.</p>
             </section>
             
@@ -116,28 +116,30 @@
                 <h1>Rigid Simulation</h1>
                 <p>In the video in the introduction, one may notice that the only property of the book that changes is its orientation. The change in orientation is determined by the angular velocity <script type="math/tex">\omega</script> of the object. This angular velocity, together with the moment of inertia of the body, can be used to calculate the angular momentum <script type="math/tex">L</script> of the body: </p>
                 <script type="math/tex; mode=display">
- \label{eq:angular} L(t) = I(t) \omega (t)
+                    L(t) = I(t) \omega (t)
                 </script>
                 <p>The angular momentum is constant when the torque <script type="math/tex">\tau</script> is zero.</p>
                 <p>The moment of inertia is the measure of an object's resistance to change in its orientation <script type="math/tex">R</script>. </p>
                 <script type="math/tex; mode=display">
- \label{eq:inertia} I(t) = R(t) I_{body} R(t)^T
+                    I(t) = R(t) I_{body} R(t)^T
                 </script>
                 <p>In general the inertia tensor of an object is defined as:</p>
                 <script type="math/tex; mode=display">
- \label{eq:moi} I_{body} = \begin{bmatrix}
-             I_{xx} & I_{xy} & I_{xz} \\
-	     I_{yx} & I_{yy} & I_{yz} \\
-	     I_{zx} & I_{zy} & I_{zz}
-            \end{bmatrix}
+                    I_{body} =
+                        \begin{bmatrix}
+                            I_{xx} & I_{xy} & I_{xz} \\
+	                        I_{yx} & I_{yy} & I_{yz} \\
+	                        I_{zx} & I_{zy} & I_{zz}
+                        \end{bmatrix}
                 </script>
                 <p>The inertia tensor for a cuboid is known. For a cuboid of mass <script type="math/tex">M</script> and dimensions <script type="math/tex">a \times b \times c</script> the inertia tensor is defined as:</p>
                 <script type="math/tex; mode=display">
- I_{body} = \frac{1}{12} \begin{bmatrix}
-             M(b^2 + c^2) & 0 & 0 \\
-	     0 & M(a^2 + c^2) & 0 \\
-	     0 & 0 & M(a^2 + b^2)
-            \end{bmatrix}
+                    I_{body} = \frac{1}{12} 
+                        \begin{bmatrix}
+                            M(b^2 + c^2) & 0 & 0 \\
+	                        0 & M(a^2 + c^2) & 0 \\
+	                        0 & 0 & M(a^2 + b^2)
+                        \end{bmatrix}
                 </script>
                 
                 <section>
