@@ -85,6 +85,7 @@ void ParticleBasedRotation::updateStep(double timestep) {
 		double normalizedKineticEnergy = std::max (0.1*totalEnergy, totalEnergy - potentialEnergy); //Never remove _all_ kinetic energy to avoid corner cases when turning normalization on suddenly
 		velocity *= sqrt(normalizedKineticEnergy/kineticEnergy);
 		position = position.colwise() - position.rowwise().mean();
+		velocity = velocity.colwise() - velocity.rowwise().mean();
 	}
 }
 
