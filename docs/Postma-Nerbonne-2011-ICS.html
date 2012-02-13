@@ -50,6 +50,7 @@
                 
                 <p>In this project we will simulate the rotation of a book so that it behaves naturally (as in <a href="#fig-video-ISS">[ref]</a>).  Since the goal of this project is to simulate the rotation, we will consider a system without external forces.  We will look at two different approaches. Firstly, we will simulate the book as a number of particles connected by springs.  Rotation, whether stable or not, will be an emergent phenomenon based on the interaction between the particles.  The second approach will model the book as a single rigid body in which rotation is explicitly simulated using angular momentum and the book's moment of inertia.</p>
             </section>
+            
             <section>
                 <h1>Euler method</h1>
                 <p>To implement the simulation, we will define a number of ordinary differential equations (ODEs). These will be solved numerically.  Since Euler's method is the simplest method and computationally cheap, it was used to solve the equations arising from the models below. </p>
@@ -63,7 +64,7 @@
             </section>
             
             <section id="section-particle">
-                <!-- Chapter 2 - Partcile Simulation -->
+                <!-- Chapter 3 - Partcile Simulation -->
                 <h1>Particle Simulation </h1>
                 <p>In the particle simulation a number of particles is defined and their position <script type="math/tex">x</script> is tracked over time. The rate of change of the position is the velocity <script type="math/tex">v</script> of the particle.  The velocity of a particle is not necessarily constant, it may also change over time. The rate of change of the velocity is defined by the acceleration <script type="math/tex">a</script> of a particle. Or: </p>
                 <script type="math/tex; mode=display">
@@ -122,7 +123,16 @@
                     <p>Damping and normalization prevent divergence, but they do not prevent the actual errors from accumulating.  Due to the damping+normalization, the local error is low in the sense that for any given short period of time, the error introduced is small.  However, in the long run the book's orientation will still diverge from the true orientation.  For many purposes, this doesn't matter: the book's exact state is less important than its behavior.</p>
                     <p>  If global error is to be reduced, smaller timesteps and/or a more accurate numerical integration technique would help.  However, a more serious source of global error is likely due to the model error: modeling a book as a bunch of springs does not accurately describe how the book behaves.  More accurate simulation will not avoid inherent inaccuracies in the model.  A better model would take into account the fact that the book is a rigid object.</p>
                 </section>
+                
+                <section>
+                    <h1>Implementation</h1>
+                    <p>In our implementation the visualization is separated from the calculation of the rotation. For visualization we will need the world coordinates of the corner points of the book. Since the particles are located at these corners we can directly used their positions for visualization. </p>
+                    <p>In particle simulation we need to store the positions and the velocities in 3D space of all the particles. Both are stored in a 3 <script type="math/tex">\times</script> 8 matrix. The interacting forces are stored in an 8 <script type="math/tex">\times</script> 8 matrix. The implementation is written in C++, in which matrices are not standard. The Eigen library can be used for linear algebra <a href="#bib-eigen">[ref]</a>. This library provides useful data types, such as matrices and vectors, and useful operations on these data types, such as the dot product of two matrices.</p>
+                    <p>At each time step the positions, the velocities and the interacting forces have to be computed. After calculating the new values, they can be normalized. <i class="highlight">TODO: Little more text.</i></p>
+                    <p>When the positions of the corner points are known, we can use OpenGL to visualize the book. In OpenGL a cuboid is rendered by specifying its eight sides. The position of the eight corner points of the book define where to draw each side of the book. To be able the distinguish between different sides of the book a texture is rendered on the front, spine and back of the book. </p>
+                </section>
             </section>
+            
             <section id="section-rigid">
                 <!-- Chapter 4 - Rigid Simulation-->
                 <h1>Rigid Simulation</h1>
@@ -165,6 +175,16 @@
                 </section>
                 
                 <section>
+                    <h1>Normalization</h1>
+                    <p></p>
+                </section>
+                
+                <section>
+                    <h1>Implementation</h1>
+                    <p></p>
+                </section>
+                
+                <section>
                     <h1>Quaternions</h1>
                     <p>Quaternions provide a convenient mathematical notation for representing orientations and rotations of objects in three dimensions. Expressing rotations as quaternions offers some advantages over a matrix notation. Concatenating rotations has a low computational cost and it's easier to extract the angle and axis of rotation. </p>
                     <p>A quaternion <script type="math/tex">q</script> can be written as <script type="math/tex">w + x i + y j + z k</script> where <script type="math/tex">i^2 = j^2 = k^2 = ijk = -1</script>. </p>
@@ -175,11 +195,12 @@
                     <p>To calculate the moment of inertia we can't use the transpose of the orientation matrix. Instead the complex conjugate of the orientation quaternion is used:</p>
                     <script type="math/tex; mode=display">
                     I(t) = q(t) I_{body} \overline{q}(t)
-                </script>
+                    </script>
+                    <p><i class="highlight">TODO: Something on the normalization and implementation of quaternions.</i></p>
                 </section>
             </section>
             
-            <section id="section-implementation">
+            <!--<section id="section-implementation">
                 <h1>Implementation</h1>
                 <p>In our implementation the visualization is separated from the calculation of the rotation. For visualization we will need the world coordinates of the corner points of the book. There are three methods to calculate these coordinates. </p>
                 <p>The implementation is written in C++. The Eigen library is used for linear algebra <a href="#bib-eigen">[ref]</a>. The library provides useful data types, such as matrices and vectors, and useful operations on these data types, such as the dot product of two matrices.</p>
@@ -201,7 +222,7 @@
                     <h1>Visualisation</h1>
                     <p>OpenGL is used for the visualization of the rotating book. In OpenGL a cuboid is rendered by specifying its eight sides. The position of the eight corner points of the book define where to draw each side of the book. To be able the distinguish between different sides of the book a texture is rendered on the front, spine and back of the book. </p>
                 </section>
-            </section>
+            </section>-->
             
             <section id="section-results">
                 <h1>Results</h1>
