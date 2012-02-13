@@ -16,7 +16,7 @@
                 <hgroup>
                     <h1>Simulating the Unstable Rotation of a Book </h1>
                     <h2>Introduction to Computational Science 2011-2012 </h2>
-                    <h3>Version 0.3</h3>
+                    <!--<h3>Version 0.3</h3>-->
                 </hgroup>
                 <div class="authorsbox">
                     <div>Ivar Postma</div>
@@ -124,18 +124,22 @@
                 </section>
             </section>
             <section id="section-rigid">
-                <!-- Chapter 3 - Rigid Simulation-->
+                <!-- Chapter 4 - Rigid Simulation-->
                 <h1>Rigid Simulation</h1>
-                <p>In the video in the introduction, one may notice that the only property of the book that changes is its orientation. The change in orientation is determined by the angular velocity <script type="math/tex">\omega</script> of the object. This angular velocity, together with the moment of inertia of the body, can be used to calculate the angular momentum <script type="math/tex">L</script> of the body: </p>
+                <p>In the video in the introduction, one may notice that the only property of the book that changes is its orientation. The orientation can be described with an orientation matrix <script type="math/tex">R</script>. The change in orientation is determined by the angular velocity <script type="math/tex">\omega</script> of the object. </p>
+                <script type="math/tex; mode=display">
+                    \dot{R}(t) = R(t) * \omega (t)
+                </script>
+                <p>To update the orientation of the object, we need the angular velocity. This angular velocity, together with the moment of inertia of the body <script type="math/tex">I</script>, can be used to calculate the angular momentum <script type="math/tex">L</script> of the body: </p>
                 <script type="math/tex; mode=display">
                     L(t) = I(t) \omega (t)
                 </script>
-                <p>The angular momentum is constant when the torque <script type="math/tex">\tau</script> is zero. <i class="highlight">TODO: Extend the explanation</i></p>
-                <p>The moment of inertia is the measure of an object's resistance to change in its orientation <script type="math/tex">R</script>. </p>
+                <p>Because we do not consider external forces in our model the angular momentum is constant. This means the angular velocity can be calculated with the moment of inertia. </p>
+                <p>The moment of inertia is the measure of an object's resistance to change in its orientation <script type="math/tex">R</script>. For a given orientation matrix the moment of inertia is defined as:</p>
                 <script type="math/tex; mode=display">
                     I(t) = R(t) I_{body} R(t)^T
                 </script>
-                <p>In general the inertia tensor of an object is defined as:</p>
+                <p>where <script type="math/tex">I_{body}</script> is the so-called inertia tensor of the object. In general, the inertia tensor of an object is defined as:</p>
                 <script type="math/tex; mode=display">
                     I_{body} =
                         \begin{bmatrix}
@@ -153,16 +157,25 @@
 	                        0 & 0 & M(a^2 + b^2)
                         \end{bmatrix}
                 </script>
-                <p>This inertia tensor does not change during the simulation and thus it can be precomputed.</p>
+                <p>This inertia tensor does not change during the simulation and thus it can be precomputed. </p>
                 
                 <section>
                     <h1>Modeling the book</h1>
-                    <p>Without linear momentum the center of mass of the book is stationary. This center of mass is the origin in our coordinate system. The corner points of the book are defined by body coordinates. Together with the orientation of the body these body coordinates can be used to determine the world coordinates of the corner points. </p>
+                    <p>Without linear momentum the center of mass of the book is stationary. This center of mass is the origin in our coordinate system. The corner points of the book are defined by body coordinates. Together with the orientation of the body these body coordinates can be used to determine the world coordinates of the corner points. The body coordinates are also used to computer the moment of inertia of the body.</p>
                 </section>
                 
                 <section>
                     <h1>Quaternions</h1>
-                    <p>Quaternions provide a convenient mathematical notation for representing orientations and rotations of objects in three dimensions. Expressing rotations as quaternions offers some advantages over a matrix notation. Concatenating rotations has a low computational cost and it's easier to extract the angle and axis of rotation. <i class="highlight">TODO: Little bit more on quaternions.</i></p>
+                    <p>Quaternions provide a convenient mathematical notation for representing orientations and rotations of objects in three dimensions. Expressing rotations as quaternions offers some advantages over a matrix notation. Concatenating rotations has a low computational cost and it's easier to extract the angle and axis of rotation. </p>
+                    <p>A quaternion <script type="math/tex">q</script> can be written as <script type="math/tex">w + x i + y j + z k</script> where <script type="math/tex">i^2 = j^2 = k^2 = ijk = -1</script>. </p>
+                    <p>In quaternion notation the orientation is denoted as <script type="math/tex">q</script>. The change in orientation is now given by:</p>
+                    <script type="math/tex; mode=display">
+                    \dot{q}(t) = q(t) * \frac{1}{2} \omega (t)
+                    </script>
+                    <p>To calculate the moment of inertia we can't use the transpose of the orientation matrix. Instead the complex conjugate of the orientation quaternion is used:</p>
+                    <script type="math/tex; mode=display">
+                    I(t) = q(t) I_{body} \overline{q}(t)
+                </script>
                 </section>
             </section>
             
