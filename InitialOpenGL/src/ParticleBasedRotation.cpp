@@ -9,7 +9,7 @@
 using namespace Eigen;
 
 ParticleBasedRotation::ParticleBasedRotation(Vector3d dimensions)
-	: RotationModel(dimensions)
+	: RotationModel(dimensions), damping(true)
 {
 	k = 10.0;
 	part_mass = 1.0;
@@ -23,6 +23,10 @@ Matrix88d computePairwiseDistances(Matrix38d const & position) {
 			dist(i,j) = (position.col(i) - position.col(j)).norm();
 	dist.triangularView<StrictlyLower>() = dist.triangularView<StrictlyUpper>().transpose();
 	return dist;
+}
+void ParticleBasedRotation::toggleDamping() {
+	damping = !damping;
+	std::cout <<"Damping: Now "<< (damping?"ON":"OFF")<<"\n";
 }
 
 void ParticleBasedRotation::resetWithAngularMomentum(Vector3d angular_momentum) {
@@ -43,29 +47,33 @@ void ParticleBasedRotation::resetWithAngularMomentum(Vector3d angular_momentum) 
 	Matrix3d angular_velocity_tensor = asTensor(omega);
 
 	velocity = angular_velocity_tensor * position;
-	energy_scale = velocity.norm();
+	totalEnergy = 0.5 * part_mass* velocity.squaredNorm();
 }
 
 
 ParticleBasedRotation::~ParticleBasedRotation() {}
 
+inline static double sqr(double x ) {return x*x;}
+
 void ParticleBasedRotation::updateStep(double timestep) {
 	Matrix38d accel = Matrix38d::Zero();
-
+	double potentialEnergy = 0.0;
 	for(ptrdiff_t i=0;i<position.cols(); ++i) {
 		for(ptrdiff_t j=i+1;j<position.cols(); ++j) {
 			Vector3d JtoI = position.col(i) - position.col(j);
 			double JtoIdist = JtoI.norm();
+			potentialEnergy += 0.5*k*sqr(baseLen(i,j) - JtoIdist);
 			Vector3d JtoIunit = JtoI / JtoIdist;
-
-			Vector3d vIwrtJ = velocity.col(i) - velocity.col(j);
-			Vector3d vParallelComponent = JtoIunit * JtoIunit.dot(vIwrtJ);
-
-			Vector3d dampingForce = -2. * sqrt(k / part_mass) * vParallelComponent;
-
-			Vector3d onI = k / part_mass * (baseLen(i,j) - JtoIdist) * JtoIunit;
-			accel.col(i) += onI + dampingForce;
-			accel.col(j) -= onI + dampingForce;
+			Vector3d forceOnI = k / part_mass * (baseLen(i,j) - JtoIdist) * JtoIunit;
+			
+			if(damping) {
+				Vector3d vIwrtJ = velocity.col(i) - velocity.col(j);
+				Vector3d vParallelComponent = JtoIunit * JtoIunit.dot(vIwrtJ);
+				Vector3d dampingForce = -2. * sqrt(k / part_mass) * vParallelComponent;
+				forceOnI += dampingForce;
+			}
+			accel.col(i) += forceOnI;
+			accel.col(j) -= forceOnI;
 		}
 	}
 
@@ -73,7 +81,9 @@ void ParticleBasedRotation::updateStep(double timestep) {
 
 	velocity.noalias() += timestep * accel;
 	if(normalize) {
-		velocity *= energy_scale/velocity.norm();
+		double kineticEnergy = 0.5*part_mass*velocity.squaredNorm();
+		double normalizedKineticEnergy = std::max (0.1*totalEnergy, totalEnergy - potentialEnergy); //Never remove _all_ kinetic energy to avoid corner cases when turning normalization on suddenly
+		velocity *= sqrt(normalizedKineticEnergy/kineticEnergy);
 		position = position.colwise() - position.rowwise().mean();
 	}
 }

@@ -69,7 +69,9 @@ void BookRenderer::keyboard(unsigned char key, int /*x*/, int /*y*/) {
 	case 'n':
 		state->normalize = !state->normalize;
 		cout <<"Normalize: "<<state->normalize <<"\n";
-
+		break;
+	case 'd':
+		state->toggleDamping();
 		break;
 	case '1':
 		state->resetWithAngularMomentum(Vector3d(1.0,0.0,0.0));
