@@ -182,6 +182,8 @@ body {
 .bibliography li[data-citationnumber]:before { content: '[' attr(data-citationnumber) '] '; padding-right:0.1em; }
 .bibliography ul { list-style:none; padding:0;margin:0;}
 
+iframe {border:none;}
+
 @media screen {
     
   li:target { background: rgba(255,255,0,0.5); box-shadow: 0 0 0.2em rgba(255,255,0,1.0); 

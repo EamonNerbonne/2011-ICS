@@ -44,8 +44,10 @@
                 <p> When thrown as a frisbee, the book rotates along the <script type="math/tex">z</script> axis. This rotation is stable, as is the rotation around the <script type="math/tex">y</script> axis. However, if we throw a book so that it is rotating along the <script type="math/tex">x</script> axis, the rotation is unstable. In space, we can see this unstable rotation more clearly because without gravity linear motion can be eliminated. The video below (<a href="#fig-video-ISS">[ref]</a>) demonstrates an experiment done on the international space station.</p>
                 <!-- The <figure>-tag is used below because the <video>-tag doesn't work properly -->
                 <figure id="fig-video-ISS">
-                    <iframe width="420" height="315" src="http://www.youtube.com/embed/GgVpOorcKqc"></iframe>
-                    <figcaption>Video of an experiment in space demonstrating stable and unstable rotation <a href="#bib-video-ISS">[ref]</a>.</figcaption>
+                    <div style="position:relative;">
+                        <iframe style="width:100%; height: 9.7cm" src="http://www.youtube.com/embed/GgVpOorcKqc"></iframe>
+                    </div>
+                    <figcaption>Video of an experiment in space demonstrating both stable and unstable rotation <a href="#bib-video-ISS">[ref]</a>.</figcaption>
                 </figure>
                 
                 <p>In this project we will simulate the rotation of a book so that it behaves naturally (as in <a href="#fig-video-ISS">[ref]</a>).  Since the goal of this project is to simulate the rotation, we will consider a system without external forces.  We will look at two different approaches. Firstly, we will simulate the book as a number of particles connected by springs.  Rotation, whether stable or not, will be an emergent phenomenon based on the interaction between the particles.  The second approach will model the book as a single rigid body in which rotation is explicitly simulated using angular momentum and the book's moment of inertia.</p>
