@@ -97,10 +97,19 @@
                 </section>
                 <section>
                     <h1>Normalization</h1>
-                    <p><i class="highlight">TODO: normalize energy and CoM.  Avoids divergence, but now rotating motion still causes vibration, so energy is slowly changed from rotating to vibrating energy</i></p>
+                    <p>One way to avoid divergence due to energy gain is by normalization.  After all, the amount of energy in the system is easily computed, and should remain constant.  There are two sources of energy in the model: the elastic potential energy of the springs, and the kinetic energy of the moving particles.  The potential energy depends on the displacement  <script type="math/tex">d</script>of each spring:  <script type="math/tex">\sum 0.5 k d_{ij}^2</script>.  The kinetic energy is <script type="math/tex">\sum 0.5 m v_i^2</script>. Since altering the amount of elastic potential energy stored in the spring is complicated, we chose instead to simply scale the velocity of all particles equally by constant <script type="math/tex">c</script>.  Then, for total known energy <script type="math/tex">E</script>:</p>
+                    <script type="math/tex; mode=display">
+                        \begin{align*}
+                            E &= \sum_{i<j}\frac{1}{2} k d_{ij}^2 + \sum_i\frac{1}{2} m (c v_i)^2 \\
+                            c &= \sqrt{\frac{2E - k \sum d_{ij}^2}{m \sum v_i^2}}
+                        \end{align*}
+                    </script>
+                    <p>Similarly, after very long runs, the center of mass may start drifting.  The drift may be avoided by subtracting the mean position from all positions and the mean velocity from all velocities.</p>
+                    <p>Normalization successfully avoids divergence.  However, the model nevertheless starts vibrating: the spings still need to provide sufficient centripetal acceleration, and this involves  the springs extending then retracting in oscillating fashion as described before.  Furthermore, the error caused by the short delay between extension and counteracting pull causes the system to gain potential energy as before &mdash; now, however, with a corresponding decrease in kinetic energy.  The net effect is that the book's rotation slows as more and more rotational kinetic energy is converted to the spring's vibration.</p>
                 </section>
                 <section>
                     <h1>Damping</h1>
+                    <p></p>
                     <p><i class="highlight">TODO: Something on damping.  Avoids divergence</i></p>
                 </section>
             </section>
