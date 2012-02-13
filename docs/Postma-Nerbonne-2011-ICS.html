@@ -181,7 +181,7 @@
                 
                 <section>
                     <h1>Implementation</h1>
-                    <p>The only thing we need to store is a 3 <script type="math/tex">\times</script> 3 matrix describing the orientation, another 3 <script type="math/tex">\times</script> 3 matrix for the moment of inertia and vector decribing the angular momentum. In each timestep we calculate the angular velocity and we update the orientation. The orientation can then be normalized with SVD using the Eigen library. From the orientation matrix, the world coordinates of the corner points are determined which are used to visualize the book. </p>
+                    <p>The only thing we need to store is a 3 <script type="math/tex">\times</script> 3 matrix describing the orientation, another 3 <script type="math/tex">\times</script> 3 matrix for the moment of inertia and vector describing the angular momentum. In each timestep we calculate the angular velocity and we update the orientation. The orientation can then be normalized with SVD using the Eigen library. From the orientation matrix, the world coordinates of the corner points are determined which are used to visualize the book. </p>
                 </section>
                 
                 <section>
@@ -256,7 +256,7 @@
             
             <section id="section-conclusion">
                 <h1>Conclusion</h1>
-                <p>Simulation of the rotation of a book can be successfully implemented with both a particle-based method and rigid method. In both methods it is important to normalize the calculations because numerical integration techniques introduce errors which will eventually cause the simulation to "explode". Which implementation is more useful depends on the application. For simple objects such as cuboids the rigid method is easy to implement and performs well. For more difficult shapes the particle-based method proves to be easier to implement because it does not rely on the moment of inertia of the object to be computed.</p>
+                <p>Simulation of the rotation of a book can be successfully implemented with both a particle-based method and rigid method. In both methods it is important to normalize the calculations because numerical integration techniques introduce errors which will eventually cause the simulation to "explode". Which implementation is more useful depends on the application. For simple shapes such as a cuboid the rigid method is easy to implement and performs well. For more difficult shapes the particle-based method proves to be easier to implement because it does not rely on the moment of inertia of the object to be computed.</p>
                 <p><i class="highlight">TODO: Extend conclusion.</i></p>
             </section>
             <aside class="bibliography">
