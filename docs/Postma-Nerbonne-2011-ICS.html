@@ -75,7 +75,7 @@
                 </script>
                 <p>To find the acceleration of a particle we can use Newton's second law. </p>
                 <script type="math/tex; mode=display">F = m a</script>
-                <p>Where necessary, we will use subscripts to differentiate between particles.  For example, <script type="math/tex">\x_i</script> is the position of the <script type="math/tex">i</script>-th particle, <script type="math/tex">\F_i</script> the force acting on particle <script type="math/tex">i</script>, and <script type="math/tex">\F_{ij}</script> the force acting on particle <script type="math/tex">i</script> due to the spring connected to the <script type="math/tex">j</script>-th particle.</p>
+                <p>Where necessary, we will use subscripts to differentiate between particles.  For example, <script type="math/tex">x_i</script> is the position of the <script type="math/tex">i</script>-th particle, <script type="math/tex">F_i</script> the force acting on particle <script type="math/tex">i</script>, and <script type="math/tex">F_{ij}</script> the force acting on particle <script type="math/tex">i</script> due to the spring connected to the <script type="math/tex">j</script>-th particle.</p>
                 <!--<p>Since the masses of particles are generally constant, the acceleration can be calculated from the force applied to the particle.</p>-->
                 
                 <section>
@@ -84,8 +84,8 @@
                     <p>The force on <script type="math/tex">i</script> by the spring to <script type="math/tex">j</script> is (by Hooke's law) directly proportional to the displacement from the equilibrium length but in opposite direction.  Accounting for the fact that the orientation of the spring depends on the position of the particles it is attached to, this can be expressed as follows:</p>
                     <script type="math/tex; mode=display"> 
                         \begin{align*}
-                            \F_{ij} & = -k \left(\|\x_i - \x_j\| - \mathbf{L}_{ij}\right)\frac{\x_i - \x_j}{\|\x_i - \x_j\|} \\
-                                       & = -k \left(1 - \frac{\mathbf{L}_{ij}}{\|\x_i - \x_j\|}\right)(\x_i - \x_j)
+                            F_{ij} & = -k \left(\|x_i - x_j\| - \mathbf{L}_{ij}\right)\frac{x_i - x_j}{\|x_i - x_j\|} \\
+                                       & = -k \left(1 - \frac{\mathbf{L}_{ij}}{\|x_i - x_j\|}\right)(x_i - x_j)
                         \end{align*}
                     </script>
                     <p>Here, <script type="math/tex">k</script> is the the spring constant (defined to be identical for all springs) and <script type="math/tex">\mathbf{L}_{ij}</script> the equilibrium length of the spring between <script type="math/tex">i</script> and <script type="math/tex">j</script> (as determined using the book's shape at rest). The total force on a particle <script type="math/tex">i</script> is simply the sum of the individual forces acting on it.</p>
@@ -94,11 +94,11 @@
                 </section>
                 <section>
                     <h1>Normalization</h1>
-                    <p>One way to avoid divergence due to energy gain is by normalization.  After all, the amount of energy in the system is easily computed, and should remain constant.  There are two sources of energy in the model: the elastic potential energy of the springs, and the kinetic energy of the moving particles.  The potential energy depends on the displacement  <script type="math/tex">d</script>of each spring:  <script type="math/tex">\sum 0.5 k d_{ij}^2</script>.  The kinetic energy is <script type="math/tex">\sum 0.5 m v_i^2</script>. Since altering the amount of elastic potential energy stored in the spring is complicated, we chose instead to simply scale the velocity of all particles equally by constant <script type="math/tex">c</script>.  Then, for total known energy <script type="math/tex">E</script>:</p>
+                    <p>One way to avoid divergence due to energy gain is by normalization.  After all, the amount of energy in the system is easily computed, and should remain constant.  There are two sources of energy in the model: the elastic potential energy of the springs, and the kinetic energy of the moving particles.  The potential energy depends on the displacement <script type="math/tex">r_{ij} = \|x_i - x_j\| - L_{ij}</script> of each spring:  <script type="math/tex">\sum 0.5 k r_{ij}^2</script>.  The kinetic energy is <script type="math/tex">\sum 0.5 m v_i^2</script>. Since altering the amount of elastic potential energy stored in the spring is complicated, we chose instead to simply scale the velocity of all particles equally by constant <script type="math/tex">c</script>.  Then, for total known energy <script type="math/tex">E</script>:</p>
                     <script type="math/tex; mode=display">
                         \begin{align*}
-                            E &= \sum_{i<j}\frac{1}{2} k d_{ij}^2 + \sum_i\frac{1}{2} m (c v_i)^2 \\
-                            c &= \sqrt{\frac{2E - k \sum d_{ij}^2}{m \sum v_i^2}}
+                            E &= \sum_{i<j}\frac{1}{2} k r_{ij}^2 + \sum_i\frac{1}{2} m (c v_i)^2 \\
+                            c &= \sqrt{\frac{2E - k \sum r_{ij}^2}{m \sum v_i^2}}
                         \end{align*}
                     </script>
                     <p>Similarly, after very long runs, the center of mass may start drifting.  The drift may be avoided by subtracting the mean position from all positions and the mean velocity from all velocities.</p>
@@ -106,8 +106,20 @@
                 </section>
                 <section>
                     <h1>Damping</h1>
-                    <p></p>
-                    <p><i class="highlight">TODO: Something on damping.  Avoids divergence</i></p>
+                    <p>Spings can be prevented from oscillating by damping them: introducing frictional force proportional to the rate of change of the spring's displacement.  A single-spring system can be described as follows:</p>
+                    <script type="math/tex; mode=display">
+                    \ddot{r} + b\dot{r} + c r = 0
+                    </script>
+                    <p>This system corresponds to the springs we've defined when <script type="math/tex">b = 0, c = k/m</script>.  Such a system is critically damped (i.e. returns to rest as quickly as possible) when <script type="math/tex">b = 2\sqrt{c}</script> instead.  Assuming critical damping we then have: </p>
+                    <script type="math/tex; mode=display">
+                        \begin{align*}
+                            \ddot{r} & = -2\sqrt{\frac{k}{m}}\dot{r} - \frac{k}{m}r \\
+                            F_{ij} &= \left(-2 \sqrt{k m}(v_i - v_j)\cdot\frac{x_i - x_j}{\|x_i - x_j\|}  - k \left( \|x_i - x_j\| - \mathbf{L}_{ij}\right)\right)\frac{x_i - x_j}{\|x_i - x_j\|}
+                        \end{align*}
+                    </script>
+                    <p>
+                    
+                    </p>
                 </section>
             </section>
             
