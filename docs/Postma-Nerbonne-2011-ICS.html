@@ -128,7 +128,7 @@
                     <h1>Implementation</h1>
                     <p>In our implementation the visualization is separated from the calculation of the rotation. For visualization we will need the world coordinates of the corner points of the book. Since the particles are located at these corners we can directly used their positions for visualization. </p>
                     <p>In particle simulation we need to store the positions and the velocities in 3D space of all the particles. Both are stored in a 3 <script type="math/tex">\times</script> 8 matrix. The interacting forces are stored in an 8 <script type="math/tex">\times</script> 8 matrix. The implementation is written in C++, in which matrices are not standard. The Eigen library can be used for linear algebra <a href="#bib-eigen">[ref]</a>. This library provides useful data types, such as matrices and vectors, and useful operations on these data types, such as the dot product of two matrices.</p>
-                    <p>At each time step the positions, the velocities and the interacting forces have to be computed. After calculating the new values, they can be normalized. <i class="highlight">TODO: Little more text.</i></p>
+                    <p>At each time step the positions, the velocities and the interacting forces have to be computed. After calculating the new values, they can be normalized. </p>
                     <p>When the positions of the corner points are known, we can use OpenGL to visualize the book. In OpenGL a cuboid is rendered by specifying its eight sides. The position of the eight corner points of the book define where to draw each side of the book. To be able the distinguish between different sides of the book a texture is rendered on the front, spine and back of the book. </p>
                 </section>
             </section>
@@ -176,7 +176,7 @@
                 
                 <section>
                     <h1>Normalization</h1>
-                    <p></p>
+                    <p>Using Euler integration to numerically solve the ODEs here will produce an error which causes the orientation matrix to contain values that are slightly larger than they should be. Visually, the book will "grow". To correct for the errors the orientation should be normalized. This is done by singular value decomposition (SVD). </p>
                 </section>
                 
                 <section>
