@@ -117,7 +117,7 @@
                 <script type="math/tex; mode=display">
                     L(t) = I(t) \omega (t)
                 </script>
-                <p>The angular momentum is constant when the torque <script type="math/tex">\tau</script> is zero.</p>
+                <p>The angular momentum is constant when the torque <script type="math/tex">\tau</script> is zero. <i class="highlight">TODO: Extend the explanation</i></p>
                 <p>The moment of inertia is the measure of an object's resistance to change in its orientation <script type="math/tex">R</script>. </p>
                 <script type="math/tex; mode=display">
                     I(t) = R(t) I_{body} R(t)^T
@@ -149,7 +149,7 @@
                 
                 <section>
                     <h1>Quaternions</h1>
-                    <p>Quaternions provide a convenient mathematical notation for representing orientations and rotations of objects in three dimensions. Expressing rotations as quaternions offers some advantages over a matrix notation. Concatenating rotations has a low computational cost and it's easier to extract the angle and axis of rotation.</p>
+                    <p>Quaternions provide a convenient mathematical notation for representing orientations and rotations of objects in three dimensions. Expressing rotations as quaternions offers some advantages over a matrix notation. Concatenating rotations has a low computational cost and it's easier to extract the angle and axis of rotation. <i class="highlight">TODO: Little bit more on quaternions.</i></p>
                 </section>
             </section>
             
@@ -163,18 +163,17 @@
                     <h1>Particle Simulation</h1>
                     <p>In particle simulation we need to store the positions and the velocities in 3D space of all the particles. Both are stored in a 3 <script type="math/tex">\times</script> 8 matrix. The interacting forces are stored in an 8 <script type="math/tex">\times</script> 8 matrix.</p>
                     <p>At each time step the positions, the velocities and the interacting forces have to be computed. </p>
-                    <p>After calculating the new values they can be normalized.</p>
+                    <p>After calculating the new values they can be normalized. <i class="highlight">TODO: Little more text.</i></p>
                 </section>
                 
                 <section>
                     <h1>Rigid Simulation</h1>
-                    <p>In each time step <script type="math/tex">I^{-1}</script> is calculated from the current orientation and the static moment of inertia of the body. Using this <script type="math/tex">I^{-1}</script> the angular velocity at that time step is calculated.</p>
+                    <p>In each time step <script type="math/tex">I^{-1}</script> is calculated from the current orientation and the static moment of inertia of the body. Using this <script type="math/tex">I^{-1}</script> the angular velocity at that time step is calculated. <i class="highlight">TODO: Little more text.</i></p>
                 </section>
                 
                 <section>
                     <h1>Visualisation</h1>
-                    <p>OpenGL is used for the visualization of the rotating book. </p>
-                    <p>In OpenGL a cuboid is rendered by specifying its eight sides. The position of the eight corner points of the book define where to draw each side of the book. To be able the distinguish between different sides of the book a texture is rendered on the front, spine and back of the book. </p>
+                    <p>OpenGL is used for the visualization of the rotating book. In OpenGL a cuboid is rendered by specifying its eight sides. The position of the eight corner points of the book define where to draw each side of the book. To be able the distinguish between different sides of the book a texture is rendered on the front, spine and back of the book. </p>
                 </section>
             </section>
             
@@ -185,7 +184,7 @@
                     <h1>Particle Simulation</h1>
                     <p>The particle-based simulation produces a natural looking simulation of the rotation of a book. The rotation along the shortest and longest axis is stable. Rotation along the middle axis also appears to be stable, but this rotation is not robust. As soon as the rotation is only slightly dis-aligned with the axis it turns into an unstable rotation.</p>
                     <p>Damping is a necessary part of this particle simulation. </p>
-                    <p>This simulation is sufficiently fast.</p>
+                    <p>This simulation is sufficiently fast. <i class="highlight">TODO: Little more text.</i></p>
                 </section>
                 
                 <section>
@@ -195,13 +194,13 @@
                     <section>
                         <h1>Orientation Matrix</h1>
                         <p>The simulation using an orientation matrix also produces a natural looking result. </p>
-                        <p>Without normalization the error produced by Euler integration adds up and the shape of the book starts to change noticeably after some time. Eventually, the error is so extreme that the simulation crashes. </p>
+                        <p>Without normalization the error produced by Euler integration adds up and the shape of the book starts to change noticeably after some time. Eventually, the error is so extreme that the simulation crashes. <i class="highlight">TODO: Little more text.</i> </p>
                     </section>
                     
                     <section>
                         <h1>Quaternions</h1>
                         <p>The simulation of the rotating book using the quaternion-based implementation appears to be visually the same as the orientation matrix method. However, this changes when normalization is turned off. </p>
-                        <p>Like the implementation with the orientation matrix the shape of the book will eventually change when normalization is turned off. </p>
+                        <p>Like the implementation with the orientation matrix the shape of the book will eventually change when normalization is turned off. <i class="highlight">TODO: Little more text.</i> </p>
                     </section>
                 </section>
             </section>
@@ -209,14 +208,14 @@
             <section id="section-discussion">
                 <h1>Discussion</h1>
                 <p>Normalization is necessary in a stable simulation because of small errors in the integration technique. However, it is not necessary to normalize the calculation in every time step. When to normalize depends on the size of the time step and on the integration method. </p>
-                <p>Choosing a higher order numerical integration technique, such as fourth-order Runga-Kutta, will produce a smaller error in every time step but this is computationally more expensive. Since we need to normalize anyway, which will eliminate the error made, Euler integration is sufficient for this simulation. </p>
+                <p>Choosing a higher order numerical integration technique, such as fourth-order Runga-Kutta, will produce a smaller error in every time step but this is computationally more expensive. Since we need to normalize anyway, which will eliminate the error made, Euler integration is sufficient for this simulation. <i class="highlight">TODO: Check overlap with section on Euler.</i> </p>
                 <p>The particle-based simulation and the rigid simulation produce similar results. So can we say which method is better. If we wish to quantify this we could look at the computational load of both methods. However, this would only yield in this particular case where we simulate a rotation cuboid. If we look at the more general problem of rotating objects, the particle-based method has an advantage over the rigid method. In the rigid method we use the definition of the moment of inertia of our object. This means that if the moment of inertia is unknown we have to compute it in advance. For complex shapes this proves to be difficult thus it will take longer to implement. For particle simulation we only need to place the particles and define their interacting forces which is easier. </p>
                 <p>Rigid simulation does have the advantage that the shape of body is kept intact (apart from numerical errors). This behavior is what you would expect from a solid body. Particles move more freely which causes the shape of the object to change. </p>
             </section>
             
             <section id="section-conclusion">
                 <h1>Conclusion</h1>
-                <p>Simulation of the rotation of a book can be successfully implemented with both a particle-based method and rigid method. </p>
+                <p>Simulation of the rotation of a book can be successfully implemented with both a particle-based method and rigid method. <i class="highlight">TODO: Extend conclusion.</i></p>
             </section>
             <aside class="bibliography">
                 <h1>References </h1>
