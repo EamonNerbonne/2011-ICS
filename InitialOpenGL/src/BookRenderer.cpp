@@ -73,6 +73,9 @@ void BookRenderer::keyboard(unsigned char key, int /*x*/, int /*y*/) {
 	case 'd':
 		state->toggleDamping();
 		break;
+	case 'e':
+		cout <<"Energy: "<<state->energy() <<"\n";
+		break;
 	case '1':
 		state->resetWithAngularMomentum(Vector3d(1.0,0.0,0.0));
 		break;

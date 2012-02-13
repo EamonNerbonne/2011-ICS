@@ -13,6 +13,7 @@ public:
 	virtual Matrix38d getPositions();
 	virtual void updateStep(double timestep);
 	virtual void jiggle();
+	virtual double energy();
 	QuaternionRotation(Eigen::Vector3d dimensions);
 	virtual ~QuaternionRotation();
 

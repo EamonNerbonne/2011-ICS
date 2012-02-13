@@ -33,6 +33,7 @@ public:
 
 	virtual Matrix38d getPositions()=0;
 	virtual void jiggle()=0;
+	virtual double energy()=0;
 	virtual void updateStep(double timestep)=0;
 	virtual ~RotationModel();
 	virtual void toggleDamping() {}

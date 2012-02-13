@@ -40,6 +40,13 @@ void EulerRotation::resetWithAngularMomentum(Vector3d angular_momentum) {
 	this->angular_momentum = angular_momentum;
 }
 
+double EulerRotation::energy() {
+	Matrix3d I_inv = orientation * MoI_body_inv * orientation.transpose();
+	Vector3d omega = I_inv * angular_momentum;
+	return 0.5 * omega.transpose() * orientation * MoI_body * orientation.transpose() * omega;
+}
+
+
 
 Matrix38d EulerRotation::getPositions() {return orientation*initialPosition(dimensions);}
 EulerRotation::~EulerRotation() { }

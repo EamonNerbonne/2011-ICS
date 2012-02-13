@@ -35,6 +35,13 @@ void QuaternionRotation::updateStep(double timestep) {
 		orientation.normalize();
 }
 
+double QuaternionRotation::energy() {
+	Matrix3d I_inv = orientation * MoI_body_inv * orientation.conjugate();
+	Vector3d omega = I_inv * angular_momentum;
+	return 0.5 * omega.transpose() * (orientation * MoI_body * orientation.conjugate()) * omega;
+}
+
+
 void QuaternionRotation::resetWithAngularMomentum(Vector3d angular_momentum) {
 	orientation = Matrix3d::Identity();
 	this->angular_momentum = angular_momentum;

@@ -16,6 +16,7 @@ public:
 	virtual Matrix38d getPositions() {return position;}
 	virtual void updateStep(double timestep);
 	virtual void jiggle();
+	virtual double energy();
 	virtual void toggleDamping();
 	ParticleBasedRotation(Eigen::Vector3d dimensions);
 	virtual ~ParticleBasedRotation();

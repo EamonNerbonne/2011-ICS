@@ -64,16 +64,15 @@ void ParticleBasedRotation::updateStep(double timestep) {
 			double JtoIdist = JtoI.norm();
 			potentialEnergy += 0.5*k*sqr(baseLen(i,j) - JtoIdist);
 			Vector3d JtoIunit = JtoI / JtoIdist;
-			Vector3d forceOnI = k / part_mass * (baseLen(i,j) - JtoIdist) * JtoIunit;
+			double accelMagnitudeI = k / part_mass * (baseLen(i,j) - JtoIdist) ;
 			
-			if(damping) {
-				Vector3d vIwrtJ = velocity.col(i) - velocity.col(j);
-				Vector3d vParallelComponent = JtoIunit * JtoIunit.dot(vIwrtJ);
-				Vector3d dampingForce = -2. * sqrt(k / part_mass) * vParallelComponent;
-				forceOnI += dampingForce;
-			}
-			accel.col(i) += forceOnI;
-			accel.col(j) -= forceOnI;
+			if(damping) 
+				accelMagnitudeI += -2. * sqrt(k / part_mass) * JtoIunit.dot(velocity.col(i) - velocity.col(j));
+
+			Vector3d accelI = accelMagnitudeI * JtoIunit;
+
+			accel.col(i) += accelI;
+			accel.col(j) -= accelI;
 		}
 	}
 
@@ -89,6 +88,14 @@ void ParticleBasedRotation::updateStep(double timestep) {
 	}
 }
 
+double ParticleBasedRotation::energy() {
+	double potentialEnergy = 0.0;
+	for(ptrdiff_t i=0;i<position.cols(); ++i) 
+		for(ptrdiff_t j=i+1;j<position.cols(); ++j) 
+			potentialEnergy += 0.5*k*sqr(baseLen(i,j) - (position.col(i) - position.col(j)).norm());
+	double kineticEnergy = 0.5*part_mass*velocity.squaredNorm();
+	return potentialEnergy + kineticEnergy;
+}
 
 void ParticleBasedRotation::jiggle() {
 	Vector3d randomRotVector = Vector3d::Random() * 0.001;
