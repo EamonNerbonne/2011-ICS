@@ -67,7 +67,7 @@
             </section>
             
             <section id="section-particle">
-                <!-- Chapter 3 - Partcile Simulation -->
+                <!-- Chapter 2 - Partcile Simulation -->
                 <h1>Particle Simulation </h1>
                 <p>In the particle simulation a number of particles is defined and their position <script type="math/tex">\x</script> is tracked over time. The rate of change of the position is the velocity <script type="math/tex">v</script> of the particle.  The velocity of a particle is not necessarily constant, it may also change over time. The rate of change of the velocity is defined by the acceleration <script type="math/tex">a</script> of a particle. Or: </p>
                 <script type="math/tex; mode=display">
@@ -106,13 +106,13 @@
             </section>
             
             <section id="section-rigid">
-                <!-- Chapter 4 - Rigid Simulation-->
+                <!-- Chapter 3 - Rigid Simulation-->
                 <h1>Rigid Simulation</h1>
                 <p>In the video in the introduction, one may notice that the only property of the book that changes is its orientation. The change in orientation is determined by the angular velocity <script type="math/tex">\omega</script> of the object. This angular velocity, together with the moment of inertia of the body, can be used to calculate the angular momentum <script type="math/tex">L</script> of the body: </p>
                 <script type="math/tex; mode=display">
  \label{eq:angular} L(t) = I(t) \omega (t)
                 </script>
-                <p>The angular momentum is constant when the torque <script type="math/tex">\tau</script> is zero. <i class="highlight">TODO: More explination is needed here.</i></p>
+                <p>The angular momentum is constant when the torque <script type="math/tex">\tau</script> is zero.</p>
                 <p>The moment of inertia is the measure of an object's resistance to change in its orientation <script type="math/tex">R</script>. </p>
                 <script type="math/tex; mode=display">
  \label{eq:inertia} I(t) = R(t) I_{body} R(t)^T
@@ -136,12 +136,12 @@
                 
                 <section>
                     <h1>Modeling the book</h1>
-                    <p>Without linear momentum the center of mass of the book is stationary. This center of mass is the origin in our coordinate system. For each corner point we have stationary body coordinates. The world coordiantes of these corner points can be calculated from these body coordinates and the orientation of the body. </p>
+                    <p>Without linear momentum the center of mass of the book is stationary. This center of mass is the origin in our coordinate system. </p>
                 </section>
                 
                 <section>
                     <h1>Quaternions</h1>
-                    <p>Quaternions provide a convenient mathematical notation for representing orientations and rotations of objects in three dimensions. Expressing rotations as quaternions offers some advantages over a matrix notation. Concatenating rotations has a low computational cost and it's easier to extract the angle and axis of rotation. </p>
+                    <p>Quaternions provide a convenient mathematical notation for representing orientations and rotations of objects in three dimensions. Expressing rotations as quaternions offers some advantages over a matrix notation. Concatenating rotations has a low computational cost and it's easier to extract the angle and axis of rotation.</p>
                 </section>
             </section>
             

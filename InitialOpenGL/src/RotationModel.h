@@ -35,6 +35,6 @@ public:
 	virtual void jiggle()=0;
 	virtual void updateStep(double timestep)=0;
 	virtual ~RotationModel();
-
+	virtual void toggleDamping() {}
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
