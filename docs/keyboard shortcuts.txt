@@ -1,0 +1,11 @@
+e print energy estimate (particle system only)
++ speed up simulation
+- slow down simulation
+* include simulation accuracy by using more iterations
+/ decrease simulation accuracy by using fewer iterations
+1,2,3 reinitialize rotation and rotate around one of the primary axes
+7 use particle based sim
+8 use orientation based sim
+9 use quaternion based sim
+n toggle normalization
+d toggle damping (particles only)
