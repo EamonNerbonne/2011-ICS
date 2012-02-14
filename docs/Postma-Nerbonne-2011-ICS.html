@@ -307,7 +307,7 @@
                             <label>(Show Video) <input type="checkbox"/>
                             <span><iframe src="http://www.youtube.com/embed/UAmZ7DC11mA?theme=light&amp;hd=1&amp;modestbranding=1"></iframe></span></label>
                         </div>
-						<figcaption>An orientation based simulation showing unstable rotation. With a larger timestep results are also good, but slightly less consistent: <a href="http://www.youtube.com/watch?v=GhF2aJT54AM" />.
+						<figcaption>An orientation based simulation showing unstable rotation. With a larger timestep results are also good, but slightly less consistent: <a href="http://www.youtube.com/watch?v=GhF2aJT54AM" >(external video)</a>.
                        </figcaption>
 			        </figure>
 					<figure id="fig-video-results-orientation-nonorm">
@@ -317,13 +317,20 @@
                         </div>
 						<figcaption>An orientation based simulation without normalization eventually "blows up".      </figcaption>
 			        </figure>
-                    <p>The simulation of the rotating book using the quaternion-based implementation appears to be visually the same as the orientation matrix method. However, this changes when normalization is turned off (<a href="#fig-video-results-quaternion-nonorm">[ref]</a>). Like the implementation with the orientation matrix the shape of the book will eventually change when normalization is turned off. It takes longer for this change to take effect. </p>
+                    <p>The simulation of the rotating book using the quaternion-based implementation appears to be visually the same as the orientation matrix method. However, this changes when normalization is turned off (<a href="#fig-video-results-quaternion-nonorm">[ref]</a>). Like the implementation with the orientation matrix the shape of the book will eventually change when normalization is turned off. It often takes longer for this divergence to occur; however despite many fewer degrees of freedom (than the orientation-matrix based simulation) this is not always the case. The errors caused by unnormalized quaternions are sometimes surprising ()</p>
 					<figure id="fig-video-results-quaternion-nonorm">
                         <div class="iframe">
                             <label>(Show Video) <input type="checkbox"/>
                             <span><iframe src="http://www.youtube.com/embed/5qZKb5Rl4ZE?theme=light&amp;hd=1&amp;modestbranding=1"></iframe></span></label>
                         </div>
-						<figcaption>Video of quaternion based simulation showing unstable rotation, without normalization.</figcaption>
+						<figcaption>A quaternion based simulation without normalization. It eventually denormalizes and no longer approximates a rotation.</figcaption>
+			        </figure>
+					<figure id="fig-video-results-quaternion-nonorm-Z">
+                        <div class="iframe">
+                            <label>(Show Video) <input type="checkbox"/>
+                            <span><iframe src="http://www.youtube.com/embed/0tWX7Eaqefw?theme=light&amp;hd=1&amp;modestbranding=1"></iframe></span></label>
+                        </div>
+						<figcaption>A quaternion based simulation without normalization. The denormalization error causes the book to pulsate.</figcaption>
 			        </figure>
                 </section>
             </section>
