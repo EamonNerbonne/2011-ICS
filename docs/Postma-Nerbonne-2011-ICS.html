@@ -5,6 +5,11 @@
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700italic,400italic,700' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" type="text/css" href="report-style.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>@media print {
+        #fig-video-ISS .iframe iframe {display:none;}
+        #fig-video-ISS .iframe:before {content:'(Video omitted in print version)'; text-align:center; font-style:italic; padding:1cm;}
+}
+    </style>
 </head>
 <body>
     <div class="margincontainer">
@@ -220,6 +225,7 @@
             <section id="section-results">
 			    <!-- Chapter 5 -->
                 <h1>Results</h1>
+                <p>The implementation used to generate the videos below is available in <a href="RotateBook-src.zip" >source code form</a> (cross-platform with glut or freeglut dependency) and as a compiled win32 executable: <a href="RotateBook-win32.zip" >RotateBook-win32</a>.</p>  
                 <p>The implementation shows the visualization of a rotating book. There are three different methods to calculate the position of the corner points of the book, a particle-based method, a rigid method with an orientation matrix and a rigid method with quaternions. The user can reset the visualization to a rotation around each of the three axis. Normalization can be turned on and off.</p>
                 <section>
                     <h1>Particle Simulation</h1>

@@ -11,7 +11,7 @@ body, p {
 }
 
 .titlepage {
-    page-break-after: always;
+    /*page-break-after: always;*/
 }
 
 h1, h2 {
@@ -169,7 +169,7 @@ body {
     box-shadow: 0 0 1.5cm rgba(0,0,0,0.5);
 }
 .textcontainer {
-    padding-top: 4cm;
+    padding-top: 3.5cm;
     padding-bottom: 1cm;
     max-width: 12.42cm;
     margin: 0 auto;
@@ -226,4 +226,5 @@ div.iframe{position:relative;}
     .margincontainer {
         box-shadow: none;
     }
+    a:visited {color:Blue;}
 }
