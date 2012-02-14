@@ -16,7 +16,6 @@
                 <hgroup>
                     <h1>Simulating the Unstable Rotation of a Book </h1>
                     <h2>Introduction to Computational Science 2011-2012 </h2>
-                    <!--<h3>Version 0.3</h3>-->
                 </hgroup>
                 <div class="authorsbox">
                     <div>Ivar Postma</div>
@@ -42,7 +41,6 @@
                     <figcaption>A cuboid with its three main axes.</figcaption>
                 </figure>
                 <p> When thrown as a frisbee, the book rotates along the <script type="math/tex">z</script> axis. This rotation is stable, as is the rotation around the <script type="math/tex">y</script> axis. However, if we throw a book so that it is rotating along the <script type="math/tex">x</script> axis, the rotation is unstable. In space, we can see this unstable rotation more clearly because without gravity linear motion can be eliminated. The video below (<a href="#fig-video-ISS">[ref]</a>) demonstrates an experiment done on the international space station.</p>
-                <!-- The <figure>-tag is used below because the <video>-tag doesn't work properly -->
                 <figure id="fig-video-ISS">
                     <div class="iframe">
                         <iframe src="http://www.youtube.com/embed/GgVpOorcKqc?theme=light&amp;hd=1&amp;modestbranding=1"></iframe>
@@ -54,6 +52,7 @@
             </section>
             
             <section>
+			    <!-- Chapter 2 -->
                 <h1>Euler method</h1>
                 <p>To implement the simulation, we will define a number of ordinary differential equations (ODEs). These will be solved numerically.  Since Euler's method is the simplest method and computationally cheap, it was used to solve the equations arising from the models below. </p>
                 <p>In Euler integration the value of a function is computed at discrete timesteps <script type="math/tex">t_{i}</script> where <script type="math/tex">t_{i+1} = t_{i} + \Delta t</script>. The value of a function at the next timestep is computed using a linear extrapolation from its current value and its derivative: </p>
@@ -78,7 +77,6 @@
                 <p>To find the acceleration of a particle we can use Newton's second law. </p>
                 <script type="math/tex; mode=display">F = m a</script>
                 <p>Where necessary, we will use subscripts to differentiate between particles.  For example, <script type="math/tex">x_i</script> is the position of the <script type="math/tex">i</script>-th particle, <script type="math/tex">F_i</script> the force acting on particle <script type="math/tex">i</script>, and <script type="math/tex">F_{ij}</script> the force acting on particle <script type="math/tex">i</script> due to the spring connected to the <script type="math/tex">j</script>-th particle.</p>
-                <!--<p>Since the masses of particles are generally constant, the acceleration can be calculated from the force applied to the particle.</p>-->
                 
                 <section>
                     <h1>Modeling the book</h1>
@@ -134,6 +132,7 @@
                     <p>At each time step the positions are updated using the velocity and then the velocity is updated using the computed forces (Newton's third law is exploited to avoid half of the force computations).  After calculating the new values, they can be normalized. The initial positions and velocities are computed using the books predefine shape and a predefined angular velocity around an axis of the user's choice.  The speed and accuracy of the simulation can be independantly adjusted (within computational limits) by setting the <script type="math/tex">\Delta t</script> per animation frame and the number of update steps this rate is subdivided into (more, smaller update steps mean a more accurate simulation at higher CPU load).</p>
                 </section>
             </section>
+			
             <section id="section-rigid">
                 <!-- Chapter 4 - Rigid Simulation-->
                 <h1>Rigid Body Simulation</h1>
@@ -218,31 +217,8 @@
                 </section>
             </section>
             
-            <!--<section id="section-implementation">
-                <h1>Implementation</h1>
-                <p>In our implementation the visualization is separated from the calculation of the rotation. For visualization we will need the world coordinates of the corner points of the book. There are three methods to calculate these coordinates. </p>
-                <p>The implementation is written in C++. The Eigen library is used for linear algebra <a href="#bib-eigen">[ref]</a>. The library provides useful data types, such as matrices and vectors, and useful operations on these data types, such as the dot product of two matrices.</p>
-                
-                
-                <section>
-                    <h1>Particle Simulation</h1>
-                    <p>In particle simulation we need to store the positions and the velocities in 3D space of all the particles. Both are stored in a 3 &times; 8 matrix. The interacting forces are stored in an 8 &times; 8 matrix.</p>
-                    <p>At each time step the positions, the velocities and the interacting forces have to be computed. </p>
-                    <p>After calculating the new values they can be normalized. <i class="highlight">TODO: Little more text.</i></p>
-                </section>
-                
-                <section>
-                    <h1>Rigid Simulation</h1>
-                    <p>In each time step <script type="math/tex">I^{-1}</script> is calculated from the current orientation and the static moment of inertia of the body. Using this <script type="math/tex">I^{-1}</script> the angular velocity at that time step is calculated. <i class="highlight">TODO: Little more text.</i></p>
-                </section>
-                
-                <section>
-                    <h1>Visualisation</h1>
-                    <p>OpenGL is used for the visualization of the rotating book. In OpenGL a cuboid is rendered by specifying its eight sides. The position of the eight corner points of the book define where to draw each side of the book. To be able the distinguish between different sides of the book a texture is rendered on the front, spine and back of the book. </p>
-                </section>
-            </section>-->
-            
             <section id="section-results">
+			    <!-- Chapter 5 -->
                 <h1>Results</h1>
                 <p>The implementation shows the visualization of a rotating book. There are three different methods to calculate the position of the corner points of the book, a particle-based method, a rigid method with an orientation matrix and a rigid method with quaternions. The user can reset the visualization to a rotation around each of the three axis. Normalization can be turned on and off.</p>
                 <section>
@@ -336,7 +312,8 @@
             </section>
             
             <section id="section-discussion">
-                <h1>Discussion</h1>
+                <!-- Chapter 6 -->
+				<h1>Discussion</h1>
                 <p>Normalization is necessary in a stable simulation because of small errors in the integration technique. However, it is not necessary to normalize the calculation in every time step. When to normalize depends on the size of the time step and on the integration method. </p>
                 <p>Choosing a higher order numerical integration technique, such as fourth-order Runga-Kutta, will produce a smaller error in every time step but this is computationally more expensive. Since we need to normalize anyway, which will eliminate the error made, Euler integration is sufficient for this simulation. </p>
                 <p>The particle-based simulation and the rigid simulation produce similar results. So can we say which method is better. If we wish to quantify this we could look at the computational load of both methods. However, this would only yield in this particular case where we simulate a rotation cuboid. If we look at the more general problem of rotating objects, the particle-based method has an advantage over the rigid method. In the rigid method we use the definition of the moment of inertia of our object. This means that if the moment of inertia is unknown we have to compute it in advance. For complex shapes this proves to be difficult thus it will take longer to implement. For particle simulation we only need to place the particles and define their interacting forces which is easier. </p>
@@ -344,6 +321,7 @@
             </section>
             
             <section id="section-conclusion">
+				<!-- Chapter 7 -->
                 <h1>Conclusion</h1>
                 <p>Simulation of the rotation of a book can be successfully implemented with both a particle-based method and rigid method. In both methods it is important to normalize the calculations because numerical integration techniques introduce errors which will eventually cause the simulation to "explode". Which implementation is more useful depends on the application. For simple shapes such as a cuboid the rigid method is easy to implement and performs well. For more difficult shapes the particle-based method proves to be easier to implement because it does not rely on the moment of inertia of the object to be computed.</p>
             </section>
