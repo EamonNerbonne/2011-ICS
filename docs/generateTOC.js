@@ -52,7 +52,7 @@ function createSectionToc(arrChildren) {
 let sectionIdx =0;
 for(const thisSection of document.querySelectorAll("section")) {
 	var thisSectionData = getData(thisSection);
-	if (thisSection.getAttribute("id") === undefined) thisSection.setAttribute("id", "autoSecNum" + sectionIdx);
+	if (thisSection.getAttribute("id") === null) thisSection.setAttribute("id", "autoSecNum" + sectionIdx);
 
 	var parentSection = getSectionScope(thisSection);
 	var parentSectionData = getData(parentSection);
@@ -82,22 +82,23 @@ for(const el of document.querySelectorAll(".generateTableOfContents")) {
 
 let figIdx = 0;
 for(const thisFigure of document.querySelectorAll("figure")) {
-	if (thisFigure.getAttribute("id") === undefined) thisFigure.setAttribute("id", "autoFigNum" + figIdx);
+	if (thisFigure.getAttribute("id") === null) thisFigure.setAttribute("id", "autoFigNum" + figIdx);
 
 	var parentArticle = getArticleScope(thisFigure);
 	var parentArticleData = getData(parentArticle);
 
 	if (parentArticleData.figureCounter === undefined) parentArticleData.figureCounter = 0;
 	parentArticleData.figureCounter++;
-	for(const caption of thisFigure.querySelectorAll("figcaption, figure")) {
-		caption.setAttribute("data-figureNumber", parentArticleData.figureCounter);
+    thisFigure.setAttribute("data-figureNumber", parentArticleData.figureCounter);
+	for(const caption of thisFigure.querySelectorAll("figcaption")) {
+        caption.setAttribute("data-figureNumber", parentArticleData.figureCounter);
 	}
 	figIdx++;
 }
 
 let citationIdx = 0;
 for(const thisCitation of document.querySelectorAll("aside.bibliography li")) {
-	if (thisCitation.getAttribute("id") === undefined) thisCitation.setAttribute("id", "autoCiteNum" + citationIdx);
+	if (thisCitation.getAttribute("id") === null) thisCitation.setAttribute("id", "autoCiteNum" + citationIdx);
 
 	var parentArticle = getArticleScope(thisCitation);
 	var parentArticleData = parentArticle.dataset;
