@@ -21,7 +21,7 @@ using std::cout;
 #undef max
 BookRenderer::BookRenderer(shared_ptr<RotationModel> initstate, double timestep, int timesteps_per_frame) : state(initstate), timestep(timestep), timesteps_per_frame(timesteps_per_frame)
 {
-	texture = shared_ptr<RgbaImageTexture>(new RgbaImageTexture("textures/cover.png"));
+	texture = shared_ptr<RgbaImageTexture>(new RgbaImageTexture("textures/cover.jpg"));
 }
 
 void BookRenderer::display() {
